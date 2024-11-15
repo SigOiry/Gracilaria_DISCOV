@@ -1,0 +1,63 @@
+---
+title: DISCOV-Gracilaria Paper
+shorttitle: DISCOV - Gracilaria
+author:
+  - name: Simon Oiry^[Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France]
+    orcid: 0000-0001-7161-5246
+    corresponding: true
+    email: oirysimon@gmail.com
+    roles:
+      - Investigation
+      - Writing
+      - Data acquisition
+    affiliations:
+      - Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+  - name: Bede Ffinian Rowe Davies¹
+    orcid: 0000-0001-6462-4347
+    corresponding: false
+    roles: 
+      - Investigation
+      - Data acquisition
+      - Revision
+    affiliations:
+      - Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+  - name: Pierre Gernez¹
+    orcid: 0000-0003-2055-410X
+    corresponding: false
+    roles: 
+      - Investigation
+      - Data acquisition
+      - Revision
+    affiliations:
+      - Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+  - name: Laurent Barillé¹
+    orcid: 0000-0001-5138-2684
+    corresponding: false
+    roles: 
+      - Investigation
+      - Data acquisition
+      - Revision
+    affiliations:
+      - Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+keywords:
+  - Remote Sensing
+  - Invasive species
+  - Coastal Ecosystems
+  - Biodiversity 
+abstract:
+  To be Written 
+plain-language-summary: |
+  To be written
+key-points:
+  To be Written
+date: last-modified
+citation:
+  container-title: Remote Sensing of Environment
+number-sections: true
+notebook-links: false
+editor_options: 
+  chunk_output_type: console
+csl: RSE.csl
+---
+
+this is a test
