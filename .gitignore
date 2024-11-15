@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+
+Data/Litto3D/*
+!Data/Litto3D/Study_sites/

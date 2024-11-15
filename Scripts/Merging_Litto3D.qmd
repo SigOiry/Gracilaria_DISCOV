@@ -1,0 +1,89 @@
+---
+title: "Merging_LITTO3D"
+author: "Simon Oiry"
+format: html
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+
+This code is used to merge litto3D tiles downloaded from the SHOM.
+
+```{r}
+library(MapRs)
+library(terra)
+library(sf)
+```
+
+
+```{r}
+
+filelist_litto <- list.files("Data/Litto3D", pattern = "IGN69.asc", recursive = T, full.names = T) %>% 
+  as_tibble() %>% 
+  rename(path = "value") %>% 
+  dplyr::filter(str_detect(path, "MNT1m"),
+                !str_detect(path, ".asc.aux.xml")) %>% 
+  mutate(site = case_when(str_detect(path, "0195_6770") ~ "Belon_Aven",
+                                     T ~ "Etel"))
+
+mask_list <- list.files("Data/shp/mask/", pattern = ".shp", full.names = T) %>% 
+  as_tibble() %>% 
+  rename(path = "value") %>% 
+  mutate(filename = gsub(".*/","",path),
+         site = gsub(paste0("_",gsub(".*_","",filename)),"",filename),
+         Litto3D_product = case_when(site %in% c("Aven","Belon") ~ "Belon_Aven",
+                                     site %in% c("Collet1","Collet2","Lorois") ~ "Etel",
+                                     T ~ "NA")) %>% 
+  dplyr::filter(Litto3D_product!="NA")
+
+
+
+for(site_i in 1:length(unique(filelist_litto$site))){
+  
+  df_site <- filelist_litto %>% 
+    dplyr::filter(site == unique(filelist_litto$site)[site_i])
+
+  for (i in 1:nrow(df_site)) {
+   a <- rast(df_site$path[i]) 
+   print(paste0(i,"/",nrow(df_site)))
+   if(i == 1 ){
+     b = a
+   }else{
+     b = terra::merge(b,a)
+   }
+  }
+  
+  crs(b) <- crs("EPSG:2154")
+  
+  writeRaster(b, paste0("Data/Litto3D/Litto_1m_merged_",unique(filelist_litto$site)[site_i],".tif"), overwrite = T)
+  
+  
+  msk_site <-  mask_list %>% 
+    dplyr::filter(Litto3D_product == unique(filelist_litto$site)[site_i])
+    # b_corr_HZ <- b + 2.850 ### Correct avergage sea level heigh to be in "lowest athmospheric tides"
+  b_32630 <- b %>% 
+    terra::project(crs("EPSG:32630"))
+  
+  
+  for(mask_i in 1:nrow(msk_site)){
+    
+    mask_inter <- msk_site$path[mask_i] %>% 
+      read_sf()
+    
+    b_32630_cropped <- b_32630%>% 
+      # crop(msk) %>% 
+      crop(mask_inter, mask = T)    
+    
+    writeRaster(b_32630_cropped, paste0("Data/Litto3D/Study_sites/DEM/Litto3D_1m_",paste0(msk_site$site[mask_i]),".tif"), overwrite = T)
+
+    contours = terra::as.contour(b_32630_cropped, levels = seq(0,8,by = 0.1))
+    
+    contours_sf <- st_as_sf(contours)
+
+    write_sf(contours_sf,paste0("Data/Litto3D/Study_sites/Bathy_lines/Bathy_lines_",paste0(msk_site$site[mask_i]),".shp"))
+
+    
+  }
+}
+```
+
