@@ -8,10 +8,10 @@ format:
     toc: true
     theme: cosmo
   docx:
-    output-file: "Simon_Heatwaves_Paper"
+    output-file: "DISCOV_Gracilaria_Paper"
     reference-doc: quarto_template.docx
   pdf:
-    output-file: "Simon_Heatwaves_Paper"
+    output-file: "DISCOV_Gracilaria_Paper"
 render: 
   - "index.qmd"
 resources:

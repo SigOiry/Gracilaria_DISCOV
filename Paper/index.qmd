@@ -2,7 +2,7 @@
 title: DISCOV-Gracilaria Paper
 shorttitle: DISCOV - Gracilaria
 author:
-  - name: Simon Oiry^[Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France]
+  - name: Simon Oiry¹
     orcid: 0000-0001-7161-5246
     corresponding: true
     email: oirysimon@gmail.com
@@ -11,7 +11,11 @@ author:
       - Writing
       - Data acquisition
     affiliations:
-      - Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+      - id: ISOMER
+      - name: Institut des Substances et Organismes de la Mer, ISOMer
+      - departement: Nantes Université, UR 2160
+      - city: Nantes
+      - country: France
   - name: Bede Ffinian Rowe Davies¹
     orcid: 0000-0001-6462-4347
     corresponding: false
@@ -20,7 +24,7 @@ author:
       - Data acquisition
       - Revision
     affiliations:
-      - Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+      - id: ISOMER
   - name: Pierre Gernez¹
     orcid: 0000-0003-2055-410X
     corresponding: false
@@ -29,7 +33,7 @@ author:
       - Data acquisition
       - Revision
     affiliations:
-      - Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+      - id: ISOMER
   - name: Laurent Barillé¹
     orcid: 0000-0001-5138-2684
     corresponding: false
@@ -38,7 +42,7 @@ author:
       - Data acquisition
       - Revision
     affiliations:
-      - Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+      - id: ISOMER
 keywords:
   - Remote Sensing
   - Invasive species
@@ -59,5 +63,11 @@ editor_options:
   chunk_output_type: console
 csl: RSE.csl
 ---
+[^1]
+
+[^1]: Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+
+# Introduction
+
 
 this is a test
