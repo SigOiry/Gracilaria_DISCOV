@@ -93,6 +93,39 @@
 % Set default figure placement to htbp
 \def\fps@figure{htbp}
 \makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \KOMAoption{captions}{tableheading}
 \makeatletter
@@ -157,7 +190,7 @@ Ecosystems, Biodiversity},
 \title{DISCOV-Gracilaria Paper}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2024-11-15}
+\date{2024-11-16}
 
 \begin{document}
 \maketitle
@@ -169,7 +202,157 @@ To be Written
 \footnote{Institut des Substances et Organismes de la Mer, ISOMer,
   Nantes Université, UR 2160, F-44000 Nantes, France}
 
-this is a test
+\section{Introduction}\label{introduction}
+
+Coastal ecosystems are among the most dynamic and productive
+environments on Earth, providing invaluable ecosystem services and
+supporting immense biodiversity. These ecosystems, spanning mangroves,
+salt marshes, seagrass meadows, and rocky intertidal zones, play a
+pivotal role in carbon sequestration, nutrient cycling, and shoreline
+stabilization. They also serve as critical habitats for numerous
+species, many of which are commercially or ecologically significant.
+Coastal areas are densely populated, with billions of people globally
+depending on their resources for livelihoods, fisheries, and tourism.
+However, coastal ecosystems face mounting pressures from human
+activities such as land reclamation, pollution, and overfishing,
+compounded by the impacts of climate change. Sea level rise, ocean
+acidification, and increasing storm intensity further exacerbate the
+vulnerability of these systems, threatening their resilience and the
+services they provide. Protecting and sustainably managing these
+ecosystems is therefore critical for maintaining global biodiversity and
+supporting human well-being.
+
+One of the significant threats to coastal ecosystems is biological
+invasions by non-native species, which can disrupt native biodiversity
+and alter ecosystem functions (Krueger-Hadfield (2018) ; Capdevila et
+al. (2019) ;Liu et al. (2020)). \emph{Gracilaria vermiculophylla}, an
+invasive red macroalga native to the northwest Pacific, exemplifies this
+issue. Over the last century, this species has spread extensively across
+temperate estuaries in North America, Europe, and other regions,
+facilitated by aquaculture and maritime activities (Rueness (2005) ;
+Weinberger et al. (2008) ; Krueger-Hadfield et al. (2017)). Its success
+as an invader stems from its tolerance to a wide range of environmental
+stressors, including temperature (Sotka et al. (2018)), salinity
+(Weinberger et al. (2008)), and nutrient variability (Abreu et al.
+(2011)), as well as its ability to establish in soft sediment habitats
+traditionally devoid of macroalgae (Ramus et al. (2017)). While \emph{G.
+vermiculophylla} can provide some ecosystem services, such as habitat
+for invertebrates and juvenile fish, it often outcompetes native
+vegetation, alters sediment composition (Nyberg et al. (2009)), and
+disrupts trophic interactions (Ginneken et al. (2018)). In regions like
+the Baltic Sea and the eastern United States, it has been documented to
+negatively affect native fucoids and seagrasses (Van Katwijk (2003) ;
+Thomsen et al. (2013)). These impacts underscore the importance of
+monitoring and managing the spread of \emph{G. vermiculophylla},
+particularly as climate change and anthropogenic pressures continue to
+facilitate biological invasions.
+
+Remote sensing has revolutionized our ability to monitor and manage
+ecosystems, offering efficient and scalable methods for detecting
+environmental changes over large areas. Among these technologies,
+drone-based remote sensing has emerged as a particularly promising tool
+for studying coastal environments. Equipped with high-resolution cameras
+and multispectral or hyperspectral sensors, drones can capture
+fine-scale spatial and spectral data, enabling researchers to identify
+and map vegetation, detect stress in plants, and monitor changes over
+time. Unlike traditional satellite imagery, drones provide the
+flexibility to operate in overcast conditions, achieve higher spatial
+resolution, and target specific areas of interest. For invasive species
+like G. vermiculophylla, drones equipped with multispectral sensors can
+differentiate it from native vegetation based on its unique spectral
+reflectance characteristics. This capability not only enhances detection
+accuracy but also reduces the time and labor associated with traditional
+field surveys. As the cost of drone technology continues to decrease and
+advancements in machine learning facilitate data analysis, drone-based
+remote sensing is becoming increasingly accessible and impactful for
+ecological research and management.
+
+In this study, we aim to harness the potential of drone-based
+multispectral remote sensing to map Gracilaria vermiculophylla in
+intertidal zones. Bla bla what are we going to do ? bla bla .
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-abreu2011nitrogen}
+Abreu, M.H., Pereira, R., Buschmann, A., Sousa-Pinto, I., Yarish, C.,
+2011. Nitrogen uptake responses of gracilaria vermiculophylla (ohmi)
+papenfuss under combined and single addition of nitrate and ammonium.
+Journal of Experimental Marine Biology and Ecology 407, 190--199.
+
+\bibitem[\citeproctext]{ref-capdevila2019warming}
+Capdevila, P., Hereu, B., Salguero-Gómez, R., Rovira, G. la, Medrano,
+A., Cebrian, E., Garrabou, J., Kersting, D.K., Linares, C., 2019.
+Warming impacts on early life stages increase the vulnerability and
+delay the population recovery of a long-lived habitat-forming macroalga.
+Journal of Ecology 107, 1129--1140.
+
+\bibitem[\citeproctext]{ref-van2018global}
+Ginneken, V. van, Vries, E. de, others, 2018. The global dispersal of
+the non-endemic invasive red alga gracilaria vermiculophylla in the
+ecosystems of the euro-asia coastal waters including the wadden sea
+unesco world heritage coastal area: Awful or awesome? Oceanography \&
+Fisheries Open Access Journal 8, 4--26.
+
+\bibitem[\citeproctext]{ref-krueger2018everywhere}
+Krueger-Hadfield, S., 2018. Everywhere you look, everywhere you go,
+there's an estuary invaded by the red seaweed gracilaria vermiculophylla
+(ohmi) papenfuss, 1967. BioInvasions Records 7.
+
+\bibitem[\citeproctext]{ref-krueger2017genetic}
+Krueger-Hadfield, S.A., Kollars, N.M., Strand, A.E., Byers, J.E.,
+Shainker, S.J., Terada, R., Greig, T.W., Hammann, M., Murray, D.C.,
+Weinberger, F., others, 2017. Genetic identification of source and
+likely vector of a widespread marine invader. Ecology and evolution 7,
+4432--4447.
+
+\bibitem[\citeproctext]{ref-liu2020ocean}
+Liu, C., Zou, D., Liu, Z., Ye, C., 2020. Ocean warming alters the
+responses to eutrophication in a commercially farmed seaweed,
+gracilariopsis lemaneiformis. Hydrobiologia 847, 879--893.
+
+\bibitem[\citeproctext]{ref-nyberg2009flora}
+Nyberg, C.D., Thomsen, M.S., Wallentinus, I., 2009. Flora and fauna
+associated with the introduced red alga gracilaria vermiculophylla.
+European Journal of Phycology 44, 395--403.
+
+\bibitem[\citeproctext]{ref-ramus2017invasive}
+Ramus, A.P., Silliman, B.R., Thomsen, M.S., Long, Z.T., 2017. An
+invasive foundation species enhances multifunctionality in a coastal
+ecosystem. Proceedings of the national academy of sciences 114,
+8580--8585.
+
+\bibitem[\citeproctext]{ref-rueness2005life}
+Rueness, J., 2005. Life history and molecular sequences of gracilaria
+vermiculophylla (gracilariales, rhodophyta), a new introduction to
+european waters. Phycologia 44, 120--128.
+
+\bibitem[\citeproctext]{ref-sotka2018combining}
+Sotka, E.E., Baumgardner, A.W., Bippus, P.M., Destombe, C., Duermit,
+E.A., Endo, H., Flanagan, B.A., Kamiya, M., Lees, L.E., Murren, C.J.,
+others, 2018. Combining niche shift and population genetic analyses
+predicts rapid phenotypic evolution during invasion. Evolutionary
+Applications 11, 781--793.
+
+\bibitem[\citeproctext]{ref-thomsen2013effects}
+Thomsen, M.S., Stæhr, P.A., Nejrup, L., Schiel, D.R., 2013. Effects of
+the invasive macroalgae gracilaria vermiculophylla on two co-occurring
+foundation species and associated invertebrates. Aquatic Invasions 8,
+133--145.
+
+\bibitem[\citeproctext]{ref-van2003reintroduction}
+Van Katwijk, M., 2003. Reintroduction of eelgrass (zostera marina l.) in
+the dutch wadden sea: A research overview and management vision, in:
+Challenges to the Wadden Sea Area. In: Proceedings of the 10th
+International Scientific Wadden Sea Symposium, Groningen, the
+Netherlands. pp. 173--195.
+
+\bibitem[\citeproctext]{ref-weinberger2008invasive}
+Weinberger, F., Buchholz, B., Karez, R., Wahl, M., 2008. The invasive
+red alga gracilaria vermiculophylla in the baltic sea: Adaptation to
+brackish water may compensate for light limitation. Aquatic Biology 3,
+251--264.
+
+\end{CSLReferences}
 
 
 
