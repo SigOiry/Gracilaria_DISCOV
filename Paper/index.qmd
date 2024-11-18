@@ -230,218 +230,510 @@ p1  <-
 
 
 
-ggsave("Figures/High_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10)  
-
-
+ggsave("Paper/Figures/High_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10, dpi = 400)  
+ggsave("Paper/Figures/Low_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10, dpi = 200) 
 ```
 
-```{r Figure1 Map Graphical abstract}
+```{r intertidal mask}
 #| cache: true
 #| echo: false
 #| eval: false
 #| warning: false
 
-world_map <- sovereignty10 %>% 
+######### Aven Belon 
+
+mask_aven_belon <- read_sf("Data/shp/mask/mask_site_Aven_Belon_32630.shp")
+
+HT <-  list.files("Data/Sentinel2/Aven_Belon/S2A_MSIL2A_20231107T111251_N0509_R137_T30TVT_20231107T144858.SAFE/GRANULE/L2A_T30TVT_A043749_20231107T111246/IMG_DATA/R10m/", pattern = ".jp2",recursive =T,full.names = T)
+
+B8_HT <- rast(HT[5]) %>% 
+  `names<-`("B08") %>% 
+  crop(mask_aven_belon, mask = T) 
+B8_HT <- B8_HT - 1000
+
+B4_HT <- rast(HT[4])%>% 
+  `names<-`("B04") %>% 
+  crop(mask_aven_belon, mask = T)
+B4_HT <- B4_HT -1000
+
+NDVI_HT <- (B8_HT-B4_HT)/(B8_HT+B4_HT)
+
+
+LT <-  list.files("Data/Sentinel2/Aven_Belon/S2A_MSIL2A_20240624T110641_N0510_R137_T30TVT_20240624T153247.SAFE/GRANULE/L2A_T30TVT_A047038_20240624T111001/IMG_DATA/R10m/", pattern = ".jp2",recursive =T,full.names = T)
+
+B8_LT <- rast(LT[5]) %>% 
+  `names<-`("B08") %>% 
+  crop(mask_aven_belon, mask = T) 
+B8_LT <- B8_LT - 1000
+
+B4_LT <- rast(LT[4])%>% 
+  `names<-`("B04") %>% 
+  crop(mask_aven_belon, mask = T)
+B4_LT <- B4_LT -1000
+
+NDVI_LT <- (B8_LT-B4_LT)/(B8_LT+B4_LT)
+
+
+intertidal_Aven_Belon <- NDVI_LT > 0.05 & NDVI_HT < -0.05
+
+
+values(intertidal_Aven_Belon)[values(intertidal_Aven_Belon) == F] <- NA
+
+mask_sf <- as.polygons(intertidal_Aven_Belon) %>% 
   st_as_sf() %>% 
-  dplyr::filter(sovereignt%in%c("Spain","France","Portugal",
-                                "Italy","Andorra",
-                                "United Kingdom",
-                                "Switzerland","Belgium",
-                                "Germany","Luxembourg") ) 
-
-bbox_europe <- st_bbox(c(xmin = -20, ymin = 34,
-                         xmax = 20, ymax = 55) ,
-                       crs = st_crs(world_map) ) 
-
-world_map<-st_make_valid(world_map) 
-
-european_union_map_cropped <- st_crop(world_map, bbox_europe)  %>% 
-  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
-
-
-UnitedKingdom<-sovereignty10 %>% 
-  st_as_sf() %>% 
-  dplyr::filter(sovereignt%in%c("United Kingdom") ) %>% 
-  st_cast("POLYGON") 
-
-bbox_UK <- st_bbox(c(xmin = -20, ymin = 45,
-                         xmax = 20, ymax = 55) ,
-                       crs = st_crs(UnitedKingdom) ) 
-
-UnitedKingdom<-st_make_valid(UnitedKingdom) 
-
-UK_map_cropped <- st_crop(UnitedKingdom, bbox_UK)  %>% 
-  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ") 
-
-Europe_sf<-european_union_map_cropped %>% 
-  dplyr::bind_rows(UK_map_cropped) 
-
-Projects<-data.frame(
-  Name=c(
-  "Portugal - Aveiro Lagoon Flights\nLower-Resolution: 4\nHigher-Resolution: 1",
-  "France - Morbihan Gulf Flights\nLower-Resolution: 3\nHigher-Resolution: 3",
-  "France - Bourgneuf Bay Flights\nLower-Resolution: 4\nHigher-Resolution: 0"
-  ) ,
-  Long=c(-8.745730,
-         -2.840592, 
-         -2.111868) ,
-  Lat=c(40.617610, 
-        47.578736,
-        47.024719) 
-  )  %>% 
-  st_as_sf(coords=c("Long","Lat") )  %>% 
-  st_set_crs("EPSG:4326")  %>% 
-  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
-
-Projects_df<-Projects %>%
-  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
-                lat = sf::st_coordinates(.) [,2]) %>% 
-  sf::st_set_geometry(NULL)  %>% 
-  separate(Name, into=c("Country","Bay") ,sep=" - ")  %>% 
-  dplyr::mutate(Country=as.factor(Country) ,
-                Bay=as.factor(Bay) ) 
-
-Miniworld_map <- sovereignty10 %>% 
-  st_as_sf()
-
-sf_use_s2(FALSE)
-
-bbox_EU <- st_bbox(c(xmin = -30, ymin = 20,
-                         xmax = 50, ymax = 70) ,
-                       crs = st_crs(Miniworld_map) ) 
-
-  MiniEU_map<-st_crop(Miniworld_map, bbox_EU)  %>% 
-  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
-
-  df_P2<-Projects_df %>% 
-    mutate(ID = c(1:nrow(.))) %>% 
-    mutate(Site = case_when(ID == 1 ~ "Aveiro Lagoon",
-                            ID == 2 ~ "Morbihan Gulf",
-                            ID == 3 ~ "Bourgneuf Bay",
-                            TRUE ~ "NA"),
-           ID = case_when(ID == 1 ~ "Portugal",
-                          ID == 2 ~ "France",
-                          TRUE ~ "France")) %>% 
-    dplyr::select(c(lon,lat,ID,Site))
-    
-    scaleFUN <- function(x) paste0(sprintf("%.2f", x),"°N")
+  st_cast("POLYGON") %>% 
+  mutate(area = st_area(geometry)) %>% 
+  dplyr::filter(as.numeric(area) > 6500) %>% 
+  nngeo::st_remove_holes() %>% 
+  smoothr::smooth(method = "ksmooth", smoothness = 3)
   
+# plot(mask_sf)
 
-p2  <-
-  ggplot(MiniEU_map) +
-  geom_sf(linewidth=0.5,alpha=0.93,
-          fill="#CFCFCF",colour="grey30")+
-    ggforce::geom_mark_ellipse(data=df_P2,
-                 aes(x=lon,
-                     y=lat,
-                     label = ID,
-                     description=Site) ,
-                 linewidth=0.3,
-                 label.width = 20,
-                 fill="goldenrod",
-                 show.legend=F,
-                 label.hjust = 0.5,
-                 con.size = 2,
-                 con.colour = "goldenrod4",
-                 label.fontsize = c(25,20),
-                 alpha=0.8,
-                 expand = unit(2, "mm") , 
-                 radius = unit(2, "mm") , 
-                 label.buffer = unit(10, "mm") ,
-                 label.fill = "grey90")+
-  coord_sf(xlim=c(2600000,4100000) ,
-          ylim=c(1600000,3100000))+
-  theme_void()+
-  labs(x="Longitude",
-       y="Latitude")+
-  scale_y_continuous(labels=scaleFUN)
-  # theme(plot.margin = unit(c(0.1,0.1,0.1,0.1), "cm"),
-  #       axis.title = element_blank(),
-  #       axis.text.x = element_text(size = 20),
-  #       axis.text.y = element_text(size = 20) )
+write_sf(mask_sf,"Data/shp/Intertidal_sites/mask_intertidal_Aven_Belon.shp")
+
+
+Land_Aven_Belon <- NDVI_LT > 0.05 & NDVI_HT > 0.05
+
+
+values(Land_Aven_Belon)[values(Land_Aven_Belon) == F] <- NA
+
+mask_sf <- as.polygons(Land_Aven_Belon) %>% 
+  st_as_sf() %>% 
+  st_cast("POLYGON") %>% 
+  mutate(area = st_area(geometry)) %>% 
+  dplyr::filter(as.numeric(area) > 6500) %>% 
+  nngeo::st_remove_holes()
+  # smoothr::smooth(method = "ksmooth", smoothness = 3)
+  
+# plot(mask_sf)
+
+write_sf(mask_sf,"Data/shp/Intertidal_sites/mask_Land_Aven_Belon.shp")
 
 
 
+######### ETEL
 
-ggsave("Figures/High_res/Figure1/Graphical_Abstract_Map.png",p2,width= 10, height=10)  
+mask_Etel <- read_sf("Data/shp/mask/mask_site_Etel_32630.shp")
+
+HT <-  list.files("Data/Sentinel2/Etel/S2A_MSIL2A_20231008T110941_N0509_R137_T30TVT_20231008T171550.SAFE/GRANULE/L2A_T30TVT_A043320_20231008T111641/IMG_DATA/R10m/", pattern = ".jp2",recursive =T,full.names = T)
+
+B8_HT <- rast(HT[5]) %>% 
+  `names<-`("B08") %>% 
+  crop(mask_Etel, mask = T) 
+B8_HT <- B8_HT - 1000
+
+B4_HT <- rast(HT[4])%>% 
+  `names<-`("B04") %>% 
+  crop(mask_Etel, mask = T)
+B4_HT <- B4_HT -1000
+
+NDVI_HT <- (B8_HT-B4_HT)/(B8_HT+B4_HT)
+
+LT <-  list.files("Data/Sentinel2/Etel/S2B_MSIL2A_20230718T112119_N0509_R037_T30TVT_20230718T124824.SAFE/GRANULE/L2A_T30TVT_A033239_20230718T112118/IMG_DATA/R10m/", pattern = ".jp2",recursive =T,full.names = T)
+
+B8_LT <- rast(LT[5]) %>% 
+  `names<-`("B08") %>% 
+  crop(mask_Etel, mask = T) 
+B8_LT <- B8_LT - 1000
+
+B4_LT <- rast(LT[4])%>% 
+  `names<-`("B04") %>% 
+  crop(mask_Etel, mask = T)
+B4_LT <- B4_LT -1000
+
+NDVI_LT <- (B8_LT-B4_LT)/(B8_LT+B4_LT)
+
+
+intertidal_Etel <- NDVI_LT > 0.05 & NDVI_HT < -0.05
+
+
+values(intertidal_Etel)[values(intertidal_Etel) == F] <- NA
+
+mask_sf <- as.polygons(intertidal_Etel) %>% 
+  st_as_sf() %>% 
+  st_cast("POLYGON") %>% 
+  mutate(area = st_area(geometry)) %>% 
+  dplyr::filter(as.numeric(area) > 6500) %>% 
+  nngeo::st_remove_holes() %>% 
+  smoothr::smooth(method = "ksmooth", smoothness = 3)
+  
+# plot(mask_sf)
+
+write_sf(mask_sf,"Data/shp/Intertidal_sites/mask_intertidal_Etel.shp")
+
+
+Land_Etel <- NDVI_LT > 0.05 & NDVI_HT > 0.05
+
+
+values(Land_Etel)[values(Land_Etel) == F] <- NA
+
+mask_sf <- as.polygons(Land_Etel) %>% 
+  st_as_sf() %>% 
+  st_cast("POLYGON") %>% 
+  mutate(area = st_area(geometry)) %>% 
+  dplyr::filter(as.numeric(area) > 6500) %>% 
+  nngeo::st_remove_holes() 
+  
+plot(mask_sf)
+
+write_sf(mask_sf,"Data/shp/Intertidal_sites/mask_Land_Etel.shp")
+
+######### SAJA
+
+mask_SAJA <- read_sf("Data/shp/mask/mask_site_Saja_32630.shp")
+
+
+HT <-  list.files("Data/Sentinel2/Saja/S2A_MSIL2A_20181004T110911_N0500_R137_T30TVP_20230620T014212.SAFE/GRANULE/L2A_T30TVP_A017151_20181004T111207/IMG_DATA/R10m/", pattern = ".jp2",recursive =T,full.names = T)
+
+B8_HT <- rast(HT[5]) %>% 
+  `names<-`("B08") %>% 
+  crop(mask_SAJA, mask = T) 
+B8_HT <- B8_HT - 1000
+
+B4_HT <- rast(HT[4])%>% 
+  `names<-`("B04") %>% 
+  crop(mask_SAJA, mask = T)
+B4_HT <- B4_HT -1000
+
+NDVI_HT <- (B8_HT-B4_HT)/(B8_HT+B4_HT)
+
+
+LT <-  list.files("Data/Sentinel2/Saja/S2A_MSIL2A_20230928T110831_N0509_R137_T30TVP_20230928T171657.SAFE/GRANULE/L2A_T30TVP_A043177_20230928T111532/IMG_DATA/R10m/", pattern = ".jp2",recursive =T,full.names = T)
+
+B8_LT <- rast(LT[5]) %>% 
+  `names<-`("B08") %>% 
+  crop(mask_SAJA, mask = T) 
+B8_LT <- B8_LT - 1000
+
+B4_LT <- rast(LT[4])%>% 
+  `names<-`("B04") %>% 
+  crop(mask_SAJA, mask = T)
+B4_LT <- B4_LT -1000
+
+NDVI_LT <- (B8_LT-B4_LT)/(B8_LT+B4_LT)
+
+
+intertidal_Saja <- NDVI_LT > 0.05 & NDVI_HT < -0.05
+
+
+values(intertidal_Saja)[values(intertidal_Saja) == F] <- NA
+
+mask_sf <- as.polygons(intertidal_Saja) %>% 
+  st_as_sf() %>% 
+  st_cast("POLYGON") %>% 
+  mutate(area = st_area(geometry)) %>% 
+  dplyr::filter(as.numeric(area) > 6500) %>% 
+  nngeo::st_remove_holes() %>% 
+  smoothr::smooth(method = "ksmooth", smoothness = 3)
+  
+# plot(mask_sf)
+
+write_sf(mask_sf,"Data/shp/Intertidal_sites/mask_intertidal_Saja.shp")
+
+
+Land_Saja <- NDVI_LT > 0.05 & NDVI_HT > 0.05
+
+values(Land_Saja)[values(Land_Saja) == F] <- NA
+
+mask_sf <- as.polygons(Land_Saja) %>% 
+  st_as_sf() %>% 
+  st_cast("POLYGON") %>% 
+  mutate(area = st_area(geometry)) %>% 
+  dplyr::filter(as.numeric(area) > 6500) %>% 
+  nngeo::st_remove_holes() %>% 
+  smoothr::smooth(method = "ksmooth", smoothness = 3)
+  
+plot(mask_sf)
+
+write_sf(mask_sf,"Data/shp/Intertidal_sites/mask_Land_Saja.shp")
+
 
 
 ```
 
-```{r Figure1 Aveiro}
+```{r square function}
 #| cache: true
 #| echo: false
 #| eval: false
 #| warning: false
 
-filelist<-list.files("Data/shp/", pattern = ".shp", recursive = T,full.names = T)
-mask_aveiro <- filelist[str_detect(filelist,"mask_land_intertidal_Aveiro")] %>% 
+
+create_square_sf <- function(side_length, center_lonlat) {
+  # Validate input
+  if (length(center_lonlat) != 2) {
+    stop("Please provide the center coordinates as a vector: c(longitude, latitude).")
+  }
+  if (!is.numeric(side_length) || side_length <= 0) {
+    stop("Please provide a positive numeric value for the side length.")
+  }
+  
+  # Define the center point in lon/lat
+  center_point <- st_sfc(st_point(center_lonlat), crs = 4326)
+  
+  # Transform to EPSG:32630
+  center_point_utm <- st_transform(center_point, 32630)
+  center_coords <- st_coordinates(center_point_utm)
+  
+  # Calculate half side length in meters
+  half_side <- side_length / 2
+  
+  # Create the square corners in UTM
+  square_coords <- matrix(c(
+    center_coords[1] - half_side, center_coords[2] - half_side,
+    center_coords[1] + half_side, center_coords[2] - half_side,
+    center_coords[1] + half_side, center_coords[2] + half_side,
+    center_coords[1] - half_side, center_coords[2] + half_side,
+    center_coords[1] - half_side, center_coords[2] - half_side # Close the square
+  ), ncol = 2, byrow = TRUE)
+  
+  # Create a polygon from the coordinates
+  square_polygon <- st_polygon(list(square_coords))
+  
+  # Create an sf object
+  square_sf <- st_sfc(square_polygon, crs = 32630)
+  
+  return(square_sf)
+}
+
+```
+
+```{r Figure1 Saja}
+#| cache: true
+#| echo: false
+#| eval: false
+#| warning: false
+
+It_Saja <- "Data/shp/Intertidal_sites/mask_intertidal_Saja.shp" %>% 
   read_sf()
 
-Flight_aveiro<-data.frame(
+Land_Saja <- "Data/shp/Intertidal_sites/mask_Land_Saja.shp" %>% 
+  read_sf()
+
+ext_plot <- st_bbox(create_square_sf(4000, c(-4.025987, 43.420065)))
+
+
+
+Flight_Saja<-data.frame(
   Name=c(
-  "Gafanha",
-  "Mataducos",
-  "Marinha Lanzarote"
-  ) ,
-  Description = c("12m and 120m Flights",
-                  "120m Flight",
-                  "120m Flight"),
-  Long=c(-8.742485,
-         -8.646980, 
-         -8.690677) ,
-  Lat=c(40.597599, 
-        40.666634,
-        40.665120) 
-  )  %>% 
-  st_as_sf(coords=c("Long","Lat") )  %>% 
-  st_set_crs("EPSG:4326")  %>% 
-  st_transform(crs(mask_aveiro))  %>% 
+  "Marisma de Cortiguera",
+  "Marisma de Cudón"),
+  Long=c(-4.029591,
+         -4.031800) ,
+  Lat=c(43.409738,
+        43.414434)
+  )  %>%
+  st_as_sf(coords=c("Long","Lat") )  %>%
+  st_set_crs("EPSG:4326")  %>%
+  st_transform(crs(Land_Saja))  %>%
   dplyr::mutate(lon = sf::st_coordinates(.) [,1],
-                lat = sf::st_coordinates(.) [,2]) %>% 
+                lat = sf::st_coordinates(.) [,2]) %>%
+  sf::st_set_geometry(NULL) %>% 
+  mutate(x_lab <- lon - 500)
+
+ciudades <- data.frame(
+  Name=c(
+  "Suances",
+  "Cudón"),
+  Long=c(-4.04181,
+         -4.01216) ,
+  Lat=c(43.42575,
+        43.41509)
+  )  %>%
+  st_as_sf(coords=c("Long","Lat") )  %>%
+  st_set_crs("EPSG:4326")  %>%
+  st_transform(crs(Land_Saja))  %>%
+  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
+                lat = sf::st_coordinates(.) [,2]) %>%
   sf::st_set_geometry(NULL)
 
-
-
-aveiro_plot <-
-ggplot() +
-  scale_fill_manual("", labels = c("Intertidal area", "Land area"),
-                    values = c("goldenrod", "#CFCFCF"))+
-  geom_sf(data = mask_aveiro, mapping = aes(fill = Type),linewidth=0.05,alpha=0.93,colour="grey30")+
-      coord_sf(xlim=c(519749,535233) ,
-          ylim=c(4493310,4508794) )+
-  ggforce::geom_mark_ellipse(data=Flight_aveiro,
-                 aes(x=lon,
-                     y=lat,
-                     label = Name,
-                     group = Name),
-                     # description=Description),
-                 size=0.3,
-                 fill = "goldenrod",
-                 con.colour = "goldenrod4",
-                 show.legend=F,
-                 label.fontsize = 25,
-                 label.hjust = 0.5,
-                 con.size = 2,
-                 alpha=0.8,
-  expand = unit(2, "mm") , 
-  radius = unit(2, "mm") ,
-  label.fill = "grey90",
-  label.buffer = unit(5, "mm")) +
-    # theme_void()+
+plot_Saja <- ggplot() +
+  geom_sf(data = Land_Saja, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
+  geom_sf(data = It_Saja, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
+  coord_sf(
+    xlim = c(ext_plot[1], ext_plot[3]),
+    ylim = c(ext_plot[2], ext_plot[4]),
+    expand = F
+  ) +
+  ggforce::geom_mark_ellipse(
+    data = Flight_Saja,
+    aes(
+      x = lon,
+      y = lat,
+      label = Name,
+      group = Name,
+    ),
+    size = 0.3,
+    fill = "darkred",
+    con.colour = "goldenrod4",
+    show.legend = FALSE,
+    label.fontsize = 15,
+    label.hjust = 0.5,
+    con.size = 2,
+    alpha = 0.8,
+    expand = unit(2, "mm"),
+    radius = unit(2, "mm"),
+    label.fill = "grey90",
+    label.buffer = unit(5, "mm"))+
+  geom_point(data = ciudades, 
+               aes(x = lon,
+                   y = lat
+                   ), size = 5)+
+  geom_text(data = ciudades, 
+               aes(x = lon,
+                   y = lat+100,
+                   label = Name,
+                   group = Name
+                   ),
+            size = 5)+
   theme_Bede_Map()+
   labs(x="Longitude",
        y="Latitude")+
-  geom_label(aes(x = 521000, y = 4507794, label = "C"), size = 20)+
-  scale_x_continuous(breaks = seq(-8.70, -8.60, by = 0.10))+
-  theme(plot.margin = unit(c(0.1,0.1,0.1,0.1), "cm") ,
-        legend.position = "none",
-        axis.title = element_blank(),
-        axis.text.x = element_text(size = 20),
-        axis.text.y = element_text(size = 20))
+  # Move y-axis to the right
+  theme(
+    legend.background = element_rect(fill = alpha("white", 0)),
+    plot.background = element_rect(fill = "white", color = NA),
+    axis.text.x = element_text(vjust = 8.5,
+                               hjust = -0.2,
+                               size = 10),
+    axis.text.y = element_text(angle = 90,
+                               vjust = -8,
+                               hjust = 0,
+                               size = 10),
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    legend.box = "vertical",  # Stack legends vertically
+    legend.box.just = "left",  # Align the legends to the left
+    legend.spacing.y = unit(0.0, 'mm'),  # Adjust the spacing between items
+    legend.key = element_rect(fill = "white", color = "black"),  # Ensure clear legend keys
+    legend.box.margin = margin(5, 5, 5, 5),
+    panel.grid.major = ggplot2::element_line(linetype = "dotted", 
+      colour = alpha("grey30",0.5), linewidth = 0.25)
+    )  # Adjust position if needed  )
 
 
-ggsave("Figures/High_res/Figure1/Map_Aveiro.png",aveiro_plot,width= 10, height=10)  
+ggsave("Paper/Figures/High_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=10, dpi = 400)  
+ggsave("Paper/Figures/Low_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=10, dpi = 200)  
+
+
+```
+
+```{r Figure1 Aven_Belon}
+#| cache: true
+#| echo: false
+#| eval: false
+#| warning: false
+
+It_AB <- "Data/shp/Intertidal_sites/mask_intertidal_Aven_Belon.shp" %>% 
+  read_sf()
+
+Land_AB <- "Data/shp/Intertidal_sites/mask_Land_Aven_Belon.shp" %>% 
+  read_sf()
+
+
+
+ext_plot <- st_bbox(create_square_sf(10000, c(-3.706226, 47.805149)))
+
+
+Flight_AB<-data.frame(
+  Name=c(
+  "Pont du Guilly",
+  "Notre-Dame De Tremor"),
+  Long=c(-3.655220,
+         -3.748634) ,
+  Lat=c(47.822408,
+        47.837923)
+  )  %>%
+  st_as_sf(coords=c("Long","Lat") )  %>%
+  st_set_crs("EPSG:4326")  %>%
+  st_transform(crs(Land_Saja))  %>%
+  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
+                lat = sf::st_coordinates(.) [,2]) %>%
+  sf::st_set_geometry(NULL) %>% 
+  mutate(x_lab <- lon - 500)
+
+ciudades <- data.frame(
+  Name=c(
+  "Suances",
+  "Cudón"),
+  Long=c(-4.04181,
+         -4.01216) ,
+  Lat=c(43.42575,
+        43.41509)
+  )  %>%
+  st_as_sf(coords=c("Long","Lat") )  %>%
+  st_set_crs("EPSG:4326")  %>%
+  st_transform(crs(Land_Saja))  %>%
+  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
+                lat = sf::st_coordinates(.) [,2]) %>%
+  sf::st_set_geometry(NULL)
+
+(plot_AB <- ggplot() +
+  geom_sf(data = Land_AB, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
+  geom_sf(data = It_AB, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
+  coord_sf(
+    xlim = c(ext_plot[1], ext_plot[3]),
+    ylim = c(ext_plot[2], ext_plot[4]),
+    expand = F
+  ) +
+  ggforce::geom_mark_ellipse(
+    data = Flight_AB,
+    aes(
+      x = lon,
+      y = lat,
+      label = Name,
+      group = Name,
+    ),
+    size = 0.3,
+    fill = "darkred",
+    con.colour = "goldenrod4",
+    show.legend = FALSE,
+    label.fontsize = 15,
+    label.hjust = 0.5,
+    con.size = 2,
+    alpha = 0.8,
+    expand = unit(2, "mm"),
+    radius = unit(2, "mm"),
+    label.fill = "grey90",
+    label.buffer = unit(5, "mm"))+
+  # geom_point(data = ciudades, 
+  #              aes(x = lon,
+  #                  y = lat
+  #                  ), size = 5)+
+  # geom_text(data = ciudades, 
+  #              aes(x = lon,
+  #                  y = lat+100,
+  #                  label = Name,
+  #                  group = Name
+  #                  ),
+  #           size = 5)+
+  theme_Bede_Map()+
+  labs(x="Longitude",
+       y="Latitude")+
+  # Move y-axis to the right
+  theme(
+    legend.background = element_rect(fill = alpha("white", 0)),
+    plot.background = element_rect(fill = "white", color = NA),
+    axis.text.x = element_text(vjust = 8.5,
+                               hjust = 0.8,
+                               size = 10),
+    axis.text.y = element_text(angle = 90,
+                               vjust = -8,
+                               hjust = 0,
+                               size = 10),
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    legend.box = "vertical",  # Stack legends vertically
+    legend.box.just = "left",  # Align the legends to the left
+    legend.spacing.y = unit(0.0, 'mm'),  # Adjust the spacing between items
+    legend.key = element_rect(fill = "white", color = "black"),  # Ensure clear legend keys
+    legend.box.margin = margin(5, 5, 5, 5),
+    panel.grid.major = ggplot2::element_line(linetype = "dotted", 
+      colour = alpha("grey30",0.5), linewidth = 0.25)
+    )  # Adjust position if needed  )
+)
+
+ggsave("Paper/Figures/High_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=10, dpi = 400)  
+ggsave("Paper/Figures/Low_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=10, dpi = 200)  
 
 
 ```
