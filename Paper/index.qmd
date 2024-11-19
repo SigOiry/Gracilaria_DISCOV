@@ -103,137 +103,6 @@ In this study, we aim to harness the potential of drone-based multispectral remo
 
 # Materiel & Methods
 
-```{r Figure1 Overall Map}
-#| cache: true
-#| echo: false
-#| eval: false
-#| warning: false
-
-
-sovereignty10 <- ne_countries(scale = 10, returnclass = "sf")
-
-world_map <- sovereignty10 %>% 
-  st_as_sf() %>% 
-  dplyr::filter(sovereignt%in%c("Spain","France","Portugal",
-                                "Italy","Andorra",
-                                "United Kingdom",
-                                "Switzerland","Belgium",
-                                "Germany","Luxembourg") ) 
-
-bbox_europe <- st_bbox(c(xmin = -20, ymin = 34,
-                         xmax = 20, ymax = 55) ,
-                       crs = st_crs(world_map) ) 
-
-world_map<-st_make_valid(world_map) 
-
-european_union_map_cropped <- st_crop(world_map, bbox_europe)  %>% 
-  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
-
-
-UnitedKingdom<-sovereignty10 %>% 
-  st_as_sf() %>% 
-  dplyr::filter(sovereignt%in%c("United Kingdom") ) %>% 
-  st_cast("POLYGON") 
-
-bbox_UK <- st_bbox(c(xmin = -20, ymin = 45,
-                         xmax = 20, ymax = 55) ,
-                       crs = st_crs(UnitedKingdom) ) 
-
-UnitedKingdom<-st_make_valid(UnitedKingdom) 
-
-UK_map_cropped <- st_crop(UnitedKingdom, bbox_UK)  %>% 
-  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ") 
-
-Europe_sf<-european_union_map_cropped %>% 
-  dplyr::bind_rows(UK_map_cropped) 
-
-
-Projects<-data.frame(
-  Name=c(
-  "France -Ria d'Etel",
-  "France - Aven & Belon",
-  "Spain - Saja Estuary"
-  ) ,
-  Long=c(-3.187818,
-         -3.724905, 
-         -4.025402) ,
-  Lat=c(47.697566, 
-        47.824779,
-        43.408356) 
-  )  %>% 
-  st_as_sf(coords=c("Long","Lat") )  %>% 
-  st_set_crs("EPSG:4326")  %>% 
-  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
-
-Projects_df<-Projects %>%
-  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
-                lat = sf::st_coordinates(.) [,2]) %>% 
-  sf::st_set_geometry(NULL)
-
-Miniworld_map <- sovereignty10 %>% 
-  st_as_sf()
-
-sf_use_s2(FALSE)
-
-bbox_EU <- st_bbox(c(xmin = -30, ymin = 20,
-                         xmax = 50, ymax = 70) ,
-                       crs = st_crs(Miniworld_map) ) 
-
-  MiniEU_map<-st_crop(Miniworld_map, bbox_EU)  %>% 
-  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
-
-  df_P1<-Projects_df %>% 
-    mutate(ID = c(1:nrow(.))) %>% 
-    mutate(Site = case_when(ID == 1 ~ "Ria d'Etel",
-                            ID == 2 ~ "Aven & Belon",
-                            ID == 3 ~ "Saja Estuary",
-                            TRUE ~ "NA"),
-           ID = case_when(ID == 1 ~ "B",
-                          ID == 2 ~ "A",
-                          TRUE ~ "C")) %>% 
-    dplyr::select(c(lon,lat,ID,Site))
-    
-    scaleFUN <- function(x) paste0(sprintf("%.2f", x),"°N")
-  
-
-p1  <-
-  ggplot(MiniEU_map) +
-  geom_sf(linewidth=0.5,alpha=0.93,
-          fill="#CFCFCF",colour="grey30")+
-    ggforce::geom_mark_ellipse(data=df_P1,
-                 aes(x=lon,
-                     y=lat,
-                     label = ID,
-                     description=Site) ,
-                 linewidth=0.3,
-                 fill="goldenrod",
-                 show.legend=F,
-                 label.hjust = 0.5,
-                 con.size = 2,
-                 con.colour = "goldenrod4",
-                 label.fontsize = c(25,20),
-                 alpha=0.8,
-  expand = unit(2, "mm") , 
-  radius = unit(2, "mm") , 
-  label.buffer = unit(5, "mm") ,
-  label.fill = "grey90")+
-  coord_sf(xlim=c(2600000,4100000) ,
-          ylim=c(1600000,3100000))+
-  theme_Bede_Map()+
-  labs(x="Longitude",
-       y="Latitude")+
-  scale_y_continuous(labels=scaleFUN)+
-  theme(plot.margin = unit(c(0.1,0.1,0.1,0.1), "cm"),
-        axis.title = element_blank(),
-        axis.text.x = element_text(size = 20),
-        axis.text.y = element_text(size = 20) )
-
-
-
-ggsave("Paper/Figures/High_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10, dpi = 400)  
-ggsave("Paper/Figures/Low_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10, dpi = 200) 
-```
-
 ```{r intertidal mask}
 #| cache: true
 #| echo: false
@@ -451,6 +320,149 @@ write_sf(mask_sf,"Data/shp/Intertidal_sites/mask_Land_Saja.shp")
 
 ```
 
+```{r Figure1 Overall Map}
+#| cache: true
+#| echo: false
+#| eval: false
+#| warning: false
+
+
+sovereignty10 <- ne_countries(scale = 10, returnclass = "sf")
+
+world_map <- sovereignty10 %>% 
+  st_as_sf() %>% 
+  dplyr::filter(sovereignt%in%c("Spain","France","Portugal",
+                                "Italy","Andorra",
+                                "United Kingdom",
+                                "Switzerland","Belgium",
+                                "Germany","Luxembourg") ) 
+
+bbox_europe <- st_bbox(c(xmin = -20, ymin = 34,
+                         xmax = 20, ymax = 55) ,
+                       crs = st_crs(world_map) ) 
+
+world_map<-st_make_valid(world_map) 
+
+european_union_map_cropped <- st_crop(world_map, bbox_europe)  %>% 
+  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
+
+
+UnitedKingdom<-sovereignty10 %>% 
+  st_as_sf() %>% 
+  dplyr::filter(sovereignt%in%c("United Kingdom") ) %>% 
+  st_cast("POLYGON") 
+
+bbox_UK <- st_bbox(c(xmin = -20, ymin = 45,
+                         xmax = 20, ymax = 55) ,
+                       crs = st_crs(UnitedKingdom) ) 
+
+UnitedKingdom<-st_make_valid(UnitedKingdom) 
+
+UK_map_cropped <- st_crop(UnitedKingdom, bbox_UK)  %>% 
+  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ") 
+
+Europe_sf<-european_union_map_cropped %>% 
+  dplyr::bind_rows(UK_map_cropped) 
+
+
+Projects<-data.frame(
+  Name=c(
+  "France -Ria d'Etel",
+  "France - Aven & Belon",
+  "Spain - Saja Estuary"
+  ) ,
+  Long=c(-3.187818,
+         -3.724905, 
+         -4.025402) ,
+  Lat=c(47.697566, 
+        47.824779,
+        43.408356) 
+  )  %>% 
+  st_as_sf(coords=c("Long","Lat") )  %>% 
+  st_set_crs("EPSG:4326")  %>% 
+  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
+
+Projects_df<-Projects %>%
+  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
+                lat = sf::st_coordinates(.) [,2]) %>% 
+  sf::st_set_geometry(NULL)
+
+Miniworld_map <- sovereignty10 %>% 
+  st_as_sf()
+
+sf_use_s2(FALSE)
+
+bbox_EU <- st_bbox(c(xmin = -30, ymin = 20,
+                         xmax = 50, ymax = 70) ,
+                       crs = st_crs(Miniworld_map) ) 
+
+  MiniEU_map<-st_crop(Miniworld_map, bbox_EU)  %>% 
+  st_transform("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ")  
+
+  df_P1<-Projects_df %>% 
+    mutate(ID = c(1:nrow(.))) %>% 
+    mutate(Site = case_when(ID == 1 ~ "Ria d'Etel",
+                            ID == 2 ~ "Aven & Belon",
+                            ID == 3 ~ "Saja Estuary",
+                            TRUE ~ "NA"),
+           ID = case_when(ID == 1 ~ "B",
+                          ID == 2 ~ "A",
+                          TRUE ~ "C")) %>% 
+    dplyr::select(c(lon,lat,ID,Site))
+    
+    scaleFUN <- function(x) paste0(sprintf("%.2f", x),"°N")
+  
+
+(p1  <-
+  ggplot(MiniEU_map) +
+  geom_sf(linewidth=0.5,alpha=0.93,
+          fill="#CFCFCF",colour="grey30")+
+    ggforce::geom_mark_ellipse(data=df_P1,
+                 aes(x=lon,
+                     y=lat,
+                     label = ID,
+                     description=Site) ,
+                 linewidth=0.3,
+                 fill="goldenrod",
+                 show.legend=F,
+                 label.hjust = 0.5,
+                 con.size = 1.5,
+                 con.colour = "goldenrod4",
+                 label.fontsize = c(20,15),
+                 alpha=0.8,
+  expand = unit(2, "mm") , 
+  radius = unit(2, "mm") , 
+  label.buffer = unit(5, "mm") ,
+  label.fill = "grey90")+
+  coord_sf(xlim=c(2600000,4100000) ,
+          ylim=c(1600000,3100000), 
+          expand = F)+
+  theme_Bede_Map()+
+  labs(x="Longitude",
+       y="Latitude")+
+  scale_x_continuous(breaks = 0) +
+  scale_y_continuous(breaks = 42,
+                     labels=scaleFUN) +
+  theme_void() +
+  theme(
+    plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"),
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 20, vjust = 8.5, hjust = 0.8),
+    axis.text.y = element_text(size = 20, vjust = -8, hjust = 0, angle = 90),
+    panel.border = element_rect(color = "black", fill = NA),
+    panel.background = element_rect(fill = "white"),  # Re-enable panel background
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.background = element_rect(fill = "transparent"),
+    panel.grid.major = element_line(color = "black", linetype = "dashed", linewidth = 0.5),
+    panel.grid.minor = element_line(color = "grey", linetype = "dotted", linewidth = 0.25)  # Explicitly add grid
+  )
+  )
+
+ggsave("Paper/Figures/High_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10, dpi = 400)  
+ggsave("Paper/Figures/Low_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10, dpi = 200) 
+```
+
 ```{r square function}
 #| cache: true
 #| echo: false
@@ -509,7 +521,7 @@ It_Saja <- "Data/shp/Intertidal_sites/mask_intertidal_Saja.shp" %>%
 Land_Saja <- "Data/shp/Intertidal_sites/mask_Land_Saja.shp" %>% 
   read_sf()
 
-ext_plot <- st_bbox(create_square_sf(4000, c(-4.025987, 43.420065)))
+ext_plot_Saja <- st_bbox(create_square_sf(4000, c(-4.025987, 43.420065)))
 
 
 
@@ -546,12 +558,17 @@ ciudades <- data.frame(
                 lat = sf::st_coordinates(.) [,2]) %>%
   sf::st_set_geometry(NULL)
 
-plot_Saja <- ggplot() +
+(plot_Saja <- ggplot() +
   geom_sf(data = Land_Saja, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
-  geom_sf(data = It_Saja, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
+  geom_sf(data = It_Saja, linewidth = 0.05, alpha = 0.93, fill = "goldenrod")+
+    geom_label(aes(x = as.numeric(ext_plot_Saja[1]) + (as.numeric(ext_plot_Saja[3])-as.numeric(ext_plot_Saja[1]))*0.9 , 
+                   y = as.numeric(ext_plot_Saja[2]) + (as.numeric(ext_plot_Saja[4])-as.numeric(ext_plot_Saja[2]))*0.9
+                   , label = "C"), 
+               size = 10,
+               alpha = 0.5 )+
   coord_sf(
-    xlim = c(ext_plot[1], ext_plot[3]),
-    ylim = c(ext_plot[2], ext_plot[4]),
+    xlim = c(ext_plot_Saja[1], ext_plot_Saja[3]),
+    ylim = c(ext_plot_Saja[2], ext_plot_Saja[4]),
     expand = F
   ) +
   ggforce::geom_mark_ellipse(
@@ -568,37 +585,35 @@ plot_Saja <- ggplot() +
     show.legend = FALSE,
     label.fontsize = 15,
     label.hjust = 0.5,
-    con.size = 2,
+    con.size = 1.5,
     alpha = 0.8,
     expand = unit(2, "mm"),
     radius = unit(2, "mm"),
     label.fill = "grey90",
-    label.buffer = unit(5, "mm"))+
-  geom_point(data = ciudades, 
-               aes(x = lon,
-                   y = lat
-                   ), size = 5)+
-  geom_text(data = ciudades, 
-               aes(x = lon,
-                   y = lat+100,
-                   label = Name,
-                   group = Name
-                   ),
-            size = 5)+
+    label.buffer = unit(2, "mm"))+
+    # geom_label(aes(x = as.numeric(ext_plot_Saja[1]*1.1) , y = as.numeric(ext_plot_Saja[4]*0.9)), label = "C")+
+  # geom_point(data = ciudades, 
+  #              aes(x = lon,
+  #                  y = lat
+  #                  ), size = 5)+
+  # geom_text(data = ciudades, 
+  #              aes(x = lon,
+  #                  y = lat+100,
+  #                  label = Name,
+  #                  group = Name
+  #                  ),
+  #           size = 5)+
   theme_Bede_Map()+
   labs(x="Longitude",
        y="Latitude")+
+  scale_x_continuous(breaks = -4.01) +
+  scale_y_continuous(breaks = 43.415) +
   # Move y-axis to the right
   theme(
     legend.background = element_rect(fill = alpha("white", 0)),
     plot.background = element_rect(fill = "white", color = NA),
-    axis.text.x = element_text(vjust = 8.5,
-                               hjust = -0.2,
-                               size = 10),
-    axis.text.y = element_text(angle = 90,
-                               vjust = -8,
-                               hjust = 0,
-                               size = 10),
+    axis.text.x = element_text(vjust = 8.5,  size = 20),
+    axis.text.y = element_text(angle = 90, vjust = -8, hjust = 0.5, size = 20),
     axis.title = element_blank(),
     axis.ticks = element_blank(),
     legend.box = "vertical",  # Stack legends vertically
@@ -609,7 +624,7 @@ plot_Saja <- ggplot() +
     panel.grid.major = ggplot2::element_line(linetype = "dotted", 
       colour = alpha("grey30",0.5), linewidth = 0.25)
     )  # Adjust position if needed  )
-
+)
 
 ggsave("Paper/Figures/High_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=10, dpi = 400)  
 ggsave("Paper/Figures/Low_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=10, dpi = 200)  
@@ -631,7 +646,7 @@ Land_AB <- "Data/shp/Intertidal_sites/mask_Land_Aven_Belon.shp" %>%
 
 
 
-ext_plot <- st_bbox(create_square_sf(10000, c(-3.706226, 47.805149)))
+ext_plot_AB <- st_bbox(create_square_sf(10000, c(-3.706226, 47.815149)))
 
 
 Flight_AB<-data.frame(
@@ -670,9 +685,14 @@ ciudades <- data.frame(
 (plot_AB <- ggplot() +
   geom_sf(data = Land_AB, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
   geom_sf(data = It_AB, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
+    geom_label(aes(x = as.numeric(ext_plot_AB[1]) + (as.numeric(ext_plot_AB[3])-as.numeric(ext_plot_AB[1]))*0.9 , 
+                   y = as.numeric(ext_plot_AB[2]) + (as.numeric(ext_plot_AB[4])-as.numeric(ext_plot_AB[2]))*0.9
+                   , label = "A"), 
+               size = 10,
+               alpha = 0.5 )+
   coord_sf(
-    xlim = c(ext_plot[1], ext_plot[3]),
-    ylim = c(ext_plot[2], ext_plot[4]),
+    xlim = c(ext_plot_AB[1], ext_plot_AB[3]),
+    ylim = c(ext_plot_AB[2], ext_plot_AB[4]),
     expand = F
   ) +
   ggforce::geom_mark_ellipse(
@@ -689,7 +709,7 @@ ciudades <- data.frame(
     show.legend = FALSE,
     label.fontsize = 15,
     label.hjust = 0.5,
-    con.size = 2,
+    con.size = 1.5,
     alpha = 0.8,
     expand = unit(2, "mm"),
     radius = unit(2, "mm"),
@@ -709,17 +729,14 @@ ciudades <- data.frame(
   theme_Bede_Map()+
   labs(x="Longitude",
        y="Latitude")+
+  scale_x_continuous(breaks = -3.7) +
+  scale_y_continuous(breaks = 47.8) +
   # Move y-axis to the right
   theme(
     legend.background = element_rect(fill = alpha("white", 0)),
     plot.background = element_rect(fill = "white", color = NA),
-    axis.text.x = element_text(vjust = 8.5,
-                               hjust = 0.8,
-                               size = 10),
-    axis.text.y = element_text(angle = 90,
-                               vjust = -8,
-                               hjust = 0,
-                               size = 10),
+    axis.text.x = element_text(vjust = 8.5,  size = 20),
+    axis.text.y = element_text(angle = 90, vjust = -8, hjust = 0.5, size = 20),
     axis.title = element_blank(),
     axis.ticks = element_blank(),
     legend.box = "vertical",  # Stack legends vertically
@@ -732,153 +749,166 @@ ciudades <- data.frame(
     )  # Adjust position if needed  )
 )
 
-ggsave("Paper/Figures/High_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=10, dpi = 400)  
-ggsave("Paper/Figures/Low_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=10, dpi = 200)  
-
-
+ggsave("Paper/Figures/High_res/Figure1/Map_AB.png",plot_AB,width= 10, height=10, dpi = 400)  
+ggsave("Paper/Figures/Low_res/Figure1/Map_AB.png",plot_AB,width= 10, height=10, dpi = 200)  
 ```
 
-```{r Figure1 Bourgneuf Bay}
+```{r Figure1 Etel}
 #| cache: true
 #| echo: false
 #| eval: false
 #| warning: false
 
-filelist<-list.files("Data/shp/", pattern = ".shp", recursive = T,full.names = T)
-mask_BB <- filelist[str_detect(filelist,"mask_land_intertidal_BB")] %>% 
+It_Etel <- "Data/shp/Intertidal_sites/mask_intertidal_Etel.shp" %>% 
   read_sf()
 
-Flight_BB<-data.frame(
+Land_Etel <- "Data/shp/Intertidal_sites/mask_Land_Etel.shp" %>% 
+  read_sf()
+
+
+
+ext_plot_Etel <- st_bbox(create_square_sf(10000, c(-3.186821, 47.683477)))
+
+
+Flight_Etel<-data.frame(
   Name=c(
-  "Barbâtre",
-  "L'Epine"
-  ) ,
-  Description = c("120m Flight",
-                  "120m Flight"),
-  Long=c(-2.166313,
-         -2.228239) ,
-  Lat=c(46.956420, 
-        46.989515) 
-  )  %>% 
-  st_as_sf(coords=c("Long","Lat") )  %>% 
-  st_set_crs("EPSG:4326")  %>% 
-  st_transform(crs(mask_BB))  %>% 
+  "Berringue",
+  "Lorois"),
+  Long=c(-3.194274,
+         -3.205714) ,
+  Lat=c(47.698978,
+        47.675159)
+  )  %>%
+  st_as_sf(coords=c("Long","Lat") )  %>%
+  st_set_crs("EPSG:4326")  %>%
+  st_transform(crs(Land_Saja))  %>%
   dplyr::mutate(lon = sf::st_coordinates(.) [,1],
-                lat = sf::st_coordinates(.) [,2]) %>% 
+                lat = sf::st_coordinates(.) [,2]) %>%
+  sf::st_set_geometry(NULL) %>% 
+  mutate(x_lab <- lon - 500)
+
+ciudades <- data.frame(
+  Name=c(
+  "Suances",
+  "Cudón"),
+  Long=c(-4.04181,
+         -4.01216) ,
+  Lat=c(43.42575,
+        43.41509)
+  )  %>%
+  st_as_sf(coords=c("Long","Lat") )  %>%
+  st_set_crs("EPSG:4326")  %>%
+  st_transform(crs(Land_Saja))  %>%
+  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
+                lat = sf::st_coordinates(.) [,2]) %>%
   sf::st_set_geometry(NULL)
 
-BB_plot <- ggplot() +
-  scale_fill_manual("", labels = c("Intertidal area", "Land area"),
-                    values = c("goldenrod", "#CFCFCF"))+
-  geom_sf(data = mask_BB, mapping = aes(fill = Type),linewidth=0.05,alpha=0.93,colour="grey30")+
-      coord_sf(xlim=c(550609,579539) ,
-          ylim=c(5189447,5218377) )+
-  ggforce::geom_mark_ellipse(data=Flight_BB,
-                 aes(x=lon,
-                     y=lat,
-                     label = Name,
-                     group = Name),
-                     # description=Description),
-                 size=0.3,
-                 fill = "goldenrod",
-                 con.colour = "goldenrod4",
-                 show.legend=F,
-                 con.size = 2,
-                 label.fontsize = 25,
-                 label.hjust = 0.5,
-                 alpha=0.8,
-  expand = unit(2, "mm") , 
-  radius = unit(2, "mm") ,
-  label.fill = "grey90",
-  label.buffer = unit(5, "mm")) +
-  theme_Bede_Map()+
-  labs(x="Longitude",
-       y="Latitude")+
-  geom_label(aes(x = 553460, y = 5216442, label = "B"), size = 20)+
-  theme(plot.margin = unit(c(0.1,0.1,0.1,0.1), "cm") ,
-        legend.position = c(0.95,0.2),
-        legend.key.size =  unit(1, "cm"),
-        legend.text = element_text(size = 20),
-        legend.title=element_blank(),
-        legend.background = element_rect(linewidth = 0.5, 
-                                         fill = "white",
-                                         linetype="solid", 
-                                  colour ="black"),
-        axis.title = element_blank(),
-        axis.text.x = element_text(size = 20),
-        axis.text.y = element_text(size = 20))
+(plot_Etel <- ggplot() +
+  geom_sf(data = Land_Etel, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
+  geom_sf(data = It_Etel, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
+    geom_label(aes(x = as.numeric(ext_plot_Etel[1]) + (as.numeric(ext_plot_Etel[3])-as.numeric(ext_plot_Etel[1]))*0.9 , 
+                   y = as.numeric(ext_plot_Etel[2]) + (as.numeric(ext_plot_Etel[4])-as.numeric(ext_plot_Etel[2]))*0.9
+                   , label = "B"), 
+               size = 10,
+               alpha = 0.5 )+
+  coord_sf(
+    xlim = c(ext_plot_Etel[1], ext_plot_Etel[3]),
+    ylim = c(ext_plot_Etel[2], ext_plot_Etel[4]),
+    # ndiscr = 1,
+    expand = FALSE
+  ) +
+  scale_x_continuous(breaks = -3.2) +
+  scale_y_continuous(breaks = 47.68) +
+  ggforce::geom_mark_ellipse(
+    data = Flight_Etel,
+    aes(
+      x = lon,
+      y = lat,
+      label = Name,
+      group = Name
+    ),
+    size = 0.3,
+    fill = "darkred",
+    con.colour = "goldenrod4",
+    show.legend = FALSE,
+    label.fontsize = 15,
+    label.hjust = 0.5,
+    con.size = 1.5,
+    alpha = 0.8,
+    expand = unit(2, "mm"),
+    radius = unit(2, "mm"),
+    label.fill = "grey90",
+    label.buffer = unit(5, "mm")
+  ) +
+  theme_Bede_Map() +
+  labs(x = "Longitude", y = "Latitude")+
+  # scale_x_continuous(breaks = seq(floor(ext_plot_Etel[1]), ceiling(ext_plot_Etel[3]), by = 500)) +
+  # scale_y_continuous(breaks = seq(floor(ext_plot_Etel[2]), ceiling(ext_plot_Etel[4]), by = 500)) +
 
+  theme(
+    legend.background = element_rect(fill = alpha("white", 0)),
+    plot.background = element_rect(fill = "white", color = NA),
+    axis.text.x = element_text(vjust = 8.5,  size = 20),
+    axis.text.y = element_text(angle = 90, vjust = -8, hjust = 0.5, size = 20),
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    legend.box = "vertical",
+    legend.box.just = "left",
+    legend.spacing.y = unit(0.0, 'mm'),
+    legend.key = element_rect(fill = "white", color = "black"),
+    legend.box.margin = margin(5, 5, 5, 5),
+    panel.grid.major = element_line(
+      linetype = "dotted",
+      colour = alpha("grey30", 0.5),
+      linewidth = 0.25
+    )
+  )
+)
 
-ggsave("Figures/High_res/Figure1/Map_BB.png",width= 10, height=10)  
-
+ggsave("Paper/Figures/High_res/Figure1/Map_Etel.png",plot_AB,width= 10, height=10, dpi = 400)  
+ggsave("Paper/Figures/Low_res/Figure1/Map_Etel.png",plot_AB,width= 10, height=10, dpi = 200)  
 ```
 
-```{r Figure1 Morbihan Bay}
+```{r Patchwork Figure1}
 #| cache: true
 #| echo: false
 #| eval: false
 #| warning: false
 
-filelist<-list.files("Data/shp/", pattern = ".shp", recursive = T,full.names = T)
-mask_Morb <- filelist[str_detect(filelist,"mask_land_intertidal_Morbihan")] %>% 
-  read_sf()
+(final_map <- ((p1 | plot_AB) / (plot_Etel | plot_Saja))  + 
+  plot_layout(guides = "collect")& 
+    theme_void()&
+  theme(legend.position = "bottom",
+        plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"),
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 20, vjust = 8.5, hjust = 0.8),
+    axis.text.y = element_text(size = 20, vjust = -8, hjust = 0, angle = 90),
+    panel.border = element_rect(color = "black", fill = NA),
+    panel.background = element_rect(fill = "white"),  # Re-enable panel background
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.background = element_rect(fill = "transparent"),
+    panel.grid.major = element_line(color = "black", linetype = "dashed", linewidth = 0.5),
+    panel.grid.minor = element_line(color = "grey", linetype = "dotted", linewidth = 0.25)))
 
-Flight_Morbihan<-data.frame(
-  Name=c(
-  "Arz",
-  "Duer"
-  ) ,
-  Description = c("12m Flight",
-                  "12m and 120m Flight"),
-  Long=c(-2.795961,
-         -2.746186) ,
-  Lat=c(47.603260, 
-        47.543877) 
-  )  %>% 
-  st_as_sf(coords=c("Long","Lat") )  %>% 
-  st_set_crs("EPSG:4326")  %>% 
-  st_transform(crs(mask_Morb))  %>% 
-  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
-                lat = sf::st_coordinates(.) [,2]) %>% 
-  sf::st_set_geometry(NULL)
+ggsave("Paper/Figures/High_res/Figure1/Map_site.png",final_map,width= 10, height=10, dpi = 400)  
+ggsave("Paper/Figures/Low_res/Figure1/Map_site.png",final_map,width= 10, height=10, dpi = 200)
+```
 
-Morbihan_plot<-ggplot() +
-  scale_fill_manual("", labels = c("Intertidal area", "Land mask"),
-                    values = c("goldenrod", "#CFCFCF"))+
-  geom_sf(data = mask_Morb, mapping = aes(fill = Type),linewidth=0.05,alpha=0.93,colour="grey30")+
-      coord_sf(xlim=c(503019,526177) ,
-          ylim=c(5257824,5280982))+
-  ggforce::geom_mark_ellipse(data=Flight_Morbihan,
-                 aes(x=lon,
-                     y=lat,
-                     label = Name,
-                     group = Name),
-                     # description=Description),
-                 size=0.3,
-                 fill = "goldenrod",
-                 con.colour = "goldenrod4",
-                 show.legend=F,
-                 con.size = 2,
-                 label.hjust = 0.5,
-                 label.fontsize = 25,
-                 alpha=0.8,
-  expand = unit(2, "mm") , 
-  radius = unit(2, "mm") ,
-  label.fill = "grey90",
-  label.buffer = unit(5, "mm")) +
-  theme_Bede_Map()+
-  labs(x="Longitude",
-       y="Latitude")+
-  geom_label(aes(x = 505000, y = 5280982-1981, label = "A"), size = 20)+
-  scale_x_continuous(breaks = seq(-3, -2.6, by = 0.1))+
-  theme(plot.margin = unit(c(0.1,0.1,0.1,0.1), "cm"),
-        legend.position = "none",
-        axis.title = element_blank(),
-        axis.text.x = element_text(size = 20),
-        axis.text.y = element_text(size = 20))
+```{r Figure Sites}
+#| cache: false
+#| echo: false
+#| warning: false
+#| fig-cap: "Location of the drone flights. A: Flights made in Aven & Belon Estuaries, France; B: Flights made in Etel Estuary, France; C: Flights made in Saja Estuaries, Spain. Golden polygons represent intertidal areas. "
+#| label: fig-location_sites
+#| fig-width: 10
+#| fig-height: 10
+#| out-width: "95%"
 
-
-  ggsave("Figures/High_res/Figure1/Map_Morbihan.png",width= 10, height=10)  
-
+knitr::include_graphics("Figures/Low_res/Figure1/Map_site.png")
 
 ```
+
+
+
+
