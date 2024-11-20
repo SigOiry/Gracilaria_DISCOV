@@ -79,6 +79,7 @@ library(rnaturalearth)
 library(rnaturalearthdata) 
 library(sf)
 library(Utilities.Package)
+library(ggrepel)
 ```
 
 ```{r my_comma}
@@ -105,12 +106,11 @@ In this study, we aim to harness the potential of drone-based multispectral remo
 
 ## Study sites
 
-The Aven & Belon Estuary in South Brittany, France, is a dynamic ria-type system hosting diverse habitats, including sandy tidal flats and subtidal zones with coarse, marine-origin sediments [@fig-location_sites A ; @Michel2021 ; @Castaing1995]. These habitats support key benthic species such as *Scrobicularia plana*, *Cerastoderma edule*, and *Tellina tenuis*, which play essential roles in sediment bioturbation and nutrient cycling [@Tankoua2011 ; @Blanchet2014]. The estuary serves as a nursery for juvenile fish and a feeding ground for migratory birds, with its ecological productivity driven by a mix of euryhaline and marine species adapted to salinity gradients [@Blanchet2014]. Oyster farming, particularly *Crassostrea gigas*, is a dominant activity, altering sediment dynamics and local biodiversity [@Michel2021]. Despite its ecological richness, the estuary faces pressures from nutrient loading and physical alterations, with bioindicators like *S. plana* used to monitor the impacts of salinity, sediment quality, and pollution [@Tankoua2011].
+Field campaigns were conducted at three study sites in France and Spain. At each site, two locations were investigated [@fig-location_sites]. The Aven & Belon Estuary in South Brittany, France (@fig-location_sites A), is a dynamic ria-type system hosting diverse habitats, including sandy tidal flats and subtidal zones with coarse, marine-origin sediments [@Michel2021 ; @Castaing1995]. These habitats support key benthic species such as *Scrobicularia plana*, *Cerastoderma edule*, and *Tellina tenuis*, which play essential roles in sediment bioturbation and nutrient cycling [@Tankoua2011 ; @Blanchet2014]. The estuary serves as a nursery for juvenile fish and a feeding ground for migratory birds, with its ecological productivity driven by a mix of euryhaline and marine species adapted to salinity gradients [@Blanchet2014]. Oyster farming, particularly *Crassostrea gigas*, is a dominant activity, altering sediment dynamics and local biodiversity [@Michel2021]. Despite its ecological richness, the estuary faces pressures from nutrient loading and physical alterations, with bioindicators like *S. plana* used to monitor the impacts of salinity, sediment quality, and pollution [@Tankoua2011].
 
 The Ria d'Étel, located in Brittany, France, is a macrotidal estuary characterized by its unique hydrodynamics and biodiversity (@fig-location_sites B). Influenced predominantly by tidal regimes, the estuary exhibits high-energy zones with strong currents reaching up to 2.5 m/s, shaping both sediment deposition and ecological habitats [@Portas2023]. The estuary supports diverse benthic communities, with sedimentary organic matter originating from both terrestrial inputs and marine sources, contributing to nutrient cycling and benthic fluxes [@Jeanneau2023]. Vegetation gradients transition from halophytic plants in saline zones to freshwater species upstream, reflecting the estuary's salinity dynamics and ecological complexity [@Cianfaglione2018]. This estuary is also notable for its shellfish farming, with species like *Crassostrea gigas* cultivated extensively. The presence of filter-feeding organisms such as sponges (*Hymeniacidon perlevis*) enhances water quality by mitigating bacterial loads and promoting bioremediation [@Gentric2024]. However, the estuary faces environmental pressures, including nutrient enrichment from agricultural runoff and anthropogenic impacts on sedimentary processes.
 
 The Saja-Besaya Estuary, situated along the Cantabrian Sea in northern Spain, is characterized by the confluence of the Saja and Besaya rivers near Torrelavega (@fig-location_sites C). The estuary, also known as San Martín de la Arena or Suances Estuary, has been subject to significant anthropogenic pressures, including industrial developments throughout the 20th century. These activities have led to contamination from mining, paper manufacturing, and carbonate discharges, classifying the estuary as highly polluted near its upper reaches [@ortega2005fluxes]. This contamination impacts the estuarine ecosystem, including water quality and biodiversity, with minimal aquatic life and sparse riverbank vegetation in its lower sections [@romero2008sintering].
-
 
 
 ```{r intertidal mask}
@@ -417,57 +417,47 @@ bbox_EU <- st_bbox(c(xmin = -30, ymin = 20,
                             TRUE ~ "NA"),
            ID = case_when(ID == 1 ~ "B",
                           ID == 2 ~ "A",
-                          TRUE ~ "C")) %>% 
-    dplyr::select(c(lon,lat,ID,Site))
+                          TRUE ~ "C"),
+           lon_label = 2900000,
+           lat_label = case_when(Site == "Ria d'Etel" ~ lat  - 200000,
+                                 Site == "Aven & Belon" ~ lat + 50000,
+                                 Site == "Saja Estuary" ~ lat  - 250000,),
+           lat_ID = lat_label + 100000) %>% 
+    dplyr::select(c(lon,lat,lon_label,lat_label,lat_ID,ID,Site))
     
     scaleFUN <- function(x) paste0(sprintf("%.2f", x),"°N")
-  
-
-(p1  <-
-  ggplot(MiniEU_map) +
-  geom_sf(linewidth=0.5,alpha=0.93,
-          fill="#CFCFCF",colour="grey30")+
-    ggforce::geom_mark_ellipse(data=df_P1,
-                 aes(x=lon,
-                     y=lat,
-                     label = ID,
-                     description=Site) ,
-                 linewidth=0.3,
-                 fill="goldenrod",
-                 show.legend=F,
-                 label.hjust = 0.5,
-                 con.size = 1.5,
-                 con.colour = "goldenrod4",
-                 label.fontsize = c(20,15),
-                 alpha=0.8,
-  expand = unit(2, "mm") , 
-  radius = unit(2, "mm") , 
-  label.buffer = unit(5, "mm") ,
-  label.fill = "grey90")+
-  coord_sf(xlim=c(2600000,4100000) ,
-          ylim=c(1600000,3100000), 
-          expand = F)+
-  theme_Bede_Map()+
-  labs(x="Longitude",
-       y="Latitude")+
+(
+p1 <- ggplot(MiniEU_map) +
+  geom_sf(linewidth = 0.5, alpha = 0.93, fill = "#CFCFCF", colour = "grey30") +
+  geom_segment(data = df_P1, aes(x = lon_label, xend = lon, yend = lat, y =lat_label, group = ID), color = "goldenrod4",size = 1)+
+  geom_point(data = df_P1, aes(x = lon, y =lat), color = "darkred", alpha = 0.8, size = 5)+
+  geom_label(data = df_P1, aes(x = lon_label, y =lat_label, label = Site), fill = "#FFD27D",size = 5)+
+  geom_label(data = df_P1, aes(x = lon_label, y = lat_ID, label = c("B","A","C")), size = 6)+
+  coord_sf(
+    xlim = c(2600000, 4100000),
+    ylim = c(1600000, 3100000), 
+    expand = FALSE
+  ) +
+  theme_Bede_Map() +
+  labs(x = "Longitude", y = "Latitude") +
   scale_x_continuous(breaks = 0) +
-  scale_y_continuous(breaks = 42,
-                     labels=scaleFUN) +
-  theme_void() +
+  scale_y_continuous(breaks = 42, labels = scaleFUN) +
+  # theme_void() +
   theme(
-    plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"),
+    plot.margin = unit(c(0, 0, 0, 0), "cm"),
     axis.title = element_blank(),
     axis.ticks = element_blank(),
-    axis.text.x = element_text(size = 20, vjust = 8.5, hjust = 0.8),
-    axis.text.y = element_text(size = 20, vjust = -8, hjust = 0, angle = 90),
-    panel.border = element_rect(color = "black", fill = NA),
-    panel.background = element_rect(fill = "white"),  # Re-enable panel background
-    plot.background = element_rect(fill = "white", color = NA),
-    legend.background = element_rect(fill = "transparent"),
-    panel.grid.major = element_line(color = "black", linetype = "dashed", linewidth = 0.5),
-    panel.grid.minor = element_line(color = "grey", linetype = "dotted", linewidth = 0.25)  # Explicitly add grid
-  )
-  )
+    axis.text.x = element_text(size = 20, vjust = 7.1, hjust = 0.8),
+    axis.text.y = element_text(size = 20, vjust = -5, hjust = 0, angle = 90),
+    # panel.border = element_rect(color = "black", fill = NA),
+    # panel.background = element_rect(fill = "white"),
+    # plot.background = element_rect(fill = "white", color = NA),
+    # legend.background = element_rect(fill = "transparent"),
+    # panel.grid.major = element_line(color = "grey", linetype = "dashed", linewidth = 0.5),
+    # panel.grid.minor = element_line(color = "grey", linetype = "dotted", linewidth = 0.25)
+  ))
+
+
 
 ggsave("Paper/Figures/High_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10, dpi = 400)  
 ggsave("Paper/Figures/Low_res/Figure1/Map_Drone_Sites.png",p1,width= 10, height=10, dpi = 200) 
@@ -531,14 +521,14 @@ It_Saja <- "Data/shp/Intertidal_sites/mask_intertidal_Saja.shp" %>%
 Land_Saja <- "Data/shp/Intertidal_sites/mask_Land_Saja.shp" %>% 
   read_sf()
 
-ext_plot_Saja <- st_bbox(create_square_sf(5000, c(-4.025987, 43.4250065)))
+ext_plot_Saja <- st_bbox(create_square_sf(5000, c(-4.025987, 43.4200065)))
 
 
 
 Flight_Saja<-data.frame(
   Name=c(
-  "Marisma de Cortiguera",
-  "Marisma de Cudón"),
+  "Marisma de \nCortiguera",
+  "Marisma de \nCudón"),
   Long=c(-4.029591,
          -4.031800) ,
   Lat=c(43.409738,
@@ -550,29 +540,16 @@ Flight_Saja<-data.frame(
   dplyr::mutate(lon = sf::st_coordinates(.) [,1],
                 lat = sf::st_coordinates(.) [,2]) %>%
   sf::st_set_geometry(NULL) %>% 
-  mutate(x_lab <- lon - 500)
-
-ciudades <- data.frame(
-  Name=c(
-  "Suances",
-  "Cudón"),
-  Long=c(-4.04181,
-         -4.01216) ,
-  Lat=c(43.42575,
-        43.41509)
-  )  %>%
-  st_as_sf(coords=c("Long","Lat") )  %>%
-  st_set_crs("EPSG:4326")  %>%
-  st_transform(crs(Land_Saja))  %>%
-  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
-                lat = sf::st_coordinates(.) [,2]) %>%
-  sf::st_set_geometry(NULL)
+  mutate(lon_label = case_when(Name == "Marisma de \nCudón" ~ 418639.3,
+                               Name == "Marisma de \nCortiguera" ~ lon + 2000),
+         lat_label = case_when(Name == "Marisma de \nCudón" ~ lat + 1000,
+                               Name == "Marisma de \nCortiguera" ~ lat + 500))
 
 (plot_Saja <- ggplot() +
   geom_sf(data = Land_Saja, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
   geom_sf(data = It_Saja, linewidth = 0.05, alpha = 0.93, fill = "goldenrod")+
-    geom_label(aes(x = as.numeric(ext_plot_Saja[1]) + (as.numeric(ext_plot_Saja[3])-as.numeric(ext_plot_Saja[1]))*0.9 , 
-                   y = as.numeric(ext_plot_Saja[2]) + (as.numeric(ext_plot_Saja[4])-as.numeric(ext_plot_Saja[2]))*0.9
+    geom_label(aes(x = as.numeric(ext_plot_Saja[1]) + (as.numeric(ext_plot_Saja[3])-as.numeric(ext_plot_Saja[1]))*0.1 , 
+                   y = as.numeric(ext_plot_Saja[2]) + (as.numeric(ext_plot_Saja[4])-as.numeric(ext_plot_Saja[2]))*0.1
                    , label = "C"), 
                size = 10,
                alpha = 0.5 )+
@@ -581,38 +558,9 @@ ciudades <- data.frame(
     ylim = c(ext_plot_Saja[2], ext_plot_Saja[4]),
     expand = F
   ) +
-  ggforce::geom_mark_ellipse(
-    data = Flight_Saja,
-    aes(
-      x = lon,
-      y = lat,
-      label = Name,
-      group = Name,
-    ),
-    size = 0.3,
-    fill = "darkred",
-    con.colour = "goldenrod4",
-    show.legend = FALSE,
-    label.fontsize = 15,
-    label.hjust = 0.5,
-    con.size = 1.5,
-    alpha = 0.8,
-    expand = unit(2, "mm"),
-    radius = unit(2, "mm"),
-    label.fill = "grey90",
-    label.buffer = unit(2, "mm"))+
-    # geom_label(aes(x = as.numeric(ext_plot_Saja[1]*1.1) , y = as.numeric(ext_plot_Saja[4]*0.9)), label = "C")+
-  # geom_point(data = ciudades, 
-  #              aes(x = lon,
-  #                  y = lat
-  #                  ), size = 5)+
-  # geom_text(data = ciudades, 
-  #              aes(x = lon,
-  #                  y = lat+100,
-  #                  label = Name,
-  #                  group = Name
-  #                  ),
-  #           size = 5)+
+  geom_segment(data = Flight_Saja, aes(x = lon_label, xend = lon, yend = lat, y =lat_label, group = Name), color = "goldenrod4",size = 1)+
+  geom_point(data = Flight_Saja, aes(x = lon, y =lat), color = "darkred", alpha = 0.8, size = 5)+
+  geom_label(data = Flight_Saja, aes(x = lon_label, y =lat_label, label = Name), fill = "#FFD27D",size = 5)+
   theme_Bede_Map()+
   labs(x="Longitude",
        y="Latitude")+
@@ -622,17 +570,10 @@ ciudades <- data.frame(
   theme(
     legend.background = element_rect(fill = alpha("white", 0)),
     plot.background = element_rect(fill = "white", color = NA),
-    axis.text.x = element_text(vjust = 8.5,  size = 20),
-    axis.text.y = element_text(angle = 90, vjust = -8, hjust = 0.5, size = 20),
+    axis.text.x = element_text(vjust = 4.5,  size = 20),
+    axis.text.y = element_text(angle = 90, vjust = -4, hjust = 0.5, size = 20),
     axis.title = element_blank(),
-    axis.ticks = element_blank(),
-    legend.box = "vertical",  # Stack legends vertically
-    legend.box.just = "left",  # Align the legends to the left
-    legend.spacing.y = unit(0.0, 'mm'),  # Adjust the spacing between items
-    legend.key = element_rect(fill = "white", color = "black"),  # Ensure clear legend keys
-    legend.box.margin = margin(5, 5, 5, 5),
-    panel.grid.major = ggplot2::element_line(linetype = "dotted", 
-      colour = alpha("grey30",0.5), linewidth = 0.25)
+    axis.ticks = element_blank()
     )  # Adjust position if needed  )
 )
 
@@ -674,29 +615,16 @@ Flight_AB<-data.frame(
   dplyr::mutate(lon = sf::st_coordinates(.) [,1],
                 lat = sf::st_coordinates(.) [,2]) %>%
   sf::st_set_geometry(NULL) %>% 
-  mutate(x_lab <- lon - 500)
-
-ciudades <- data.frame(
-  Name=c(
-  "Suances",
-  "Cudón"),
-  Long=c(-4.04181,
-         -4.01216) ,
-  Lat=c(43.42575,
-        43.41509)
-  )  %>%
-  st_as_sf(coords=c("Long","Lat") )  %>%
-  st_set_crs("EPSG:4326")  %>%
-  st_transform(crs(Land_Saja))  %>%
-  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
-                lat = sf::st_coordinates(.) [,2]) %>%
-  sf::st_set_geometry(NULL)
+  mutate(lon_label = case_when(Name == "Pont du Guilly" ~ lon - 1000,
+                               Name == "Notre-Dame De Tremor" ~ lon + 2000),
+         lat_label = case_when(Name ==  "Pont du Guilly" ~ lat - 1000,
+                               Name == "Notre-Dame De Tremor" ~ lat + 1500))
 
 (plot_AB <- ggplot() +
   geom_sf(data = Land_AB, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
   geom_sf(data = It_AB, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
-    geom_label(aes(x = as.numeric(ext_plot_AB[1]) + (as.numeric(ext_plot_AB[3])-as.numeric(ext_plot_AB[1]))*0.9 , 
-                   y = as.numeric(ext_plot_AB[2]) + (as.numeric(ext_plot_AB[4])-as.numeric(ext_plot_AB[2]))*0.9
+    geom_label(aes(x = as.numeric(ext_plot_AB[1]) + (as.numeric(ext_plot_AB[3])-as.numeric(ext_plot_AB[1]))*0.1 , 
+                   y = as.numeric(ext_plot_AB[2]) + (as.numeric(ext_plot_AB[4])-as.numeric(ext_plot_AB[2]))*0.1
                    , label = "A"), 
                size = 10,
                alpha = 0.5 )+
@@ -705,37 +633,9 @@ ciudades <- data.frame(
     ylim = c(ext_plot_AB[2], ext_plot_AB[4]),
     expand = F
   ) +
-  ggforce::geom_mark_ellipse(
-    data = Flight_AB,
-    aes(
-      x = lon,
-      y = lat,
-      label = Name,
-      group = Name,
-    ),
-    size = 0.3,
-    fill = "darkred",
-    con.colour = "goldenrod4",
-    show.legend = FALSE,
-    label.fontsize = 15,
-    label.hjust = 0.5,
-    con.size = 1.5,
-    alpha = 0.8,
-    expand = unit(2, "mm"),
-    radius = unit(2, "mm"),
-    label.fill = "grey90",
-    label.buffer = unit(5, "mm"))+
-  # geom_point(data = ciudades, 
-  #              aes(x = lon,
-  #                  y = lat
-  #                  ), size = 5)+
-  # geom_text(data = ciudades, 
-  #              aes(x = lon,
-  #                  y = lat+100,
-  #                  label = Name,
-  #                  group = Name
-  #                  ),
-  #           size = 5)+
+  geom_segment(data = Flight_AB, aes(x = lon_label, xend = lon, yend = lat, y =lat_label, group = Name), color = "goldenrod4",size = 1)+
+  geom_point(data = Flight_AB, aes(x = lon, y =lat), color = "darkred", alpha = 0.8, size = 5)+
+  geom_label(data = Flight_AB, aes(x = lon_label, y =lat_label, label = Name), fill = "#FFD27D",size = 5)+
   theme_Bede_Map()+
   labs(x="Longitude",
        y="Latitude")+
@@ -745,8 +645,8 @@ ciudades <- data.frame(
   theme(
     legend.background = element_rect(fill = alpha("white", 0)),
     plot.background = element_rect(fill = "white", color = NA),
-    axis.text.x = element_text(vjust = 8.5,  size = 20),
-    axis.text.y = element_text(angle = 90, vjust = -8, hjust = 0.5, size = 20),
+    axis.text.x = element_text(vjust = 7.5,  size = 20),
+    axis.text.y = element_text(angle = 90, vjust = -7, hjust = 0.5, size = 20),
     axis.title = element_blank(),
     axis.ticks = element_blank(),
     legend.box = "vertical",  # Stack legends vertically
@@ -795,29 +695,17 @@ Flight_Etel<-data.frame(
   dplyr::mutate(lon = sf::st_coordinates(.) [,1],
                 lat = sf::st_coordinates(.) [,2]) %>%
   sf::st_set_geometry(NULL) %>% 
-  mutate(x_lab <- lon - 500)
+  mutate(lon_label = case_when(Name == "Berringue" ~ lon - 1000,
+                               Name == "Lorois" ~ lon + 2000),
+         lat_label = case_when(Name ==  "Berringue" ~ lat + 1000,
+                               Name == "Lorois" ~ lat - 1000))
 
-ciudades <- data.frame(
-  Name=c(
-  "Suances",
-  "Cudón"),
-  Long=c(-4.04181,
-         -4.01216) ,
-  Lat=c(43.42575,
-        43.41509)
-  )  %>%
-  st_as_sf(coords=c("Long","Lat") )  %>%
-  st_set_crs("EPSG:4326")  %>%
-  st_transform(crs(Land_Saja))  %>%
-  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
-                lat = sf::st_coordinates(.) [,2]) %>%
-  sf::st_set_geometry(NULL)
 
 (plot_Etel <- ggplot() +
   geom_sf(data = Land_Etel, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
   geom_sf(data = It_Etel, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
-    geom_label(aes(x = as.numeric(ext_plot_Etel[1]) + (as.numeric(ext_plot_Etel[3])-as.numeric(ext_plot_Etel[1]))*0.9 , 
-                   y = as.numeric(ext_plot_Etel[2]) + (as.numeric(ext_plot_Etel[4])-as.numeric(ext_plot_Etel[2]))*0.9
+    geom_label(aes(x = as.numeric(ext_plot_Etel[1]) + (as.numeric(ext_plot_Etel[3])-as.numeric(ext_plot_Etel[1]))*0.1 , 
+                   y = as.numeric(ext_plot_Etel[2]) + (as.numeric(ext_plot_Etel[4])-as.numeric(ext_plot_Etel[2]))*0.1
                    , label = "B"), 
                size = 10,
                alpha = 0.5 )+
@@ -829,27 +717,9 @@ ciudades <- data.frame(
   ) +
   scale_x_continuous(breaks = -3.2) +
   scale_y_continuous(breaks = 47.68) +
-  ggforce::geom_mark_ellipse(
-    data = Flight_Etel,
-    aes(
-      x = lon,
-      y = lat,
-      label = Name,
-      group = Name
-    ),
-    size = 0.3,
-    fill = "darkred",
-    con.colour = "goldenrod4",
-    show.legend = FALSE,
-    label.fontsize = 15,
-    label.hjust = 0.5,
-    con.size = 1.5,
-    alpha = 0.8,
-    expand = unit(2, "mm"),
-    radius = unit(2, "mm"),
-    label.fill = "grey90",
-    label.buffer = unit(5, "mm")
-  ) +
+  geom_segment(data = Flight_Etel, aes(x = lon_label, xend = lon, yend = lat, y =lat_label, group = Name), color = "goldenrod4",size = 1)+
+  geom_point(data = Flight_Etel, aes(x = lon, y =lat), color = "darkred", alpha = 0.8, size = 5)+
+  geom_label(data = Flight_Etel, aes(x = lon_label, y =lat_label, label = Name), fill = "#FFD27D",size = 5)+
   theme_Bede_Map() +
   labs(x = "Longitude", y = "Latitude")+
   # scale_x_continuous(breaks = seq(floor(ext_plot_Etel[1]), ceiling(ext_plot_Etel[3]), by = 500)) +
@@ -858,8 +728,8 @@ ciudades <- data.frame(
   theme(
     legend.background = element_rect(fill = alpha("white", 0)),
     plot.background = element_rect(fill = "white", color = NA),
-    axis.text.x = element_text(vjust = 8.5,  size = 20),
-    axis.text.y = element_text(angle = 90, vjust = -8, hjust = 0.5, size = 20),
+    axis.text.x = element_text(vjust = 7.5,  size = 20),
+    axis.text.y = element_text(angle = 90, vjust = -7, hjust = 0.5, size = 20),
     axis.title = element_blank(),
     axis.ticks = element_blank(),
     legend.box = "vertical",
@@ -887,19 +757,14 @@ ggsave("Paper/Figures/Low_res/Figure1/Map_Etel.png",plot_AB,width= 10, height=10
 
 (final_map <- ((p1 | plot_AB) / (plot_Etel | plot_Saja))  + 
   plot_layout(guides = "collect")& 
-    theme_void()&
+    # theme_void()&
   theme(legend.position = "bottom",
-        plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"),
+        plot.margin = unit(c(0, 0, 0, 0), "cm"),
     axis.title = element_blank(),
     axis.ticks = element_blank(),
-    axis.text.x = element_text(size = 20, vjust = 8.5, hjust = 0.8),
-    axis.text.y = element_text(size = 20, vjust = -8, hjust = 0, angle = 90),
-    panel.border = element_rect(color = "black", fill = NA),
-    panel.background = element_rect(fill = "white"),  # Re-enable panel background
-    plot.background = element_rect(fill = "white", color = NA),
-    legend.background = element_rect(fill = "transparent"),
-    panel.grid.major = element_line(color = "black", linetype = "dashed", linewidth = 0.5),
-    panel.grid.minor = element_line(color = "grey", linetype = "dotted", linewidth = 0.25)))
+    axis.text.x = element_text(size = 20, vjust = 6, hjust = 0.8),
+    axis.text.y = element_text(size = 20, vjust = -5, hjust = 0, angle = 90))
+)
 
 ggsave("Paper/Figures/High_res/Figure1/Map_site.png",final_map,width= 10, height=10, dpi = 400)  
 ggsave("Paper/Figures/Low_res/Figure1/Map_site.png",final_map,width= 10, height=10, dpi = 200)
@@ -919,6 +784,14 @@ knitr::include_graphics("Figures/Low_res/Figure1/Map_site.png")
 
 ```
 
+## Study sites
+
+A total of 
+
+# Results
+# Discussion
+# Conclusion
+# References
 
 
 
