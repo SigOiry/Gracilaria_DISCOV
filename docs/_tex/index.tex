@@ -348,9 +348,60 @@ polygons represent intertidal areas.}
 
 \end{figure}%
 
-\subsection{Study sites}\label{study-sites-1}
+\subsection{Drone flights}\label{drone-flights}
 
-A total of
+\subsubsection{Multispectral data}\label{multispectral-data}
+
+At each location (Table~\ref{tbl-flights}), reflectance images with a
+resolution of 1.2 million pixels were captured using a DJI Matrice 300
+quadcopter drone equipped with a Micasense RedEdge Dual MX multispectral
+camera. The camera recorded data across ten spectral bands, spanning
+from blue to near-infrared (NIR) wavelengths (444, 475, 531, 560, 650,
+668, 705, 717, 740, and 840 nm) (). To ensure consistent lighting
+conditions, the drone's flight trajectory was aligned to maintain a
+solar azimuth angle of 90 degrees. Image acquisition was carried out
+with an overlap of 70\% between side-by-side images and 80\% between
+successive images along the flight path. A downwelling light sensor
+(DLS2) was used to measure real-time irradiance, enabling the correction
+of reflectance values for variations in light intensity caused by cloud
+cover during the flight. The raw image data were subsequently calibrated
+to reflectance using a calibration panel with \textasciitilde50\%
+reflectivity, provided by the camera's manufacturer. Images were
+processed using structure-from-motion photogrammetry software (Agisoft,
+2019) to generate multispectral orthomosaics for each flight. The
+orthomosaicking workflow was consistent across all flights. Initially,
+key tie points were identified within each image and across overlapping
+images to create a sparse point cloud. This point cloud was refined by
+removing noisy points using a reprojection accuracy metric.
+Subsequently, a dense point cloud was generated using a
+structure-from-motion algorithm. A digital surface model (DSM) was then
+created through surface interpolation of the dense point cloud, which
+served as the basis for reconstructing the multispectral ortho-image
+(Nebel et al., 2020). The resolution of the multispectral orthomosaic
+obtained were 8 cm per pixel.
+
+\subsubsection{LiDAR data}\label{lidar-data}
+
+Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1
+LiDAR and RGB sensor was mounted on the drone alongside the
+Multispectral camera. This configuration enabled the simultaneous
+recording of LiDAR point clouds, high resolution RGB images and
+multispectral images captured by the Micasense RedEdge Dual MX during
+the same flight. Settings of the LiDAR has been set to have a point
+density of 350 m\(^{-2}\)
+
+\begin{table}
+
+\caption{\label{tbl-flights}List of drone flights, summarising the
+location, the date, and the total extent of each flight (in hectars).}
+
+\centering{
+
+\includegraphics[width=8.84in,height=\textheight,keepaspectratio]{Figures/High_res/table_flights.png}
+
+}
+
+\end{table}%
 
 \section{Results}\label{results}
 
@@ -368,6 +419,9 @@ Abreu, M.H., Pereira, R., Buschmann, A., Sousa-Pinto, I., Yarish, C.,
 2011. Nitrogen uptake responses of gracilaria vermiculophylla (ohmi)
 papenfuss under combined and single addition of nitrate and ammonium.
 Journal of Experimental Marine Biology and Ecology 407, 190--199.
+
+\bibitem[\citeproctext]{ref-agisoft}
+Agisoft, 2019. \href{https://www.agisoft.com/}{Agisoft metashape}.
 
 \bibitem[\citeproctext]{ref-barbier2011value}
 Barbier, E.B., Hacker, S.D., Kennedy, C., Koch, E.W., Stier, A.C.,
@@ -491,6 +545,12 @@ belon estuary (south brittany, france). Journal of Maps 17, 389--400.
 Mukherjee, S., Ghosh, K.K., Chanda, A., 2023. Coastal pollution---an
 overview. Environmental Oceanography and Coastal Dynamics: Current
 Scenario and Future Trends 99--107.
+
+\bibitem[\citeproctext]{ref-nebel2020review}
+Nebel, S., Beege, M., Schneider, S., Rey, G.D., 2020. A review of
+photogrammetry and photorealistic 3D models in education from a
+psychological perspective, in: Frontiers in Education. Frontiers Media
+SA, p. 144.
 
 \bibitem[\citeproctext]{ref-nyberg2009flora}
 Nyberg, C.D., Thomsen, M.S., Wallentinus, I., 2009. Flora and fauna

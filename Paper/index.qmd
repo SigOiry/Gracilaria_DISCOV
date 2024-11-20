@@ -67,7 +67,7 @@ csl: RSE.csl
 
 [^1]: Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
 
-```{r}
+```{r library}
 #| cache: true
 #| echo: false
 #| eval: true
@@ -79,7 +79,7 @@ library(rnaturalearth)
 library(rnaturalearthdata) 
 library(sf)
 library(Utilities.Package)
-library(ggrepel)
+library(flextable)
 ```
 
 ```{r my_comma}
@@ -784,9 +784,69 @@ knitr::include_graphics("Figures/Low_res/Figure1/Map_site.png")
 
 ```
 
-## Study sites
+## Drone flights
 
-A total of 
+```{r Drone flights dataframe}
+#| cache: true
+#| echo: false
+#| eval: false
+#| warning: false
+
+df <- data.frame(Country = c("France", "France", "France", "France", "Spain", "Spain"),
+                 Site = c("Aven & Belon","Aven & Belon","Ria d'Etel","Ria d'Etel", "Saja Estuary","Saja Estuary"),
+                 Flight  = c("Notre-Dame De Tremor","Pont du Guilly","Berringue","Lorois","Marisma de Cortiguera","Marisma de Cudón"),
+                 Date = c("2024-04-11","2024-04-11","2023-10-14","2023-10-15","2024-06-25","2024-06-25"), 
+                 Area = c(266582,213064,25486+127818,45293,204133,83757)) %>% 
+  mutate(Area = round(Area * 0.0001,1))
+
+
+
+brdr1 <- fp_border_default(color = "black", width = 0.5)
+brdr2 <- fp_border_default(color = "grey", width = 1)
+brdr3 <- fp_border_default(color = "grey40", width = 1)
+
+ i = 16.5 # width of the side borders in the word_document output (in centimeters)
+ w = i*0.3937 # width of the side borders in the word_document output (in inches)
+ 
+flx1 <- flextable(df)  %>%
+  flextable::width(width = (w/(ncol(df)))) %>% 
+  merge_v(j = 1) %>%
+  merge_v(j = 2) %>%
+    border_remove() %>%
+    hline_top(border=brdr1) %>%
+    hline(i=6, border=brdr1) %>% 
+    hline(i=4, border=brdr1) %>% 
+    hline(i=2, border=brdr1) %>% 
+    hline(i=1, border=brdr2)%>% 
+    hline(i=3, border=brdr2)%>% 
+    hline(i=5, border=brdr2) %>% 
+    flextable::align(align = "center",part = "all") %>%
+    flextable::align(align = "center",part = "header") %>%
+  # set_caption(caption = "Table 1 List of drone Flight, summarising the date, the altitude and the purpose of each flight.") %>%
+  set_table_properties(layout = "autofit") 
+
+save_as_image(flx1, "Paper/Figures/High_res/table_flights.png", res = 400)
+
+```
+### Multispectral data
+
+At each location (@tbl-flights), reflectance images with a resolution of 1.2 million pixels were captured using a DJI Matrice 300 quadcopter drone equipped with a Micasense RedEdge Dual MX multispectral camera. The camera recorded data across ten spectral bands, spanning from blue to near-infrared (NIR) wavelengths (444, 475, 531, 560, 650, 668, 705, 717, 740, and 840 nm) (). To ensure consistent lighting conditions, the drone's flight trajectory was aligned to maintain a solar azimuth angle of 90 degrees. Image acquisition was carried out with an overlap of 70% between side-by-side images and 80% between successive images along the flight path. A downwelling light sensor (DLS2) was used to measure real-time irradiance, enabling the correction of reflectance values for variations in light intensity caused by cloud cover during the flight. The raw image data were subsequently calibrated to reflectance using a calibration panel with ~50% reflectivity, provided by the camera's manufacturer.
+Images were processed using structure-from-motion photogrammetry software [@agisoft] to generate multispectral orthomosaics for each flight. The orthomosaicking workflow was consistent across all flights. Initially, key tie points were identified within each image and across overlapping images to create a sparse point cloud. This point cloud was refined by removing noisy points using a reprojection accuracy metric. Subsequently, a dense point cloud was generated using a structure-from-motion algorithm. A digital surface model (DSM) was then created through surface interpolation of the dense point cloud, which served as the basis for reconstructing the multispectral ortho-image [@nebel2020review]. The resolution of the multispectral orthomosaic obtained were 8 cm per pixel.  
+
+### LiDAR data
+
+Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1 LiDAR and RGB sensor was mounted on the drone alongside the Multispectral camera. This configuration enabled the simultaneous recording of LiDAR point clouds, high resolution RGB images and multispectral images captured by the Micasense RedEdge Dual MX during the same flight. Settings of the LiDAR has been set to have a point density of 350 m$^{-2}$
+
+
+```{r Table1}
+#| echo: false
+#| warning: false
+#| label: tbl-flights
+#| tbl-cap: List of drone flights, summarising the location, the date, and the total extent of each flight (in hectars).
+#| cache: true
+
+knitr::include_graphics("Figures/High_res/table_flights.png")
+```
 
 # Results
 # Discussion

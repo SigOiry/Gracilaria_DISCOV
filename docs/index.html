@@ -63,6 +63,35 @@ div.csl-indent {
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <meta name="citation_title" content="DISCOV-Gracilaria Paper">
 <meta name="citation_abstract" content="To be Written">
@@ -91,6 +120,8 @@ div.csl-indent {
 <meta name="citation_reference" content="citation_title=Using a UAV-mounted multispectral camera for the monitoring of marine macrophytes;,citation_author=Alejandro Román;,citation_author=Antonio Tovar-Sánchez;,citation_author=Irene Olivé;,citation_author=Gabriel Navarro;,citation_publication_date=2021;,citation_cover_date=2021;,citation_year=2021;,citation_volume=8;,citation_journal_title=Frontiers in Marine Science;,citation_publisher=Frontiers Media SA;">
 <meta name="citation_reference" content="citation_title=Mapping intertidal oyster farms using unmanned aerial vehicles (UAV) high-resolution multispectral data;,citation_author=Alejandro Román;,citation_author=Hermansyah Prasyad;,citation_author=Simon Oiry;,citation_author=Bede FR Davies;,citation_author=Guillaume Brunier;,citation_author=Laurent Barillé;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_volume=291;,citation_journal_title=Estuarine, Coastal and Shelf Science;,citation_publisher=Elsevier;">
 <meta name="citation_reference" content="citation_title=Mapping intertidal microphytobenthic biomass with very high-resolution remote sensing imagery in an estuarine system;,citation_author=Alejandro Román;,citation_author=Simon Oiry;,citation_author=Bede FR Davies;,citation_author=Philippe Rosa;,citation_author=Pierre Gernez;,citation_author=Antonio Tovar-Sánchez;,citation_author=Gabriel Navarro;,citation_author=Vona Méléder;,citation_author=Laurent Barillé;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_journal_title=Science of The Total Environment;,citation_publisher=Elsevier;">
+<meta name="citation_reference" content="citation_title=Agisoft metashape;,citation_author=undefined Agisoft;,citation_publication_date=2019;,citation_cover_date=2019;,citation_year=2019;,citation_fulltext_html_url=https://www.agisoft.com/;">
+<meta name="citation_reference" content="citation_title=A review of photogrammetry and photorealistic 3D models in education from a psychological perspective;,citation_author=Steve Nebel;,citation_author=Maik Beege;,citation_author=Sascha Schneider;,citation_author=Günter Daniel Rey;,citation_publication_date=2020;,citation_cover_date=2020;,citation_year=2020;,citation_volume=5;,citation_conference_title=Frontiers in education;,citation_conference=Frontiers Media SA;">
 <meta name="citation_reference" content="citation_title=Decadal increase in the ecological status of a north-atlantic intertidal seagrass meadow observed with multi-mission satellite time-series;,citation_author=Maria Laura Zoffoli;,citation_author=Pierre Gernez;,citation_author=Laurent Godet;,citation_author=Steef Peters;,citation_author=Simon Oiry;,citation_author=Laurent Barillé;,citation_publication_date=2021;,citation_cover_date=2021;,citation_year=2021;,citation_volume=130;,citation_journal_title=Ecological Indicators;,citation_publisher=Elsevier;">
 <meta name="citation_reference" content="citation_title=A sentinel watching over inter-tidal seagrass phenology across western europe and north africa;,citation_author=Bede Ffinian Rowe Davies;,citation_author=Simon Oiry;,citation_author=Philippe Rosa;,citation_author=Maria Laura Zoffoli;,citation_author=Ana I Sousa;,citation_author=Oliver R Thomas;,citation_author=Dan A Smale;,citation_author=Melanie C Austen;,citation_author=Lauren Biermann;,citation_author=Martin J Attrill;,citation_author=others;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_issue=1;,citation_volume=5;,citation_journal_title=Communications Earth &amp;amp;amp; Environment;,citation_publisher=Nature Publishing Group UK London;">
 <meta name="citation_reference" content="citation_title=Intertidal seagrass extent from sentinel-2 time-series show distinct trajectories in western europe;,citation_author=Bede Ffinian Rowe Davies;,citation_author=Simon Oiry;,citation_author=Philippe Rosa;,citation_author=Maria Laura Zoffoli;,citation_author=Ana I Sousa;,citation_author=Oliver R Thomas;,citation_author=Dan A Smale;,citation_author=Melanie C Austen;,citation_author=Lauren Biermann;,citation_author=Martin J Attrill;,citation_author=others;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_volume=312;,citation_journal_title=Remote Sensing of Environment;,citation_publisher=Elsevier;">
@@ -224,7 +255,11 @@ div.csl-indent {
   <li><a href="#materiel-methods" id="toc-materiel-methods" class="nav-link" data-scroll-target="#materiel-methods"><span class="header-section-number">2</span> Materiel &amp; Methods</a>
   <ul class="collapse">
   <li><a href="#study-sites" id="toc-study-sites" class="nav-link" data-scroll-target="#study-sites"><span class="header-section-number">2.1</span> Study sites</a></li>
-  <li><a href="#study-sites-1" id="toc-study-sites-1" class="nav-link" data-scroll-target="#study-sites-1"><span class="header-section-number">2.2</span> Study sites</a></li>
+  <li><a href="#drone-flights" id="toc-drone-flights" class="nav-link" data-scroll-target="#drone-flights"><span class="header-section-number">2.2</span> Drone flights</a>
+  <ul class="collapse">
+  <li><a href="#multispectral-data" id="toc-multispectral-data" class="nav-link" data-scroll-target="#multispectral-data"><span class="header-section-number">2.2.1</span> Multispectral data</a></li>
+  <li><a href="#lidar-data" id="toc-lidar-data" class="nav-link" data-scroll-target="#lidar-data"><span class="header-section-number">2.2.2</span> LiDAR data</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">3</span> Results</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">4</span> Discussion</a></li>
@@ -272,9 +307,34 @@ Figure&nbsp;1: Location of the drone flights. A: Flights made in Aven &amp; Belo
 </div>
 </div>
 </section>
-<section id="study-sites-1" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="study-sites-1"><span class="header-section-number">2.2</span> Study sites</h2>
-<p>A total of</p>
+<section id="drone-flights" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="drone-flights"><span class="header-section-number">2.2</span> Drone flights</h2>
+<section id="multispectral-data" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="multispectral-data"><span class="header-section-number">2.2.1</span> Multispectral data</h3>
+<p>At each location (<a href="#tbl-flights" class="quarto-xref">Table&nbsp;1</a>), reflectance images with a resolution of 1.2 million pixels were captured using a DJI Matrice 300 quadcopter drone equipped with a Micasense RedEdge Dual MX multispectral camera. The camera recorded data across ten spectral bands, spanning from blue to near-infrared (NIR) wavelengths (444, 475, 531, 560, 650, 668, 705, 717, 740, and 840 nm) (). To ensure consistent lighting conditions, the drone’s flight trajectory was aligned to maintain a solar azimuth angle of 90 degrees. Image acquisition was carried out with an overlap of 70% between side-by-side images and 80% between successive images along the flight path. A downwelling light sensor (DLS2) was used to measure real-time irradiance, enabling the correction of reflectance values for variations in light intensity caused by cloud cover during the flight. The raw image data were subsequently calibrated to reflectance using a calibration panel with ~50% reflectivity, provided by the camera’s manufacturer. Images were processed using structure-from-motion photogrammetry software <span class="citation" data-cites="agisoft">(<a href="#ref-agisoft" role="doc-biblioref">Agisoft, 2019</a>)</span> to generate multispectral orthomosaics for each flight. The orthomosaicking workflow was consistent across all flights. Initially, key tie points were identified within each image and across overlapping images to create a sparse point cloud. This point cloud was refined by removing noisy points using a reprojection accuracy metric. Subsequently, a dense point cloud was generated using a structure-from-motion algorithm. A digital surface model (DSM) was then created through surface interpolation of the dense point cloud, which served as the basis for reconstructing the multispectral ortho-image <span class="citation" data-cites="nebel2020review">(<a href="#ref-nebel2020review" role="doc-biblioref">Nebel et al., 2020</a>)</span>. The resolution of the multispectral orthomosaic obtained were 8 cm per pixel.</p>
+</section>
+<section id="lidar-data" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="lidar-data"><span class="header-section-number">2.2.2</span> LiDAR data</h3>
+<p>Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1 LiDAR and RGB sensor was mounted on the drone alongside the Multispectral camera. This configuration enabled the simultaneous recording of LiDAR point clouds, high resolution RGB images and multispectral images captured by the Micasense RedEdge Dual MX during the same flight. Settings of the LiDAR has been set to have a point density of 350 m<span class="math inline">\(^{-2}\)</span></p>
+<div class="cell">
+<div id="tbl-flights" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-flights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: List of drone flights, summarising the location, the date, and the total extent of each flight (in hectars).
+</figcaption>
+<div aria-describedby="tbl-flights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="Figures/High_res/table_flights.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Table&nbsp;1: List of drone flights, summarising the location, the date, and the total extent of each flight (in hectars)."><img src="Figures/High_res/table_flights.png" class="img-fluid figure-img" width="1326"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
 </section>
 </section>
 <section id="results" class="level1" data-number="3">
@@ -295,6 +355,9 @@ Figure&nbsp;1: Location of the drone flights. A: Flights made in Aven &amp; Belo
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">6 References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-abreu2011nitrogen" class="csl-entry" role="listitem">
 Abreu, M.H., Pereira, R., Buschmann, A., Sousa-Pinto, I., Yarish, C., 2011. Nitrogen uptake responses of gracilaria vermiculophylla (ohmi) papenfuss under combined and single addition of nitrate and ammonium. Journal of Experimental Marine Biology and Ecology 407, 190–199.
+</div>
+<div id="ref-agisoft" class="csl-entry" role="listitem">
+Agisoft, 2019. <a href="https://www.agisoft.com/">Agisoft metashape</a>.
 </div>
 <div id="ref-barbier2011value" class="csl-entry" role="listitem">
 Barbier, E.B., Hacker, S.D., Kennedy, C., Koch, E.W., Stier, A.C., Silliman, B.R., 2011. The value of estuarine and coastal ecosystem services. Ecological monographs 81, 169–193.
@@ -358,6 +421,9 @@ Michel, G., Le Bot, S., Lesourd, S., Lafite, R., 2021. Morpho-sedimentological a
 </div>
 <div id="ref-mukherjee2023coastal" class="csl-entry" role="listitem">
 Mukherjee, S., Ghosh, K.K., Chanda, A., 2023. Coastal pollution—an overview. Environmental Oceanography and Coastal Dynamics: Current Scenario and Future Trends 99–107.
+</div>
+<div id="ref-nebel2020review" class="csl-entry" role="listitem">
+Nebel, S., Beege, M., Schneider, S., Rey, G.D., 2020. A review of photogrammetry and photorealistic 3D models in education from a psychological perspective, in: Frontiers in Education. Frontiers Media SA, p. 144.
 </div>
 <div id="ref-nyberg2009flora" class="csl-entry" role="listitem">
 Nyberg, C.D., Thomsen, M.S., Wallentinus, I., 2009. Flora and fauna associated with the introduced red alga gracilaria vermiculophylla. European Journal of Phycology 44, 395–403.
