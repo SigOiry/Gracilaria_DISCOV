@@ -782,7 +782,7 @@ knitr::include_graphics("Figures/Low_res/Figure1/Map_site.png")
 
 ```
 
-## Drone flights
+## remote sensing data acquisition and pre-processing
 
 ```{r Drone flights dataframe}
 #| cache: true
@@ -827,14 +827,6 @@ save_as_image(flx1, "Paper/Figures/High_res/table_flights.png", res = 400)
 
 ```
 
-### Multispectral data
-
-At each location (@tbl-flights), reflectance images with a resolution of 1.2 million pixels were captured using a DJI Matrice 300 quadcopter drone equipped with a Micasense RedEdge Dual MX multispectral camera. The camera recorded data across ten spectral bands, spanning from blue to near-infrared (NIR) wavelengths (444, 475, 531, 560, 650, 668, 705, 717, 740, and 840 nm) (). To ensure consistent lighting conditions, the drone's flight trajectory was aligned to maintain a solar azimuth angle of 90 degrees. Image acquisition was carried out with an overlap of 70% between side-by-side images and 80% between successive images along the flight path. A downwelling light sensor (DLS2) was used to measure real-time irradiance, enabling the correction of reflectance values for variations in light intensity caused by cloud cover during the flight. The raw image data were subsequently calibrated to reflectance using a calibration panel with \~50% reflectivity, provided by the camera's manufacturer. Images were processed using structure-from-motion photogrammetry software [@agisoft] to generate multispectral orthomosaics for each flight. The orthomosaicking workflow was consistent across all flights. Initially, key tie points were identified within each image and across overlapping images to create a sparse point cloud. This point cloud was refined by removing noisy points using a reprojection accuracy metric. Subsequently, a dense point cloud was generated using a structure-from-motion algorithm. A digital surface model (DSM) was then created through surface interpolation of the dense point cloud, which served as the basis for reconstructing the multispectral ortho-image [@nebel2020review]. The resolution of the multispectral orthomosaic obtained were 8 cm per pixel.
-
-### LiDAR data
-
-Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1 LiDAR and RGB sensor was mounted on the drone alongside a multispectral camera. This setup enabled the simultaneous capture of LiDAR point clouds, high-resolution RGB images, and multispectral images collected by the MicaSense RedEdge Dual MX during the same flight. The same processing workflow was applied to process LiDAR RGB images, resulting in orthomosaic with a resolution of 2.5 cm per pixel. Since the mapping focused solely on flat surfaces without dense vegetation, the LiDAR measured only a single return. Operating in repetitive scanning mode with a sampling rate of 240 kHz, the system achieved a point density of 350 points per square meter. The LiDAR point cloud was extracted and converted into LAS format using DJI Terra software. The LAS point cloud was then imported into Agisoft Metashape [@agisoft] to generate a DEM with a resolution of 2.5 cm.
-
 ```{r Table1}
 #| echo: false
 #| warning: false
@@ -844,6 +836,19 @@ Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1 LiDAR and R
 
 knitr::include_graphics("Figures/High_res/table_flights.png")
 ```
+
+A total of 6 drone flights were done spread in the 3 study sites. Each time, flights were done at an altitude of 120 m and at a speed of 10 m.s<-1> (@tbl-flights).
+
+### Multispectral data
+
+At each location, reflectance images with a resolution of 1.2 million pixels were captured using a DJI Matrice 300 quadcopter drone equipped with a Micasense RedEdge Dual MX multispectral camera. The camera recorded data across ten spectral bands, spanning from blue to near-infrared (NIR) wavelengths (444, 475, 531, 560, 650, 668, 705, 717, 740, and 840 nm) (). To ensure consistent lighting conditions, the drone's flight trajectory was aligned to maintain a solar azimuth angle of 90 degrees. Image acquisition was carried out with an overlap of 70% between side-by-side images and 80% between successive images along the flight path. A downwelling light sensor (DLS2) was used to measure real-time irradiance, enabling the correction of reflectance values for variations in light intensity caused by cloud cover during the flight. The raw image data were subsequently calibrated to reflectance using a calibration panel with \~50% reflectivity, provided by the camera's manufacturer. Images were processed using structure-from-motion photogrammetry software [@agisoft] to generate multispectral orthomosaics for each flight. The orthomosaicking workflow was consistent across all flights. Initially, key tie points were identified within each image and across overlapping images to create a sparse point cloud. This point cloud was refined by removing noisy points using a reprojection accuracy metric. Subsequently, a dense point cloud was generated using a structure-from-motion algorithm. A digital surface model (DSM) was then created through surface interpolation of the dense point cloud, which served as the basis for reconstructing the multispectral ortho-image [@nebel2020review]. The resolution of the multispectral orthomosaic obtained were 8 cm per pixel.
+
+### LiDAR data
+
+Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1 LiDAR and RGB sensor was mounted on the drone alongside a multispectral camera. This setup enabled the simultaneous capture of LiDAR point clouds, high-resolution RGB images, and multispectral images collected by the MicaSense RedEdge Dual MX during the same flight. The same processing workflow was applied to process LiDAR RGB images, resulting in orthomosaic with a resolution of 2.5 cm per pixel. Since the mapping focused solely on flat surfaces without dense vegetation, the LiDAR measured only a single return. Operating in repetitive scanning mode with a sampling rate of 240 kHz, the system achieved a point density of 350 points per square meter. The LiDAR point cloud was extracted and converted into LAS format using DJI Terra software. The LAS point cloud was then imported into Agisoft Metashape [@agisoft] to generate a DEM with a resolution of 2.5 cm.
+
+## Scene classification 
+
 
 # Results
 
