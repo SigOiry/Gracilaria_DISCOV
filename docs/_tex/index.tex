@@ -383,12 +383,19 @@ obtained were 8 cm per pixel.
 \subsubsection{LiDAR data}\label{lidar-data}
 
 Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1
-LiDAR and RGB sensor was mounted on the drone alongside the
-Multispectral camera. This configuration enabled the simultaneous
-recording of LiDAR point clouds, high resolution RGB images and
-multispectral images captured by the Micasense RedEdge Dual MX during
-the same flight. Settings of the LiDAR has been set to have a point
-density of 350 m\(^{-2}\)
+LiDAR and RGB sensor was mounted on the drone alongside a multispectral
+camera. This setup enabled the simultaneous capture of LiDAR point
+clouds, high-resolution RGB images, and multispectral images collected
+by the MicaSense RedEdge Dual MX during the same flight. The same
+processing workflow was applied to process LiDAR RGB images, resulting
+in orthomosaic with a resolution of 2.5 cm per pixel. Since the mapping
+focused solely on flat surfaces without dense vegetation, the LiDAR
+measured only a single return. Operating in repetitive scanning mode
+with a sampling rate of 240 kHz, the system achieved a point density of
+350 points per square meter. The LiDAR point cloud was extracted and
+converted into LAS format using DJI Terra software. The LAS point cloud
+was then imported into Agisoft Metashape (Agisoft, 2019) to generate a
+DEM with a resolution of 2.5 cm.
 
 \begin{table}
 
