@@ -190,7 +190,7 @@ Ecosystems, Biodiversity},
 \title{DISCOV-Gracilaria Paper}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2024-11-20}
+\date{2024-11-26}
 
 \begin{document}
 \maketitle
@@ -348,54 +348,8 @@ polygons represent intertidal areas.}
 
 \end{figure}%
 
-\subsection{Drone flights}\label{drone-flights}
-
-\subsubsection{Multispectral data}\label{multispectral-data}
-
-At each location (Table~\ref{tbl-flights}), reflectance images with a
-resolution of 1.2 million pixels were captured using a DJI Matrice 300
-quadcopter drone equipped with a Micasense RedEdge Dual MX multispectral
-camera. The camera recorded data across ten spectral bands, spanning
-from blue to near-infrared (NIR) wavelengths (444, 475, 531, 560, 650,
-668, 705, 717, 740, and 840 nm) (). To ensure consistent lighting
-conditions, the drone's flight trajectory was aligned to maintain a
-solar azimuth angle of 90 degrees. Image acquisition was carried out
-with an overlap of 70\% between side-by-side images and 80\% between
-successive images along the flight path. A downwelling light sensor
-(DLS2) was used to measure real-time irradiance, enabling the correction
-of reflectance values for variations in light intensity caused by cloud
-cover during the flight. The raw image data were subsequently calibrated
-to reflectance using a calibration panel with \textasciitilde50\%
-reflectivity, provided by the camera's manufacturer. Images were
-processed using structure-from-motion photogrammetry software (Agisoft,
-2019) to generate multispectral orthomosaics for each flight. The
-orthomosaicking workflow was consistent across all flights. Initially,
-key tie points were identified within each image and across overlapping
-images to create a sparse point cloud. This point cloud was refined by
-removing noisy points using a reprojection accuracy metric.
-Subsequently, a dense point cloud was generated using a
-structure-from-motion algorithm. A digital surface model (DSM) was then
-created through surface interpolation of the dense point cloud, which
-served as the basis for reconstructing the multispectral ortho-image
-(Nebel et al., 2020). The resolution of the multispectral orthomosaic
-obtained were 8 cm per pixel.
-
-\subsubsection{LiDAR data}\label{lidar-data}
-
-Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1
-LiDAR and RGB sensor was mounted on the drone alongside a multispectral
-camera. This setup enabled the simultaneous capture of LiDAR point
-clouds, high-resolution RGB images, and multispectral images collected
-by the MicaSense RedEdge Dual MX during the same flight. The same
-processing workflow was applied to process LiDAR RGB images, resulting
-in orthomosaic with a resolution of 2.5 cm per pixel. Since the mapping
-focused solely on flat surfaces without dense vegetation, the LiDAR
-measured only a single return. Operating in repetitive scanning mode
-with a sampling rate of 240 kHz, the system achieved a point density of
-350 points per square meter. The LiDAR point cloud was extracted and
-converted into LAS format using DJI Terra software. The LAS point cloud
-was then imported into Agisoft Metashape (Agisoft, 2019) to generate a
-DEM with a resolution of 2.5 cm.
+\subsection{remote sensing data acquisition and
+pre-processing}\label{sec-DroneFlights}
 
 \begin{table}
 
@@ -409,6 +363,75 @@ location, the date, and the total extent of each flight (in hectars).}
 }
 
 \end{table}%
+
+A total of 6 drone flights were done spread in the 3 study sites. Each
+time, flights were done at an altitude of 120 m and at a speed of 10
+m.s\textsuperscript{-1} (Table~\ref{tbl-flights}).
+
+\subsubsection{Multispectral data}\label{sec-photo}
+
+At each location, reflectance images with a resolution of 1.2 million
+pixels were captured using a DJI Matrice 300 quadcopter drone equipped
+with a Micasense RedEdge Dual MX multispectral camera. The camera
+recorded data across ten spectral bands, spanning from blue to
+near-infrared (NIR) wavelengths (444, 475, 531, 560, 650, 668, 705, 717,
+740, and 840 nm) (). To ensure consistent lighting conditions, the
+drone's flight trajectory was aligned to maintain a solar azimuth angle
+of 90 degrees. Image acquisition was carried out with an overlap of 70\%
+between side-by-side images and 80\% between successive images along the
+flight path. A downwelling light sensor (DLS2) was used to measure
+real-time irradiance, enabling the correction of reflectance values for
+variations in light intensity caused by cloud cover during the flight.
+The raw image data were subsequently calibrated to reflectance using a
+calibration panel with \textasciitilde50\% reflectivity, provided by the
+camera's manufacturer. Images were processed using structure-from-motion
+photogrammetry software (Agisoft, 2019) to generate multispectral
+ortho-mosaics for each flight. The ortho-mosaicking workflow was
+consistent across all flights. Initially, key tie points were identified
+within each image and across overlapping images to create a sparse point
+cloud. This point cloud was refined by removing noisy points using a
+reprojection accuracy metric. Subsequently, a dense point cloud was
+generated using a structure-from-motion algorithm. A digital surface
+model (DSM) was then created through surface interpolation of the dense
+point cloud, which served as the basis for reconstructing the
+multispectral ortho-image (Nebel et al., 2020). The resolution of the
+multispectral ortho-mosaic obtained were 8 cm per pixel.
+
+\subsubsection{LiDAR data}\label{lidar-data}
+
+LiDAR standing for Light Detection and Ranging uses lasers to measure
+distances by timing reflected pulses, creating detailed 3D maps of
+surfaces.
+
+Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1
+LiDAR and RGB sensor was mounted on the drone alongside a multispectral
+camera. This setup enabled the simultaneous capture of LiDAR point
+clouds, high-resolution RGB images, and multispectral images collected
+by the MicaSense RedEdge Dual MX during the same flight. The same
+processing workflow as Section~\ref{sec-photo} was applied to process
+LiDAR RGB images, resulting in ortho-mosaic with a resolution of 2.5 cm
+per pixel. Since the mapping focused solely on flat surfaces without
+dense vegetation, the LiDAR measured only a single return. Operating in
+repetitive scanning mode with a sampling rate of 240 kHz, the system
+achieved a point density of 350 points per square meter. The LiDAR point
+cloud was extracted and converted into LAS format using DJI Terra
+software. The LAS point cloud was then imported into Agisoft Metashape
+(Agisoft, 2019) to generate a DEM with a resolution of 2.5 cm.
+
+\subsection{Scene classification}\label{scene-classification}
+
+A neural network classification model (DISCOV; Oiry et al. (2024b); Oiry
+et al. (2024a)), previously applied with success to Micasense
+reflectance data for mapping intertidal vegetation along the Portuguese
+and French Atlantic coasts, served as the baseline for this study. The
+training dataset of DISCOV v1.0 (Oiry et al., 2024a) was updated in the
+current study, to file one of the weakness of this model. As shown by
+Oiry et al. (2024b) the DISCOV v1.0 model was trained using only 5771
+Rhodophyceae pixel (3\% of the training dataset), making that class
+among the least performing of the model (Sensitivity of 0.82). To fill
+this gap the original training dataset of DISCOV v1.0 was updated using
+new training pixel coming from flight performed in the current study
+(Section~\ref{sec-DroneFlights})
 
 \section{Results}\label{results}
 
@@ -563,6 +586,18 @@ SA, p. 144.
 Nyberg, C.D., Thomsen, M.S., Wallentinus, I., 2009. Flora and fauna
 associated with the introduced red alga gracilaria vermiculophylla.
 European Journal of Phycology 44, 395--403.
+
+\bibitem[\citeproctext]{ref-oiry_2024_14218984}
+Oiry, S., Davies, B.F.R., Pierre, G., Laurent, B., 2024a. {DISCOV: Drone
+Intertidal Sediment Classification Of Vegetation}.
+\url{https://doi.org/10.5281/zenodo.14218984}
+
+\bibitem[\citeproctext]{ref-rs16234383}
+Oiry, S., Davies, B.F.R., Sousa, A.I., Rosa, P., Zoffoli, M.L., Brunier,
+G., Gernez, P., Barillé, L., 2024b. Discriminating seagrasses from green
+macroalgae in european intertidal areas using high-resolution
+multispectral drone imagery. Remote Sensing 16.
+\url{https://doi.org/10.3390/rs16234383}
 
 \bibitem[\citeproctext]{ref-ortega2005fluxes}
 Ortega, T., Ponce, R., Forja, J., Gómez-Parra, A., 2005. Fluxes of
