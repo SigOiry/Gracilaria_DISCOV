@@ -1,5 +1,5 @@
 ---
-title: DISCOV-Gracilaria Paper
+title: From AI to IA: 
 shorttitle: DISCOV - Gracilaria
 author:
   - name: Simon Oiry¹
@@ -851,9 +851,167 @@ Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1 LiDAR and R
 
 ## Scene classification
 
-A neural network classification model (DISCOV; @rs16234383; @oiry_2024_14218984), previously applied with success to Micasense reflectance data for mapping intertidal vegetation along the Portuguese and French Atlantic coasts, has been used in this study. The training dataset of DISCOV v1.0 [@oiry_2024_14218984] has been updated to file one of the weakness of this model. As shown by @rs16234383 the DISCOV v1.0 model was trained using only 5771 Rhodophyceae pixel (3% of the training dataset). To fill this gap the original training dataset of DISCOV v1.0 was updated using new training pixel coming from flight performed in the current study (@sec-DroneFlights)
+A neural network classification model (DISCOV; @rs16234383; @oiry_2024_14218984), previously applied with success to Micasense reflectance data for mapping intertidal vegetation along the Portuguese and French Atlantic coasts, has been used in this study. The training dataset of DISCOV v1.0 has been updated. As shown by @rs16234383 the DISCOV v1.0 model [@oiry_2024_14218984] was trained using only 5771 Rhodophyceae pixel (3% of the training dataset). To fill this gap the original training dataset of DISCOV v1.0 was updated using new training pixel coming from the 5 drone flights (@sec-DroneFlights). 
+
+```{r Training pixel}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+library(tidyverse)
+library(flextable)
+
+df_training <- "Data/Training_DISCOV/DISCOV_Invasea_Saja_filtered.txt" %>% 
+  read.delim(sep = ";")
+
+
+brdr1 <- fp_border_default(color = "black", width = 0.5)
+brdr2 <- fp_border_default(color = "grey", width = 1)
+brdr3 <- fp_border_default(color = "grey40", width = 1)
+
+i = 16.5 # width of the side borders in the word_document output (in centimeters)
+w = i*0.3937 # width of the side borders in the word_document output (in inches)
+ 
+df_training %>% 
+  dplyr::filter(True_Class != "SunGlint") %>% 
+  mutate(DISCOV1_n = case_when(True_Class == "Bacillariophyceae" ~ 4475,
+                          True_Class == "Chlorophyta" ~ 17140,
+                          True_Class == "Magnoliopsida" ~ 221065,
+                          True_Class == "Phaeophyta" ~ 169936,
+                          True_Class == "Rhodophyta" ~ 5771,
+                          True_Class == "Water" ~ 83677,
+                          True_Class == "Sediment" ~ 95126),
+         Name = case_when(True_Class == "Bacillariophyceae" ~ "Benthic Diatoms",
+                          True_Class == "Chlorophyta" ~ "Green macroalgae",
+                          True_Class == "Magnoliopsida" ~ "Seagrass",
+                          True_Class == "Phaeophyta" ~ "Brown macroalgae",
+                          True_Class == "Rhodophyta" ~ "Red macroalgae",
+                          T ~ True_Class),
+         True_Class = case_when(True_Class == "Sediment" ~ "-",
+                                True_Class == "Water" ~ "-",
+                                T ~ True_Class),
+         `Difference with DISCOV V1.0` = round((n)/DISCOV1_n,2),
+         `Difference with DISCOV V1.0` = case_when(`Difference with DISCOV V1.0` == 1 ~ "-",
+                                                   T ~ paste0("x",`Difference with DISCOV V1.0`))) %>%
+  rename(`Taxonomic Class` = "True_Class",
+         `Training Pixels` = "n") %>% 
+  dplyr::select(Name,`Taxonomic Class`,`Training Pixels`, `Difference with DISCOV V1.0`) %>% 
+  flextable()
+
+flx1<-flextable(df)  %>%
+  flextable::width(width = (w/(ncol(df)))) %>% 
+  merge_v(j = 1) %>%
+  merge_v(j = 2) %>%
+    border_remove() %>%
+    hline_top(border=brdr1) %>%
+    hline(i=5, border=brdr1) %>%
+    hline(i=1,j = 3:6, border=brdr2) %>%
+    hline(i=2, border=brdr2) %>%
+    hline(i=3, j = 2:6, border=brdr3) %>%
+    hline(i=4, j = 3:6, border=brdr2) %>%
+    hline(i=6, border=brdr2) %>%
+    hline(i=6, j = 1:2, border=brdr1) %>%
+    hline(i=7, border=brdr2) %>%
+    hline(i=8, border=brdr2) %>%
+    hline(i=9, border=brdr1) %>%
+    vline(j=2, border = brdr1) %>%
+    flextable::align(align = "center",part = "all") %>%
+    flextable::align(align = "center",part = "header") %>%
+  # set_caption(caption = "Table 1 List of drone Flight, summarising the date, the altitude and the purpose of each flight.") %>%
+  set_table_properties(layout = "autofit") 
+
+```
+
 
 # Results
+
+```{r DISCOV Belon Map}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+
+library(terra)
+library(tidyverse)
+library(Utilities.Package)
+
+DISCOV_rast <- rast("Data/DISCOV/Belon_1104_MS_DISCOV_InvaSea_26112024_pred.tif")
+
+values(DISCOV_rast)[values(DISCOV_rast) == 0] = NA
+names(DISCOV_rast) <- "layer"
+DISCOV_rast<-DISCOV_rast %>% 
+  as.factor()
+
+DISCOV_Belon <- ggplot()+
+    tidyterra::geom_spatraster(data = DISCOV_rast, 
+                               mapping = aes(fill = layer),
+                               maxcell = 500832*8)+
+  scale_fill_manual(breaks = c(1,2,3,4,5,6,8),
+                    values=c("#DAA520","#b3ff1a","#389318","#873e23","#b3002d","#a2a3a2","#42c9bc",NA,NA),
+                    na.value = NA,
+                    name = "",
+                    labels = c( "Bacillariophyceae",
+                                "Chlorophyceae",
+                                "Magnoliopsida",
+                               "Phaeophyceae",
+                               "Rhodophyceae",
+                               "Sediment",
+                               "Water"))+
+  theme_Bede_Map()+
+  # coord_equal()+
+   theme(axis.text.x = element_text(size = 10, angle = -20,hjust = 0),
+         axis.text.y = element_text(size = 10, color = NA),
+         # axis.text.y = element_blank(),
+         axis.ticks.y = element_blank(), 
+         axis.title = element_blank(),
+         plot.background = element_rect(fill = "white", color = NA),
+         legend.background = element_blank(),
+         legend.position = c(0.98,0.98),
+         legend.text = element_text(size = 10),
+         legend.key.size = unit(0.5,"cm"))
+
+ggsave("Paper/Figures/High_res/Prediction_Map/Belon_DISCOV.png",DISCOV_Belon,width = 10, height = 4.56, dpi = 400)
+```
+
+```{r RGB Belon}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+
+library(sf)
+library(terra)
+library(tidyverse)
+library(Utilities.Package)
+
+Belon_RGB <- rast("Data/RGB/Belon_RGB_LiDAR_cropped.tif") 
+values(Belon_RGB[[1]])[values(Belon_RGB[[1]]) == 0] = NA
+
+# RGB(Belon_RGB) <- 1:3
+
+ RGB_Belon<- ggplot()+
+   tidyterra::geom_spatraster_rgb(data = Belon_RGB,
+         r = 1,
+         g = 2,
+         b = 3,
+         maxcell = 4010533
+         )+
+    ggspatial::annotation_scale(location = "br",
+                                text_cex=2)+
+   theme_Bede_Map()+
+  # coord_equal()+
+   theme(axis.text.x = element_text(size = 10, angle = -20,hjust = 0),
+         axis.text.y = element_text(size = 10),
+         plot.background = element_rect(fill = "white", color = NA), 
+         axis.title = element_blank())
+
+ 
+ ggsave("Paper/Figures/High_res/Prediction_Map/Belon_RGB.png",RGB_Belon,width = 10, height = 4.56, dpi = 400)
+  
+
+```
+
+
 
 # Discussion
 

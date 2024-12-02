@@ -4,6 +4,8 @@
 .Ruserdata
 
 Data/Litto3D/*
+Data/Training_DISCOV/*
 !Data/Litto3D/Study_sites/
 
+Data/*
 Data/Sentinel2/*
