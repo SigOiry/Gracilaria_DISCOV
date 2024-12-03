@@ -1,5 +1,5 @@
 ---
-title: From AI to IA: 
+title: Spatial distribution of *Gracillaria vermiculophylla* in French and Spanish estuaries using Unmaned Aerial Vehicule. 
 shorttitle: DISCOV - Gracilaria
 author:
   - name: Simon Oiry¹
@@ -105,9 +105,17 @@ In this study, we aim to harness the potential of drone-based multispectral remo
 
 ## Study sites
 
-Field campaigns were conducted at three study sites in France and Spain. At each site, two locations were investigated [@fig-location_sites]. The Aven & Belon Estuary in South Brittany, France (@fig-location_sites A), is a dynamic ria-type system hosting diverse habitats, including sandy tidal flats and subtidal zones with coarse, marine-origin sediments [@Michel2021; @Castaing1995]. These habitats support key benthic species such as *Scrobicularia plana*, *Cerastoderma edule*, and *Tellina tenuis*, which play essential roles in sediment bioturbation and nutrient cycling [@Tankoua2011; @Blanchet2014]. The estuary serves as a nursery for juvenile fish and a feeding ground for migratory birds, with its ecological productivity driven by a mix of euryhaline and marine species adapted to salinity gradients [@Blanchet2014]. Oyster farming, particularly *Crassostrea gigas*, is a dominant activity, altering sediment dynamics and local biodiversity [@Michel2021]. Despite its ecological richness, the estuary faces pressures from nutrient loading and physical alterations, with bioindicators like *S. plana* used to monitor the impacts of salinity, sediment quality, and pollution [@Tankoua2011].
+Field campaigns were conducted at three study sites in France and Spain. At each site, two locations were investigated [@fig-location_sites]. The Aven & Belon Estuary in South Brittany, France (@fig-location_sites A & C), is a dynamic ria-type system hosting diverse habitats, including sandy tidal flats and subtidal zones with coarse, marine-origin sediments [@Michel2021; @Castaing1995]. These habitats support key benthic species such as *Scrobicularia plana*, *Cerastoderma edule*, and *Tellina tenuis*, which play essential roles in sediment bioturbation and nutrient cycling [@Tankoua2011; @Blanchet2014]. The estuary serves as a nursery for juvenile fish and a feeding ground for migratory birds, with its ecological productivity driven by a mix of euryhaline and marine species adapted to salinity gradients [@Blanchet2014]. Oyster farming, particularly *Crassostrea gigas*, is a dominant activity, altering sediment dynamics and local biodiversity [@Michel2021]. Despite its ecological richness, the estuary faces pressures from nutrient loading and physical alterations, with bioindicators like *S. plana* used to monitor the impacts of salinity, sediment quality, and pollution [@Tankoua2011].
 
-The Ria d'Étel, located in Brittany, France, is a macrotidal estuary characterized by its unique hydrodynamics and biodiversity (@fig-location_sites B). Influenced predominantly by tidal regimes, the estuary exhibits high-energy zones with strong currents reaching up to 2.5 m/s, shaping both sediment deposition and ecological habitats [@Portas2023]. The estuary supports diverse benthic communities, with sedimentary organic matter originating from both terrestrial inputs and marine sources, contributing to nutrient cycling and benthic fluxes [@Jeanneau2023]. Vegetation gradients transition from halophytic plants in saline zones to freshwater species upstream, reflecting the estuary's salinity dynamics and ecological complexity [@Cianfaglione2018]. This estuary is also notable for its shellfish farming, with species like *Crassostrea gigas* cultivated extensively. The presence of filter-feeding organisms such as sponges (*Hymeniacidon perlevis*) enhances water quality by mitigating bacterial loads and promoting bioremediation [@Gentric2024]. However, the estuary faces environmental pressures, including nutrient enrichment from agricultural runoff and anthropogenic impacts on sedimentary processes.
+```{r text_Etel}
+#| cache: true
+#| echo: false
+#| eval: false
+#| warning: false
+
+"The Ria d'Étel, located in Brittany, France, is a macrotidal estuary characterized by its unique hydrodynamics and biodiversity (@fig-location_sites B). Influenced predominantly by tidal regimes, the estuary exhibits high-energy zones with strong currents reaching up to 2.5 m/s, shaping both sediment deposition and ecological habitats [@Portas2023]. The estuary supports diverse benthic communities, with sedimentary organic matter originating from both terrestrial inputs and marine sources, contributing to nutrient cycling and benthic fluxes [@Jeanneau2023]. Vegetation gradients transition from halophytic plants in saline zones to freshwater species upstream, reflecting the estuary's salinity dynamics and ecological complexity [@Cianfaglione2018]. This estuary is also notable for its shellfish farming, with species like *Crassostrea gigas* cultivated extensively. The presence of filter-feeding organisms such as sponges (*Hymeniacidon perlevis*) enhances water quality by mitigating bacterial loads and promoting bioremediation [@Gentric2024]. However, the estuary faces environmental pressures, including nutrient enrichment from agricultural runoff and anthropogenic impacts on sedimentary processes.
+"
+```
 
 The Saja-Besaya Estuary, situated along the Cantabrian Sea in northern Spain, is characterized by the confluence of the Saja and Besaya rivers near Torrelavega (@fig-location_sites C). The estuary, also known as San Martín de la Arena or Suances Estuary, has been subject to significant anthropogenic pressures, including industrial developments throughout the 20th century. These activities have led to contamination from mining, paper manufacturing, and carbonate discharges, classifying the estuary as highly polluted near its upper reaches [@ortega2005fluxes]. This contamination impacts the estuarine ecosystem, including water quality and biodiversity, with minimal aquatic life and sparse riverbank vegetation in its lower sections [@romero2008sintering].
 
@@ -375,15 +383,15 @@ Europe_sf<-european_union_map_cropped %>%
 
 Projects<-data.frame(
   Name=c(
-  "France -Ria d'Etel",
-  "France - Aven & Belon",
+  "France - Aven",
+  "France - Belon",
   "Spain - Saja Estuary"
   ) ,
   Long=c(-3.187818,
-         -3.724905, 
+         -3.187818, 
          -4.025402) ,
   Lat=c(47.697566, 
-        47.824779,
+        47.697566,
         43.408356) 
   )  %>% 
   st_as_sf(coords=c("Long","Lat") )  %>% 
@@ -409,16 +417,16 @@ bbox_EU <- st_bbox(c(xmin = -30, ymin = 20,
 
   df_P1<-Projects_df %>% 
     mutate(ID = c(1:nrow(.))) %>% 
-    mutate(Site = case_when(ID == 1 ~ "Ria d'Etel",
-                            ID == 2 ~ "Aven & Belon",
+    mutate(Site = case_when(ID == 1 ~ "Aven Estuary",
+                            ID == 2 ~ "Bélon Estuary",
                             ID == 3 ~ "Saja Estuary",
                             TRUE ~ "NA"),
-           ID = case_when(ID == 1 ~ "B",
-                          ID == 2 ~ "A",
+           ID = case_when(ID == 1 ~ "A",
+                          ID == 2 ~ "B",
                           TRUE ~ "C"),
            lon_label = 2900000,
-           lat_label = case_when(Site == "Ria d'Etel" ~ lat  - 200000,
-                                 Site == "Aven & Belon" ~ lat + 50000,
+           lat_label = case_when(Site == "Aven Estuary" ~ lat  - 200000,
+                                 Site == "Bélon Estuary" ~ lat + 50000,
                                  Site == "Saja Estuary" ~ lat  - 250000,),
            lat_ID = lat_label + 100000) %>% 
     dplyr::select(c(lon,lat,lon_label,lat_label,lat_ID,ID,Site))
@@ -581,7 +589,7 @@ ggsave("Paper/Figures/Low_res/Figure1/Map_Saja.png",plot_Saja,width= 10, height=
 
 ```
 
-```{r Figure1 Aven_Belon}
+```{r Figure1 Aven}
 #| cache: true
 #| echo: false
 #| eval: false
@@ -593,19 +601,14 @@ It_AB <- "Data/shp/Intertidal_sites/mask_intertidal_Aven_Belon.shp" %>%
 Land_AB <- "Data/shp/Intertidal_sites/mask_Land_Aven_Belon.shp" %>% 
   read_sf()
 
-
-
-ext_plot_AB <- st_bbox(create_square_sf(10000, c(-3.706226, 47.815149)))
+ext_plot_AB <- st_bbox(create_square_sf(8000, c(-3.780146, 47.810000)))
 
 
 Flight_AB<-data.frame(
   Name=c(
-  "Pont du Guilly",
   "Notre-Dame De Tremor"),
-  Long=c(-3.655220,
-         -3.748634) ,
-  Lat=c(47.822408,
-        47.837923)
+  Long=c(-3.748634) ,
+  Lat=c(47.837923)
   )  %>%
   st_as_sf(coords=c("Long","Lat") )  %>%
   st_set_crs("EPSG:4326")  %>%
@@ -613,12 +616,10 @@ Flight_AB<-data.frame(
   dplyr::mutate(lon = sf::st_coordinates(.) [,1],
                 lat = sf::st_coordinates(.) [,2]) %>%
   sf::st_set_geometry(NULL) %>% 
-  mutate(lon_label = case_when(Name == "Pont du Guilly" ~ lon - 1000,
-                               Name == "Notre-Dame De Tremor" ~ lon + 2000),
-         lat_label = case_when(Name ==  "Pont du Guilly" ~ lat - 1000,
-                               Name == "Notre-Dame De Tremor" ~ lat + 1500))
+  mutate(lon_label = case_when(Name == "Notre-Dame De Tremor" ~  as.numeric(ext_plot_AB[1]) + (as.numeric(ext_plot_AB[4])-as.numeric(ext_plot_AB[2]))*0.35),
+         lat_label = case_when(Name == "Notre-Dame De Tremor" ~  as.numeric(ext_plot_AB[2]) + (as.numeric(ext_plot_AB[4])-as.numeric(ext_plot_AB[2]))*0.85))
 
-(plot_AB <- ggplot() +
+(Plot_Aven <- ggplot() +
   geom_sf(data = Land_AB, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
   geom_sf(data = It_AB, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
     geom_label(aes(x = as.numeric(ext_plot_AB[1]) + (as.numeric(ext_plot_AB[3])-as.numeric(ext_plot_AB[1]))*0.1 , 
@@ -637,8 +638,80 @@ Flight_AB<-data.frame(
   theme_Bede_Map()+
   labs(x="Longitude",
        y="Latitude")+
-  scale_x_continuous(breaks = -3.7) +
-  scale_y_continuous(breaks = 47.8) +
+  scale_x_continuous(breaks = -3.725) +
+  scale_y_continuous(breaks = 47.82) +
+  # Move y-axis to the right
+  theme(
+    legend.background = element_rect(fill = alpha("white", 0)),
+    plot.background = element_rect(fill = "white", color = NA),
+    axis.text.x = element_text(vjust = 7.5,  size = 20),
+    axis.text.y = element_text(angle = 90, vjust = -7, hjust = 0.5, size = 20),
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    legend.box = "vertical",  # Stack legends vertically
+    legend.box.just = "left",  # Align the legends to the left
+    legend.spacing.y = unit(0.0, 'mm'),  # Adjust the spacing between items
+    legend.key = element_rect(fill = "white", color = "black"),  # Ensure clear legend keys
+    legend.box.margin = margin(5, 5, 5, 5),
+    panel.grid.major = ggplot2::element_line(linetype = "dotted", 
+      colour = alpha("grey30",0.5), linewidth = 0.25)
+    )  # Adjust position if needed  )
+)
+
+ggsave("Paper/Figures/High_res/Figure1/Map_AB.png",Plot_Aven,width= 10, height=10, dpi = 400)  
+ggsave("Paper/Figures/Low_res/Figure1/Map_AB.png",Plot_Aven,width= 10, height=10, dpi = 200)  
+```
+
+```{r Figure1 Belon}
+#| cache: true
+#| echo: false
+#| eval: false
+#| warning: false
+
+It_AB <- "Data/shp/Intertidal_sites/mask_intertidal_Aven_Belon.shp" %>% 
+  read_sf()
+
+Land_AB <- "Data/shp/Intertidal_sites/mask_Land_Aven_Belon.shp" %>% 
+  read_sf()
+
+ext_plot_B <- st_bbox(create_square_sf(8000, c(-3.690000, 47.800000)))
+
+
+Flight_AB<-data.frame(
+  Name=c("Pont du Guilly"),
+  Long=c(-3.655220) ,
+  Lat=c(47.822408)
+  )  %>%
+  st_as_sf(coords=c("Long","Lat") )  %>%
+  st_set_crs("EPSG:4326")  %>%
+  st_transform(crs(Land_Saja))  %>%
+  dplyr::mutate(lon = sf::st_coordinates(.) [,1],
+                lat = sf::st_coordinates(.) [,2]) %>%
+  sf::st_set_geometry(NULL) %>% 
+  mutate(lon_label = case_when(Name == "Pont du Guilly" ~ as.numeric(ext_plot_B[1]) + (as.numeric(ext_plot_B[3])-as.numeric(ext_plot_B[1]))*0.7),
+         lat_label = case_when(Name ==  "Pont du Guilly" ~  as.numeric(ext_plot_B[2]) + (as.numeric(ext_plot_B[4])-as.numeric(ext_plot_B[2]))*0.7))
+
+(plot_Belon <- ggplot() +
+  geom_sf(data = Land_AB, linewidth = 0.05, alpha = 0.93, fill = "grey80") +
+  geom_sf(data = It_AB, linewidth = 0.05, alpha = 0.93, fill = "goldenrod") +
+    geom_label(aes(x = as.numeric(ext_plot_B[1]) + (as.numeric(ext_plot_B[3])-as.numeric(ext_plot_B[1]))*0.1 , 
+                   y = as.numeric(ext_plot_B[2]) + (as.numeric(ext_plot_B[4])-as.numeric(ext_plot_B[2]))*0.1
+                   , label = "B"), 
+               size = 10,
+               alpha = 0.5 )+
+  coord_sf(
+    xlim = c(ext_plot_B[1], ext_plot_B[3]),
+    ylim = c(ext_plot_B[2], ext_plot_B[4]),
+    expand = F
+  ) +
+  geom_segment(data = Flight_AB, aes(x = lon_label, xend = lon, yend = lat, y =lat_label, group = Name), color = "goldenrod4",size = 1)+
+  geom_point(data = Flight_AB, aes(x = lon, y =lat), color = "darkred", alpha = 0.8, size = 5)+
+  geom_label(data = Flight_AB, aes(x = lon_label, y =lat_label, label = Name), fill = "#FFD27D",size = 5)+
+  theme_Bede_Map()+
+  labs(x="Longitude",
+       y="Latitude")+
+  scale_x_continuous(breaks = -3.67) +
+  scale_y_continuous(breaks = 47.82) +
   # Move y-axis to the right
   theme(
     legend.background = element_rect(fill = alpha("white", 0)),
@@ -753,7 +826,7 @@ ggsave("Paper/Figures/Low_res/Figure1/Map_Etel.png",plot_AB,width= 10, height=10
 #| eval: false
 #| warning: false
 
-(final_map <- ((p1 | plot_AB) / (plot_Etel | plot_Saja))  + 
+(final_map <- ((p1 | Plot_Aven) / (plot_Belon | plot_Saja))  + 
   plot_layout(guides = "collect")& 
     # theme_void()&
   theme(legend.position = "bottom",
@@ -772,7 +845,7 @@ ggsave("Paper/Figures/Low_res/Figure1/Map_site.png",final_map,width= 10, height=
 #| cache: false
 #| echo: false
 #| warning: false
-#| fig-cap: "Location of the drone flights. A: Flights made in Aven & Belon Estuaries, France; B: Flights made in Etel Estuary, France; C: Flights made in Saja Estuaries, Spain. Golden polygons represent intertidal areas. "
+#| fig-cap: "Location of the drone flights. A: Flights made in Aven Estuary, France; B: Flights made in Bélon Estuary, France; C: Flights made in Saja Estuaries, Spain. Golden polygons represent intertidal areas. "
 #| label: fig-location_sites
 #| fig-width: 10
 #| fig-height: 10
@@ -782,19 +855,19 @@ knitr::include_graphics("Figures/Low_res/Figure1/Map_site.png")
 
 ```
 
-## remote sensing data acquisition and pre-processing {#sec-DroneFlights}
+## Remote sensing data acquisition and pre-processing {#sec-DroneFlights}
 
 ```{r Drone flights dataframe}
 #| cache: true
 #| echo: false
 #| eval: false
 #| warning: false
-
-df <- data.frame(Country = c("France", "France", "France", "France", "Spain", "Spain"),
-                 Site = c("Aven & Belon","Aven & Belon","Ria d'Etel","Ria d'Etel", "Saja Estuary","Saja Estuary"),
-                 Flight  = c("Notre-Dame De Tremor","Pont du Guilly","Berringue","Lorois","Marisma de Cortiguera","Marisma de Cudón"),
-                 Date = c("2024-04-11","2024-04-11","2023-10-14","2023-10-15","2024-06-25","2024-06-25"), 
-                 Area = c(266582,213064,25486+127818,45293,204133,83757)) %>% 
+library(flextable)
+df <- data.frame(Country = c("France", "France","Spain", "Spain"),
+                 Site = c("Aven & Belon","Aven & Belon", "Saja Estuary","Saja Estuary"),
+                 Flight  = c("Notre-Dame De Tremor","Pont du Guilly","Marisma de Cortiguera","Marisma de Cudón"),
+                 Date = c("2024-04-11","2024-04-11","2024-06-25","2024-06-25"), 
+                 Area = c(266582,213064,204133,83757)) %>% 
   mutate(Area = round(Area * 0.0001,1))
 
 
@@ -812,12 +885,12 @@ flx1 <- flextable(df)  %>%
   merge_v(j = 2) %>%
     border_remove() %>%
     hline_top(border=brdr1) %>%
-    hline(i=6, border=brdr1) %>% 
+    hline_bottom(border=brdr1) %>% 
     hline(i=4, border=brdr1) %>% 
     hline(i=2, border=brdr1) %>% 
     hline(i=1, border=brdr2)%>% 
     hline(i=3, border=brdr2)%>% 
-    hline(i=5, border=brdr2) %>% 
+    # hline(i=5, border=brdr2) %>% 
     flextable::align(align = "center",part = "all") %>%
     flextable::align(align = "center",part = "header") %>%
   # set_caption(caption = "Table 1 List of drone Flight, summarising the date, the altitude and the purpose of each flight.") %>%
@@ -956,19 +1029,25 @@ DISCOV_Belon <- ggplot()+
                     values=c("#DAA520","#b3ff1a","#389318","#873e23","#b3002d","#a2a3a2","#42c9bc",NA,NA),
                     na.value = NA,
                     name = "",
-                    labels = c( "Bacillariophyceae",
-                                "Chlorophyceae",
-                                "Magnoliopsida",
+                    labels = c("Bacillariophyceae",
+                               "Chlorophyceae",
+                               "Magnoliopsida",
                                "Phaeophyceae",
                                "Rhodophyceae",
                                "Sediment",
                                "Water"))+
+  geom_text(aes(x =  ext(DISCOV_rast)[1]+0.04*(ext(DISCOV_rast)[2]-ext(DISCOV_rast)[1]),
+                y =  ext(DISCOV_rast)[4]-0.08*(ext(DISCOV_rast)[4]-ext(DISCOV_rast)[3]),
+                label = "A"),
+                size = 10)+
+  coord_sf(expand = F)+
   theme_Bede_Map()+
   # coord_equal()+
-   theme(axis.text.x = element_text(size = 10, angle = -20, color = NA,hjust = 0),
+   theme(
+     # axis.text.x = element_text(size = 10, angle = -20, color = NA,hjust = 0),
          axis.text.y = element_text(size = 10),
-         # axis.text.y = element_blank(),
-         axis.ticks.y = element_blank(), 
+         axis.text.x = element_blank(),
+         axis.ticks.x = element_blank(),
          axis.title = element_blank(),
          plot.background = element_rect(fill = "white", color = NA),
          legend.background = element_blank(),
@@ -976,7 +1055,7 @@ DISCOV_Belon <- ggplot()+
          legend.text = element_text(size = 10),
          legend.key.size = unit(0.5,"cm"))
 
-ggsave("Paper/Figures/High_res/Prediction_Map/Belon_DISCOV.png",DISCOV_Belon,width = 10, height = 4.56, dpi = 400)
+ggsave("Paper/Figures/High_res/Prediction_Map/Belon_DISCOV.png",DISCOV_Belon,width = 10, height = 4.225, dpi = 400)
 ```
 
 ```{r RGB Belon}
@@ -1008,22 +1087,37 @@ Belon_RGB <- "Data/RGB/Belon_RGB_MULTI.tif" %>%
          b = 3,
          maxcell = 4010533
          )+
+  geom_text(aes(x =  ext(Belon_RGB)[1]+0.04*(ext(Belon_RGB)[2]-ext(Belon_RGB)[1]),
+                y =  ext(Belon_RGB)[4]-0.08*(ext(Belon_RGB)[4]-ext(Belon_RGB)[3]),
+                label = "B"),
+                size = 10)+
     ggspatial::annotation_scale(location = "br",
+                                pad_y = unit(0.5, "cm"),
                                 text_cex=2)+
    theme_Bede_Map()+
+   coord_sf(expand = F)+
   # coord_equal()+
-   theme(axis.text.x = element_text(size = 10, angle = -20,hjust = 0, color = NA),
-         axis.text.y = element_text(size = 10, color = NA),
+   theme(
+     # axis.text.x = element_text(size = 10, angle = -20,hjust = 0, color = NA),
+         axis.text.y = element_text(size = 10),
+         axis.text.x = element_blank(),
+         # axis.ticks.y = element_blank(),
+         axis.ticks.x= element_blank(),
          plot.background = element_rect(fill = "white", color = NA), 
          axis.title = element_blank())
 
  
- ggsave("Paper/Figures/High_res/Prediction_Map/Belon_RGB.png",RGB_Belon,width = 10, height = 4.56, dpi = 400)
+ ggsave("Paper/Figures/High_res/Prediction_Map/Belon_RGB.png",RGB_Belon,width = 10, height = 4.225, dpi = 400)
   
 
 ```
 
 ```{r LiDAR DEM}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+
 
 library(terra)
 library(tidyverse)
@@ -1057,14 +1151,20 @@ bathy_Belon <- ggplot()+
                                maxcell = 500832)+
   scale_fill_scico(palette = "batlow", na.value = NA,
                    name = "Bathymetry",
-                   breaks = c(0,1,2,3),
-                   labels = c("0 m","1 m", "2 m ", "3 m ")) +
+                   breaks = c(0,1.5,3),
+                   limits = c(0,3),
+                   labels = c("0 m","1.5 m", "3 m")) +
+  geom_text(aes(x =  ext(Belon_RGB)[1]+0.04*(ext(Belon_RGB)[2]-ext(Belon_RGB)[1]),
+                y =  ext(Belon_RGB)[4]-0.08*(ext(Belon_RGB)[4]-ext(Belon_RGB)[3]),
+                label = "C"),
+                size = 10)+
   theme_Bede_Map()+
+  coord_sf(expand = F)+
   # coord_equal()+
    theme(axis.text.x = element_text(size = 10, angle = -20,hjust = 0),
          axis.text.y = element_text(size = 10),
          # axis.text.y = element_blank(),
-         axis.ticks.y = element_blank(), 
+         # axis.ticks.y = element_blank(), 
          axis.title = element_blank(),
          plot.background = element_rect(fill = "white", color = NA),
          legend.background = element_blank(),
@@ -1074,8 +1174,80 @@ bathy_Belon <- ggplot()+
          legend.key.size = unit(0.5,"cm"))
 
  ggsave("Paper/Figures/High_res/Prediction_Map/Belon_Bathy.png",bathy_Belon,width = 10, height = 4.56, dpi = 400)
+ 
+ # nrow(DEM_rast %>%  as.data.frame() %>% dplyr::filter(!is.na(Belon_DEM_LiDAR)))
 
 ```
+
+```{r MAP pathchwork}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+
+library(sf)
+library(terra)
+library(tidyverse)
+library(Utilities.Package)
+
+RGB <- rast("Paper/Figures/High_res/Prediction_Map/Belon_RGB.png")
+RGB(RGB) <- 1:3
+
+Pred <- rast("Paper/Figures/High_res/Prediction_Map/Belon_DISCOV.png")
+RGB(Pred) <- 1:3
+
+
+Bathy <- rast("Paper/Figures/High_res/Prediction_Map/Belon_Bathy.png")
+RGB(Pred) <- 1:3
+
+offset = 50
+
+ext(Pred) <- c(0,4000,1689,1689*2)
+ext(RGB) <- c(0,4000,offset,1689+offset)
+ext(Bathy) <- c(0,4000,-1823+(2*offset),2*offset)
+
+ Belon_patchwork<- ggplot()+
+   tidyterra::geom_spatraster_rgb(data = Pred,
+         r = 1,
+         g = 2,
+         b = 3,
+         maxcell = 4000*1689
+         )+
+   tidyterra::geom_spatraster_rgb(data = RGB,
+         r = 1,
+         g = 2,
+         b = 3,
+         maxcell = 4000*1689
+         )+
+   tidyterra::geom_spatraster_rgb(data = Bathy,
+         r = 1,
+         g = 2,
+         b = 3,
+         maxcell = 4000*1689
+         )+
+   coord_equal()+
+   theme_void()
+
+ggsave("Paper/Figures/High_res/Prediction_Map/Belon_maps.png",Belon_patchwork,width = 7.89, height = 10, dpi = 400)
+ggsave("Paper/Figures/Low_res/Belon_maps.png",Belon_patchwork,width = 7.89, height = 10, dpi = 200)
+
+```
+
+```{r Figure Map_Belon}
+#| cache: false
+#| echo: false
+#| warning: false
+#| fig-cap: DISCOV Prediction (A), RGB composition (B) and Bathymetry (C) of the Bélon estuary site in Brttany, France. The total extent of this flight was 21 hectars with a resolution of 8 mm per pixel. Bathymetry is represented as the height above mean sea level. 
+#| label: fig-Belon
+#| fig-width: 7.89
+#| fig-height: 10
+#| out-width: "95%"
+
+knitr::include_graphics("./Figures/Low_res/Belon_maps.png")
+
+```
+
+
 
 
 

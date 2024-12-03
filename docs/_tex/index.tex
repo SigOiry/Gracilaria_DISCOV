@@ -80,17 +80,15 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 % Set default figure placement to htbp
+\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -170,12 +168,15 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={DISCOV-Gracilaria Paper},
+  pdftitle={Spatial distribution of Gracillaria vermiculophylla in French and Spanish estuaries using Unmaned Aerial Vehicule.},
   pdfauthor={Simon Oiry¹; Bede Ffinian Rowe Davies¹; Pierre Gernez¹; Laurent Barillé¹},
   pdfkeywords={Remote Sensing, Invasive species, Coastal
 Ecosystems, Biodiversity},
@@ -187,10 +188,11 @@ Ecosystems, Biodiversity},
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{DISCOV-Gracilaria Paper}
+\title{Spatial distribution of \emph{Gracillaria vermiculophylla} in
+French and Spanish estuaries using Unmaned Aerial Vehicule.}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2024-11-26}
+\date{2024-12-03}
 
 \begin{document}
 \maketitle
@@ -273,7 +275,11 @@ management.
 
 In this study, we aim to harness the potential of drone-based
 multispectral remote sensing to map \emph{Gracilaria vermiculophylla} in
-intertidal zones. Bla bla what are we going to do ? bla bla .
+intertidal zones. A Neural Network classification model (DISCOV;Oiry et
+al. (2024a)), developed by Oiry et al. (2024b) to map intertidal
+vegetation in Europe has been update to improve red algae detection
+capability of the DISCOV model. Bla bla what are we going to do ? bla
+bla .
 
 \section{Materiel \& Methods}\label{materiel-methods}
 
@@ -282,7 +288,7 @@ intertidal zones. Bla bla what are we going to do ? bla bla .
 Field campaigns were conducted at three study sites in France and Spain.
 At each site, two locations were investigated
 Figure~\ref{fig-location_sites}. The Aven \& Belon Estuary in South
-Brittany, France (Figure~\ref{fig-location_sites} A), is a dynamic
+Brittany, France (Figure~\ref{fig-location_sites} A \& C), is a dynamic
 ria-type system hosting diverse habitats, including sandy tidal flats
 and subtidal zones with coarse, marine-origin sediments (Castaing and
 Guilcher, 1995; Michel et al., 2021). These habitats support key benthic
@@ -299,26 +305,6 @@ ecological richness, the estuary faces pressures from nutrient loading
 and physical alterations, with bioindicators like \emph{S. plana} used
 to monitor the impacts of salinity, sediment quality, and pollution
 (Tankoua et al., 2011).
-
-The Ria d'Étel, located in Brittany, France, is a macrotidal estuary
-characterized by its unique hydrodynamics and biodiversity
-(Figure~\ref{fig-location_sites} B). Influenced predominantly by tidal
-regimes, the estuary exhibits high-energy zones with strong currents
-reaching up to 2.5 m/s, shaping both sediment deposition and ecological
-habitats (Portas et al., 2023). The estuary supports diverse benthic
-communities, with sedimentary organic matter originating from both
-terrestrial inputs and marine sources, contributing to nutrient cycling
-and benthic fluxes (Jeanneau et al., 2023). Vegetation gradients
-transition from halophytic plants in saline zones to freshwater species
-upstream, reflecting the estuary's salinity dynamics and ecological
-complexity (Cianfaglione, 2021). This estuary is also notable for its
-shellfish farming, with species like \emph{Crassostrea gigas} cultivated
-extensively. The presence of filter-feeding organisms such as sponges
-(\emph{Hymeniacidon perlevis}) enhances water quality by mitigating
-bacterial loads and promoting bioremediation (Gentric and Sauleau,
-2024). However, the estuary faces environmental pressures, including
-nutrient enrichment from agricultural runoff and anthropogenic impacts
-on sedimentary processes.
 
 The Saja-Besaya Estuary, situated along the Cantabrian Sea in northern
 Spain, is characterized by the confluence of the Saja and Besaya rivers
@@ -337,18 +323,18 @@ riverbank vegetation in its lower sections (Romero et al., 2008).
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{Figures/Low_res/Figure1/Map_site.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{Figures/Low_res/Figure1/Map_site.png}
 
 }
 
 \caption{\label{fig-location_sites}Location of the drone flights. A:
-Flights made in Aven \& Belon Estuaries, France; B: Flights made in Etel
-Estuary, France; C: Flights made in Saja Estuaries, Spain. Golden
-polygons represent intertidal areas.}
+Flights made in Aven Estuary, France; B: Flights made in Bélon Estuary,
+France; C: Flights made in Saja Estuaries, Spain. Golden polygons
+represent intertidal areas.}
 
 \end{figure}%
 
-\subsection{remote sensing data acquisition and
+\subsection{Remote sensing data acquisition and
 pre-processing}\label{sec-DroneFlights}
 
 \begin{table}
@@ -358,7 +344,7 @@ location, the date, and the total extent of each flight (in hectars).}
 
 \centering{
 
-\includegraphics[width=8.84in,height=\textheight,keepaspectratio]{Figures/High_res/table_flights.png}
+\includegraphics[width=8.84in,height=\textheight]{Figures/High_res/table_flights.png}
 
 }
 
@@ -423,17 +409,30 @@ software. The LAS point cloud was then imported into Agisoft Metashape
 A neural network classification model (DISCOV; Oiry et al. (2024b); Oiry
 et al. (2024a)), previously applied with success to Micasense
 reflectance data for mapping intertidal vegetation along the Portuguese
-and French Atlantic coasts, served as the baseline for this study. The
-training dataset of DISCOV v1.0 (Oiry et al., 2024a) was updated in the
-current study, to file one of the weakness of this model. As shown by
-Oiry et al. (2024b) the DISCOV v1.0 model was trained using only 5771
-Rhodophyceae pixel (3\% of the training dataset), making that class
-among the least performing of the model (Sensitivity of 0.82). To fill
-this gap the original training dataset of DISCOV v1.0 was updated using
-new training pixel coming from flight performed in the current study
-(Section~\ref{sec-DroneFlights})
+and French Atlantic coasts, has been used in this study. The training
+dataset of DISCOV v1.0 has been updated. As shown by Oiry et al. (2024b)
+the DISCOV v1.0 model (Oiry et al., 2024a) was trained using only 5771
+Rhodophyceae pixel (3\% of the training dataset). To fill this gap the
+original training dataset of DISCOV v1.0 was updated using new training
+pixel coming from the 5 drone flights (Section~\ref{sec-DroneFlights}).
 
 \section{Results}\label{results}
+
+\phantomsection\label{cell-fig-Belon}
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Belon_maps.png}
+
+}
+
+\caption{\label{fig-Belon}DISCOV Prediction (A), RGB composition (B) and
+Bathymetry (C) of the Bélon estuary site in Brttany, France. The total
+extent of this flight was 21 hectars with a resolution of 8 mm per
+pixel. Bathymetry is represented as the height above mean sea level.}
+
+\end{figure}%
 
 \section{Discussion}\label{discussion}
 
@@ -476,12 +475,6 @@ Castaing, P., Guilcher, A., 1995. Morphosedimentary evolution of
 ria-type estuaries. Earth Surface Processes and Landforms 20, 361--376.
 \url{https://doi.org/10.1002/esp.3290200408}
 
-\bibitem[\citeproctext]{ref-Cianfaglione2018}
-Cianfaglione, K., 2021. Plant landscape and models of french atlantic
-estuarine systems: Extended summary of the doctoral thesis.
-Transylvanian Review of Systematical and Ecological Research 23, 15--36.
-\url{https://doi.org/10.2478/trser-2021-0002}
-
 \bibitem[\citeproctext]{ref-davies2024sentinel}
 Davies, B.F.R., Oiry, S., Rosa, P., Zoffoli, M.L., Sousa, A.I., Thomas,
 O.R., Smale, D.A., Austen, M.C., Biermann, L., Attrill, M.J., others,
@@ -502,12 +495,6 @@ Newlands, M., 2023. Valuing ecosystem services in complex coastal
 settings: An extended ecosystem accounting framework for improved
 decision-making. Marine Policy 155, 105761.
 
-\bibitem[\citeproctext]{ref-Gentric2024}
-Gentric, C., Sauleau, P., 2024. Bacterial load mitigation of the
-shellfish magallana gigas by the marine sponge hymeniacidon perlevis
-(montagu 1818). Regional Studies in Marine Science 75, 103564.
-\url{https://doi.org/10.1016/j.rsma.2024.103564}
-
 \bibitem[\citeproctext]{ref-van2018global}
 Ginneken, V. van, Vries, E. de, others, 2018. The global dispersal of
 the non-endemic invasive red alga gracilaria vermiculophylla in the
@@ -523,13 +510,6 @@ in Life Sciences 3, 197--206.
 \bibitem[\citeproctext]{ref-he2019climate}
 He, Q., Silliman, B.R., 2019. Climate change, human impacts, and coastal
 ecosystems in the anthropocene. Current Biology 29, R1021--R1035.
-
-\bibitem[\citeproctext]{ref-Jeanneau2023}
-Jeanneau, L., Jardé, E., Louis, J., Pannard, A., Liotaud, M.,
-Andrieux-Loyer, F., Gruau, G., Caradec, F., Rabiller, E., Lebris, N.,
-Laverman, A., 2023. How the origin of sedimentary organic matter impacts
-the benthic nutrient fluxes in shallow coastal mudflats. Comptes Rendus
-Géoscience 355, 237--258. \url{https://doi.org/10.5802/crgeos.228}
 
 \bibitem[\citeproctext]{ref-krueger2018everywhere}
 Krueger-Hadfield, S., 2018. Everywhere you look, everywhere you go,
@@ -603,13 +583,6 @@ multispectral drone imagery. Remote Sensing 16.
 Ortega, T., Ponce, R., Forja, J., Gómez-Parra, A., 2005. Fluxes of
 dissolved inorganic carbon in three estuarine systems of the cantabrian
 sea (north of spain). Journal of Marine Systems 53, 125--142.
-
-\bibitem[\citeproctext]{ref-Portas2023}
-Portas, A., Carriot, N., Ortalo-Magné, A., Damblans, G., Thiébaut, M.,
-Culioli, G., Quillien, N., Briand, J.-F., 2023. Impact of hydrodynamics
-on community structure and metabolic production of marine biofouling
-formed in a highly energetic estuary. Marine Environmental Research 192,
-106241. \url{https://doi.org/10.1016/j.marenvres.2023.106241}
 
 \bibitem[\citeproctext]{ref-ramus2017invasive}
 Ramus, A.P., Silliman, B.R., Thomsen, M.S., Long, Z.T., 2017. An
