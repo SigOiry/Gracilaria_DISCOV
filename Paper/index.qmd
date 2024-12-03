@@ -935,7 +935,13 @@ library(terra)
 library(tidyverse)
 library(Utilities.Package)
 
-DISCOV_rast <- rast("Data/DISCOV/Belon_1104_MS_DISCOV_InvaSea_26112024_pred.tif")
+
+msk <- "Data/shp/mask/Belon_32630.shp" %>% 
+  read_sf()
+
+DISCOV_rast <- rast("Data/DISCOV/Belon_1104_MS_DISCOV_InvaSea_26112024_pred.tif") %>% 
+  project(crs(msk), method = "near") %>% 
+  crop(msk, mask = T)
 
 values(DISCOV_rast)[values(DISCOV_rast) == 0] = NA
 names(DISCOV_rast) <- "layer"
@@ -959,8 +965,8 @@ DISCOV_Belon <- ggplot()+
                                "Water"))+
   theme_Bede_Map()+
   # coord_equal()+
-   theme(axis.text.x = element_text(size = 10, angle = -20,hjust = 0),
-         axis.text.y = element_text(size = 10, color = NA),
+   theme(axis.text.x = element_text(size = 10, angle = -20, color = NA,hjust = 0),
+         axis.text.y = element_text(size = 10),
          # axis.text.y = element_blank(),
          axis.ticks.y = element_blank(), 
          axis.title = element_blank(),
@@ -984,8 +990,14 @@ library(terra)
 library(tidyverse)
 library(Utilities.Package)
 
-Belon_RGB <- rast("Data/RGB/Belon_RGB_LiDAR_cropped.tif") 
-values(Belon_RGB[[1]])[values(Belon_RGB[[1]]) == 0] = NA
+msk <- "Data/shp/mask/Belon_32630.shp" %>% 
+  read_sf()
+
+Belon_RGB <- "Data/RGB/Belon_RGB_MULTI.tif" %>% 
+  rast() %>% 
+  crop(msk, mask = T)
+
+# values(Belon_RGB[[1]])[values(Belon_RGB[[1]]) == 0] = NA
 
 # RGB(Belon_RGB) <- 1:3
 
@@ -1000,8 +1012,8 @@ values(Belon_RGB[[1]])[values(Belon_RGB[[1]]) == 0] = NA
                                 text_cex=2)+
    theme_Bede_Map()+
   # coord_equal()+
-   theme(axis.text.x = element_text(size = 10, angle = -20,hjust = 0),
-         axis.text.y = element_text(size = 10),
+   theme(axis.text.x = element_text(size = 10, angle = -20,hjust = 0, color = NA),
+         axis.text.y = element_text(size = 10, color = NA),
          plot.background = element_rect(fill = "white", color = NA), 
          axis.title = element_blank())
 
@@ -1010,6 +1022,64 @@ values(Belon_RGB[[1]])[values(Belon_RGB[[1]]) == 0] = NA
   
 
 ```
+
+```{r LiDAR DEM}
+
+library(terra)
+library(tidyverse)
+library(Utilities.Package)
+library(scico)
+
+
+
+msk <- "Data/shp/mask/Belon_DEM_32630.shp" %>% 
+  read_sf()
+
+DEM_rast <- rast("Data/DEM/Belon_DEM_LiDAR.tif") %>% 
+  crop(msk, mask = T)
+
+p999 <- quantile(DEM_rast %>% as.data.frame() %>%  pull(Belon_DEM_LiDAR), probs = 0.999)
+
+values(DEM_rast)[values(DEM_rast) > p999] = NA
+values(DEM_rast)[values(DEM_rast) < 0] = NA
+
+
+bathy_Belon <- ggplot()+
+   tidyterra::geom_spatraster_rgb(data = Belon_RGB,
+         r = 1,
+         g = 2,
+         b = 3,
+         maxcell = 100000,
+         alpha = 0
+         )+
+    tidyterra::geom_spatraster(data = DEM_rast, 
+                               mapping = aes(fill = Belon_DEM_LiDAR ),
+                               maxcell = 500832)+
+  scale_fill_scico(palette = "batlow", na.value = NA,
+                   name = "Bathymetry",
+                   breaks = c(0,1,2,3),
+                   labels = c("0 m","1 m", "2 m ", "3 m ")) +
+  theme_Bede_Map()+
+  # coord_equal()+
+   theme(axis.text.x = element_text(size = 10, angle = -20,hjust = 0),
+         axis.text.y = element_text(size = 10),
+         # axis.text.y = element_blank(),
+         axis.ticks.y = element_blank(), 
+         axis.title = element_blank(),
+         plot.background = element_rect(fill = "white", color = NA),
+         legend.background = element_blank(),
+         legend.position = c(0.98,0.98),
+         legend.title = element_text(hjust = 0.5),
+         legend.text = element_text(size = 10),
+         legend.key.size = unit(0.5,"cm"))
+
+ ggsave("Paper/Figures/High_res/Prediction_Map/Belon_Bathy.png",bathy_Belon,width = 10, height = 4.56, dpi = 400)
+
+```
+
+
+
+
 
 
 
