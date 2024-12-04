@@ -103,6 +103,222 @@ In this study, we aim to harness the potential of drone-based multispectral remo
 
 # Materiel & Methods
 
+
+```{r Workflow building}
+#| cache: true
+#| echo: false
+#| warning: false
+#| eval: false
+
+building <- T   
+
+layout<-"Data/Workflow_Figure" %>%
+  list.files("V2.txt",full.names = T, recursive = T) %>%
+  read_delim(delim = "\t", escape_double = FALSE,
+    trim_ws = TRUE) %>%
+  dplyr::filter(Evaluate == T)
+
+
+layout$Text<- gsub("alaligne","\n", layout$Text)
+
+boxes<- layout %>% 
+  dplyr::filter(Type == "Box",
+                shape == "square")
+
+
+text<- layout %>% 
+  dplyr::filter(Type == "Box")
+
+diamonds<- layout %>% 
+  dplyr::filter(Type == "Box",
+                shape == "diamond")
+diff = 0.1
+for (i in 1:nrow(diamonds)) {
+  diam_a<-diamonds[i,]
+  
+df<-data.frame(  
+  x = c(diam_a$xmin - diff, diam_a$xmin + diff, diam_a$xmax + diff, diam_a$xmax - diff),
+  y = c(diam_a$ymin, diam_a$ymax, diam_a$ymax, diam_a$ymin),
+  Type = rep(diam_a$Type,4),
+  Text = rep(diam_a$Text,4),
+  Color = rep(diam_a$color,4),
+  Evaluate = rep(diam_a$Evaluate,4),
+  Resolution =  rep(diam_a$Resolution,4),
+  Evaluate_bigbox = rep(diam_a$Evaluate_bigbox,4),
+  alpha = rep(diam_a$alpha,4),
+  shape =  rep(diam_a$shape,4)
+)
+  if(i == 1){
+    diamond_list<-list(df)
+  }else{
+    diamond_list[[i]]<-df
+  }
+}
+
+
+
+Arrows<- layout %>% 
+  dplyr::filter(Type == "Arrow",
+                Evaluate == T)
+
+Group_box<-layout %>% 
+  dplyr::filter(Type == "Box",
+                Evaluate_bigbox == T) %>% 
+  group_by(Group) %>% 
+  dplyr::summarise(xmin = min(xmin)-0.1,
+                   xmax = max(xmax)+0.1,
+                   ymin = min(ymin)-0.1,
+                   ymax = max(ymax)+0.1,
+                   alpha = 0.1,
+                   color = color)
+
+resolution_box<-layout %>% 
+  dplyr::filter(Type == "Box",
+                Resolution != "NA") %>% 
+  group_by(Resolution) %>% 
+  dplyr::summarise(xmin = min(xmin)-0.1,
+                   xmax = max(xmax)+0.1,
+                   ymin = min(ymin)-0.1,
+                   ymax = max(ymax)+0.1,
+                   alpha = 0.1,
+                   color = color)
+
+legend = data.frame(color = unique(layout$color)) %>% 
+  dplyr::filter(!is.na(color)) %>% 
+  mutate(label = case_when(color == "#EA6155" ~ "Input Data",
+                           color == "#DC9614" ~ "Pre-processing",
+                           color == "#52A4DA" ~ "Model Building",
+                           color == "#79DA52" ~ "Validation",
+                           color == "#DA9652" ~ "Output Data",
+                           color == "darkcyan" ~ "Final Product",
+                           color == "#DA5273"  ~ "Prediction",
+                           TRUE ~ "NA")) %>% 
+  arrange
+
+segment<-layout %>% 
+  dplyr::filter(Type == "Segment")
+
+if(building == T){
+  
+text_size = 6 #### 6 to plot it fullscreen in R,  1.8 for exporting with ggsave
+line_size =1 ####arrow_size 0.3 to export  1 to for R plotting
+
+legend_size = 1 #### 0.3 to export, 1 for R ploting
+legend_text = 10 #### 4 to export, 10 for R ploting
+}else{
+  
+text_size = 1.85 #### 6 to plot it fullscreen in R,  1.8 for exporting with ggsave
+line_size =0.3 ####arrow_size 0.3 to export  1 to for R plotting
+
+legend_size = 0.3 #### 0.3 to export, 1 for R ploting
+legend_text = 5 #### 5 to export, 10 for R ploting
+  
+}
+
+
+a<-ggplot()+
+  
+  # statebins:::geom_rrect(data = Group_box,
+  #           mapping = aes(xmin = xmin,
+  #                         xmax= xmax,
+  #                         ymin = ymin,
+  #                         ymax = ymax),
+  #           alpha = 0.05,
+  #           size = 0.2,
+  #           show.legend = F,
+  #           fill = Group_box$color,
+  #           color = "black")+
+  
+    # statebins:::geom_rrect(data = resolution_box,
+    #         mapping = aes(xmin = xmin,
+    #                       xmax= xmax,
+    #                       ymin = ymin,
+    #                       ymax = ymax,
+    #                       alpha = rep(c("Input Data", "Pre-processing", "Model Building", "Prediction", "Validation", "Output Data", "Final Product"),2)),
+    #         fill = "NA",
+    #         linetype = 2,
+    #         size = 0.4,
+    #         color = "black")+
+  
+  scale_alpha_manual(name = "", 
+                     values = c(1,1,1,1,1,1,1),
+                     labels = c("Input Data", "Pre-Processing", "Model Building", "Prediction", "Validation", "Output Data", "Final Product"),
+                     guide = guide_legend(ncol = 1, override.aes = list(fill = c("#f94144", "#f3722c", "#f8961e", "#f9c74f", "#90be6d", "#43aa8b", "#577590"),
+                                                                        shape = c(22),
+                                                                        linetype = c(1),
+                                                                        alpha = c(0.5)
+                                                                        )
+                                          )
+                     )+
+  
+  statebins:::geom_rrect(data = boxes,
+            mapping = aes(xmin = xmin,
+                          xmax= xmax,
+                          ymin = ymin,
+                          ymax = ymax
+                          ),
+            size = 0.2,
+            alpha = as.numeric(boxes$alpha),
+            fill = boxes$color,
+            color = "black")
+  
+  for(i in 1:length(diamond_list)){
+    poly_i<-diamond_list[[i]]
+    a<-a+
+      geom_polygon(data = poly_i, 
+                   mapping = aes(x = x, 
+                                 y = y
+                                 ),
+                  size = 0.2,
+                   alpha = poly_i$alpha,
+                   fill = poly_i$Color,
+                   color = "black")
+    
+  }
+
+if(building == T){
+    a<-a+
+    geom_text(data = text,
+            mapping = aes(x = (xmax+xmin)/2, y = (ymax + ymin)/2, label = (ID)), size = text_size)
+  
+}else{
+    a<-a+
+    geom_text(data = text,
+            mapping = aes(x = (xmax+xmin)/2, y = (ymax + ymin)/2, label = (Text)), size = text_size)
+}
+
+
+  a<-a+
+    geom_segment(data = Arrows, aes( x = xmin, xend = xmax, y = ymin, yend = ymax),
+    size=line_size, linejoin = "mitre", lineend = "butt",
+    arrow = arrow(length = unit(1, "mm"), type= "closed")
+    )+
+    geom_segment(data = segment, aes( x = xmin, xend = xmax, y = ymin, yend = ymax),
+    size=line_size, linejoin = "mitre", lineend = "square"
+    )
+    
+  if(building == F){
+  a<- a+ theme_void()
+  }
+  
+  a<-a+
+  theme(legend.position = c(0.88,0.3),
+        legend.text = element_text(size = legend_text),
+        legend.key.size = unit(legend_size, 'cm'),
+        plot.background = element_rect(fill = "white",color = NA)
+        )+
+  scale_x_continuous(breaks = scales::breaks_width(0.5))+
+  scale_y_continuous(breaks = scales::breaks_width(0.5))
+  
+if(building == T){
+a
+}else{
+  ggsave("Paper/Figures/Workflow.png",a, units = "px")
+}
+
+
+```
+
 ## Study sites
 
 Field campaigns were conducted at three study sites in France and Spain. At each site, two locations were investigated [@fig-location_sites]. The Aven & Belon Estuary in South Brittany, France (@fig-location_sites A & C), is a dynamic ria-type system hosting diverse habitats, including sandy tidal flats and subtidal zones with coarse, marine-origin sediments [@Michel2021; @Castaing1995]. These habitats support key benthic species such as *Scrobicularia plana*, *Cerastoderma edule*, and *Tellina tenuis*, which play essential roles in sediment bioturbation and nutrient cycling [@Tankoua2011; @Blanchet2014]. The estuary serves as a nursery for juvenile fish and a feeding ground for migratory birds, with its ecological productivity driven by a mix of euryhaline and marine species adapted to salinity gradients [@Blanchet2014]. Oyster farming, particularly *Crassostrea gigas*, is a dominant activity, altering sediment dynamics and local biodiversity [@Michel2021]. Despite its ecological richness, the estuary faces pressures from nutrient loading and physical alterations, with bioindicators like *S. plana* used to monitor the impacts of salinity, sediment quality, and pollution [@Tankoua2011].
@@ -117,7 +333,7 @@ Field campaigns were conducted at three study sites in France and Spain. At each
 "
 ```
 
-The Saja-Besaya Estuary, situated along the Cantabrian Sea in northern Spain, is characterized by the confluence of the Saja and Besaya rivers near Torrelavega (@fig-location_sites C). The estuary, also known as San Martín de la Arena or Suances Estuary, has been subject to significant anthropogenic pressures, including industrial developments throughout the 20th century. These activities have led to contamination from mining, paper manufacturing, and carbonate discharges, classifying the estuary as highly polluted near its upper reaches [@ortega2005fluxes]. This contamination impacts the estuarine ecosystem, including water quality and biodiversity, with minimal aquatic life and sparse riverbank vegetation in its lower sections [@romero2008sintering].
+The Saja-Besaya Estuary, situated along the Cantabrian Sea in northern Spain, is characterized by the confluence of the Saja and Besaya rivers near Torrelavega (@fig-location_sites C). The estuary, also known as San Martín de la Arena or Suances Estuary, has been subject to significant anthropogenic pressures, including industrial developments throughout the 20th century. These activities have led to contamination from mining, paper manufacturing, and carbonate discharges, classifying the estuary as highly polluted near its upper reaches [@ortega2005fluxes]. This contamination impacts the estuarine ecosystem, including water quality and biodiversity, with minimal aquatic life and sparse riverbank vegetation in its lower sections [@romero2008sintering]. 
 
 ```{r intertidal mask}
 #| cache: true
