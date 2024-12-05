@@ -1188,33 +1188,12 @@ df_training %>%
   dplyr::select(Name,`Taxonomic Class`,`Training Pixels`, `Difference with DISCOV V1.0`) %>% 
   flextable()
 
-flx1<-flextable(df)  %>%
-  flextable::width(width = (w/(ncol(df)))) %>% 
-  merge_v(j = 1) %>%
-  merge_v(j = 2) %>%
-    border_remove() %>%
-    hline_top(border=brdr1) %>%
-    hline(i=5, border=brdr1) %>%
-    hline(i=1,j = 3:6, border=brdr2) %>%
-    hline(i=2, border=brdr2) %>%
-    hline(i=3, j = 2:6, border=brdr3) %>%
-    hline(i=4, j = 3:6, border=brdr2) %>%
-    hline(i=6, border=brdr2) %>%
-    hline(i=6, j = 1:2, border=brdr1) %>%
-    hline(i=7, border=brdr2) %>%
-    hline(i=8, border=brdr2) %>%
-    hline(i=9, border=brdr1) %>%
-    vline(j=2, border = brdr1) %>%
-    flextable::align(align = "center",part = "all") %>%
-    flextable::align(align = "center",part = "header") %>%
-  # set_caption(caption = "Table 1 List of drone Flight, summarising the date, the altitude and the purpose of each flight.") %>%
-  set_table_properties(layout = "autofit") 
-
-flx1
-
 ```
 
 # Results
+
+
+## Classification 
 
 ```{r DISCOV Belon Map}
 #| cache: false
@@ -1464,6 +1443,71 @@ ggsave("Paper/Figures/Low_res/Belon_maps.png",Belon_patchwork,width = 7.89, heig
 knitr::include_graphics("./Figures/Low_res/Belon_maps.png")
 
 ```
+
+## Spectral description
+
+```{r spectral extraction}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+
+library(tidyverse)
+library(terra)
+library(sf)
+
+multi_list <- "Data/Multi" %>% 
+  list.files(pattern = "tif", full.names = T) %>% 
+  as.tibble() %>% 
+  rename(path = "value") %>% 
+  mutate(filename = gsub(".*/","",path),
+         site = case_when(str_detect(filename, "Belon") ~ "Belon",
+                          str_detect(filename, "Aven") ~ "Aven",
+                          str_detect(filename, "Saja_North") ~ "SajaNorth",
+                          str_detect(filename, "Saja_South") ~ "SajaSouth"))
+
+DISCOV_list <- "Data/DISCOV" %>% 
+  list.files(pattern = "tif", full.names = T)%>% 
+  as.tibble() %>% 
+  rename(pred_path = "value") %>% 
+  mutate(filename = gsub(".*/","",pred_path),
+         site = case_when(str_detect(filename, "Belon") ~ "Belon",
+                          str_detect(filename, "Aven") ~ "Aven",
+                          str_detect(filename, "Saja_North") ~ "SajaNorth",
+                          str_detect(filename, "Saja_South") ~ "SajaSouth")) %>% 
+  select(pred_path,site)
+
+msk_list <- "Data/shp/mask" %>% 
+  list.files(pattern = ".shp",full.names = T)%>% 
+  as.tibble() %>% 
+  rename(shp_path = "value") %>% 
+  mutate(filename = gsub(".*/","",shp_path),
+         site = case_when(str_detect(filename, "Belon") ~ "Belon",
+                          str_detect(filename, "Aven") ~ "Aven",
+                          str_detect(filename, "SajaNorth") ~ "SajaNorth",
+                          str_detect(filename, "SajaSouth") ~ "SajaSouth")) %>% 
+  group_by(site) %>% 
+  slice(1) %>% 
+  select(shp_path,site)
+
+df_file <- multi_list %>% 
+  left_join(DISCOV_list, by ="site") %>% 
+  left_join(msk_list, by ="site")
+
+
+for (i in 1:nrow(df_file)) {
+  
+  msk <- df_file$shp_path[i] %>% read_sf()
+  multi <- rast(df_file$path[i]) %>% 
+    crop(msk)
+  pred <- rast(df_file$pred_path[i])
+  
+}
+
+
+
+```
+
 
 
 
