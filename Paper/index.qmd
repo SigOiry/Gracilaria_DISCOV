@@ -1204,7 +1204,7 @@ df_training %>%
 library(terra)
 library(tidyverse)
 library(Utilities.Package)
-
+library(sf)
 
 msk <- "Data/shp/mask/Belon_32630.shp" %>% 
   read_sf()
@@ -1490,18 +1490,80 @@ msk_list <- "Data/shp/mask" %>%
   slice(1) %>% 
   select(shp_path,site)
 
+DEM_list <- "Data/DEM" %>% 
+  list.files(pattern = ".tif",full.names = T) %>% 
+  as.tibble() %>% 
+  rename(DEM_path = "value") %>% 
+  mutate(filename = gsub(".*/","",DEM_path),
+         site = case_when(str_detect(filename, "Belon") ~ "Belon",
+                          str_detect(filename, "Aven") ~ "Aven",
+                          str_detect(filename, "SajaNorth") ~ "SajaNorth",
+                          str_detect(filename, "SajaSouth") ~ "SajaSouth")) %>% 
+  group_by(site) %>% 
+  slice(1) %>% 
+  select(DEM_path,site)
+
 df_file <- multi_list %>% 
   left_join(DISCOV_list, by ="site") %>% 
-  left_join(msk_list, by ="site")
+  left_join(msk_list, by ="site")%>% 
+  left_join(DEM_list, by ="site")
 
 
 for (i in 1:nrow(df_file)) {
   
   msk <- df_file$shp_path[i] %>% read_sf()
-  multi <- rast(df_file$path[i]) %>% 
-    crop(msk)
-  pred <- rast(df_file$pred_path[i])
   
+  multi <- rast(df_file$path[i]) %>% 
+    project(crs(msk)) %>% 
+    crop(msk, mask = T)
+  names(multi) <- c(paste0("B",1:10))
+  
+  pred <- rast(df_file$pred_path[i])%>% 
+    project(crs(msk),method = "near") %>% 
+    crop(msk, mask = T) %>% 
+    resample(multi, method = "near")
+  names(pred) <- "Pred"
+  
+  DEM <- rast(df_file$DEM_path[i]) %>% 
+    resample(multi, method = "bilinear") %>% 
+    crop(msk, mask = T)
+  names(DEM) <- "DEM"
+  
+  
+  
+  stk <- c(multi,pred,DEM) %>% 
+    as.data.frame() %>% 
+    mutate(site = df_file$site[i]) %>% 
+    dplyr::filter(B1 > 0,
+                  Pred !=0) %>% 
+    mutate(ID = c(1:nrow(.)),
+           NDVI = (B10-B6)/(B10+B6))
+  
+  sp <- stk %>% 
+    pivot_longer(-c(Pred,DEM,site, ID, NDVI), names_to = "bands", values_to = "values") %>% 
+    group_by(Pred, bands) %>% 
+    reframe(mean = mean(values, na.rm = T),
+            sd = sd(values, na.rm = T))
+  
+  
+  wv <- data.frame(bands = paste0("B",c(1:10)),
+                   wv = c(444,475,531,560,650,668,705,717,740,840))
+  
+  sp %>% 
+    left_join(wv, by = "bands") %>% 
+    ggplot()+
+    geom_line(aes(x = wv, y = mean, color = as.factor(Pred), group = Pred))
+  
+  stk %>%
+    dplyr::filter(Pred == 5) %>% 
+    ggplot()+
+    geom_density_2d(aes(x = DEM, y = NDVI))
+  
+  if(i == 1){
+    df_all <- stk
+  }else{
+    df_all <- rbind(df_all, stk)
+  }
 }
 
 
@@ -1518,6 +1580,28 @@ for (i in 1:nrow(df_file)) {
 
 
 # Discussion
+## Drone mapping *G. vermiculophylla* with machine learning
+
+In this study, we produced the first spatial distribution maps of the invasive red alga *Gracilaria vermiculophylla* using a multispectral drone survey conducted at low tide in Atlantic estuaries representing varied environmental conditions. In southern Brittany, the species formed monospecific mats, while in the Cantabrian region of Spain, it was intermixed with other intertidal vegetation. Distinguishing among these vegetation types was a key prerequisite for the analysis.
+
+To achieve this, we adapted the deep learning-based classification model DISCOV [@rs16234383], initially developed to discriminate seagrass from green macroalgae. Although the original model included Rhodophyceae as a class, this group constituted less than 3% of its training dataset. In contrast, the updated model presented here was trained on a dataset in which *G. vermiculophylla* covered 26% of approximately one million pixels. This improved dataset allowed the model to achieve an accuracy of **X%**.
+
+Rhodophytes possess unique phycobilin pigments, enabling their spectral distinction from other macroalgal groups [@rs14020346; @olmedo2020far; @rs11060704]. Even with the ten-band multispectral sensor used in our study, it remained feasible to discriminate the major classes of intertidal macrophytes [@roman2021using; @rs16234383; @davies2023multi]. However, the model identifies *G. vermiculophylla* at the class level (Rhodophyceae) rather than at the species level. Although hyperspectral approaches may allow finer taxonomic resolution [@rs14020346; @olmedo2020far], it is unlikely that Gracilaria species can be precisely distinguished using standard multispectral sensors.
+
+Ecological factors also aid in differentiating *G. vermiculophylla*. Unlike many other macroalgae that require hard substrates,* G. vermiculophylla* establishes itself on soft-bottom sediments. In fact, it is commonly found on mudflats, anchoring its thalli in the top 10 cm of mud [@surget2017processus], and inhabits the upper intertidal zone—an unusual trait for a Rhodophyte [@abreu2011nitrogen; @davoult2017multiple]. By reliably detecting *G. vermiculophylla* in these soft-substrate, upper intertidal habitats, our method provides a framework for identifying environmental conditions that favor its spread, potentially offering managers early-warning indicators to control its expansion before it reaches nuisance levels. Thus, combining spectral data with sediment characteristics provides a strong indicator of *G. vermiculophylla* presence in European Atlantic estuaries, complementing the physical variables already used in species distribution modeling [@jmse11020367].
+
+In addition, the scalability of drone-based surveying facilitates repeat mapping to detect temporal shifts in the distribution and abundance of *G. vermiculophylla.* Such continuous monitoring could capture seasonal patterns of colonization, allowing researchers and environmental managers to evaluate the effectiveness of mitigation measures, track long-term ecological impacts, and anticipate future shifts in habitat suitability under changing climate conditions.
+
+## *G. vermiculophylla* spatial distribution and mudflat topography
+
+## Spatio-temporal monitoring of invasive macroalgae 
+
+Accurate, high-resolution maps of invasive or alien species are extremely scarce (**REF**), yet they enable in-depth evaluations of these species’ ecology, temporal dynamics, and niche behavior in relation to their environment. In this study, using individual flights over monospecific algal mats, we quantified how this invasive alga associates with local mudflat topography, demonstrating that **…**. Repeated monitoring of this type can further reveal phenological patterns, invasion dynamics, and local conspecific biological interactions—such as co-occurrence, displacement, or avoidance (**REF**).
+
+Remote sensing using multispectral drone mapping can provide high-resolution, spatially explicit data, but it must be combined with repeated, in situ field measurements to maximize its potential (**REF**). As noted, temporal repetition makes it possible to assess dynamic processes, and integrating these mapping approaches with in situ analyses of local infauna, carbon cycling, riverine inputs, and sedimentology would yield valuable insights for local managers. Such an integrated approach could help determine how the invasive alga affects the local ecosystem and, more broadly, forecast its potential impact on other estuarine environments facing similar invasion events. This holistic approach can guide strategic interventions aimed at mitigating the alga’s spread, maintaining ecological balance, and protecting native biodiversity, ensuring that management efforts are informed by accurate, timely, and spatially explicit data.
+
+Invasive species like *Gracilaria vermiculophylla* and *Rugulopteryx okamurae* can be identified using drones equipped with multispectral sensors, taking advantage of the characteristic reflectance of rhodophytes [@roca2022monitoring]. However, this capability has not yet been tested using standard RGB sensors found in readily available commercial drones. These drones are easy to deploy, can cover large areas when flying at speeds of 15 m s^-1 at an altitude of 120 m, and still maintain sufficient overlap between images to support photogrammetric reconstruction. Expanding these methodologies to RGB-based detection would significantly lower barriers to entry, allowing local stakeholders with limited resources to access valuable monitoring tools for early detection and rapid response.
+A promising avenue for operational applications lies in testing machine learning techniques on RGB imagery that do not rely on enhanced spectral resolution. Considering the low cost of RGB and multispectral commercial drones, coupled with ongoing advancements in machine learning, drone-based remote sensing has now matured into a practical tool for adoption by environmental authorities in coastal management. Integrating these technologies into routine monitoring protocols can enhance surveillance capabilities, improve understanding of invasive species dynamics, and ultimately contribute to more effective conservation and restoration strategies.
 
 # Conclusion
 

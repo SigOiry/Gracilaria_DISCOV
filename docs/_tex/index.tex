@@ -80,15 +80,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -168,9 +170,6 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -192,7 +191,7 @@ Ecosystems, Biodiversity},
 French and Spanish estuaries using Unmaned Aerial Vehicule.}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2024-12-04}
+\date{2024-12-06}
 
 \begin{document}
 \maketitle
@@ -347,7 +346,7 @@ riverbank vegetation in its lower sections (Romero et al., 2008).
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{Figures/Low_res/Figure1/Map_site.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{Figures/Low_res/Figure1/Map_site.png}
 
 }
 
@@ -368,7 +367,7 @@ location, the date, and the total extent of each flight (in hectars).}
 
 \centering{
 
-\includegraphics[width=8.84in,height=\textheight]{Figures/High_res/table_flights.png}
+\includegraphics[width=8.84in,height=\textheight,keepaspectratio]{Figures/High_res/table_flights.png}
 
 }
 
@@ -442,12 +441,14 @@ pixel coming from the 5 drone flights (Section~\ref{sec-DroneFlights}).
 
 \section{Results}\label{results}
 
+\subsection{Classification}\label{classification}
+
 \phantomsection\label{cell-fig-Belon}
 \begin{figure}[H]
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Belon_maps.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Belon_maps.png}
 
 }
 
@@ -458,7 +459,123 @@ pixel. Bathymetry is represented as the height above mean sea level.}
 
 \end{figure}%
 
+\subsection{Spectral description}\label{spectral-description}
+
 \section{Discussion}\label{discussion}
+
+\subsection{\texorpdfstring{Drone mapping \emph{G. vermiculophylla} with
+machine
+learning}{Drone mapping G. vermiculophylla with machine learning}}\label{drone-mapping-g.-vermiculophylla-with-machine-learning}
+
+In this study, we produced the first spatial distribution maps of the
+invasive red alga \emph{Gracilaria vermiculophylla} using a
+multispectral drone survey conducted at low tide in Atlantic estuaries
+representing varied environmental conditions. In southern Brittany, the
+species formed monospecific mats, while in the Cantabrian region of
+Spain, it was intermixed with other intertidal vegetation.
+Distinguishing among these vegetation types was a key prerequisite for
+the analysis.
+
+To achieve this, we adapted the deep learning-based classification model
+DISCOV (Oiry et al., 2024b), initially developed to discriminate
+seagrass from green macroalgae. Although the original model included
+Rhodophyceae as a class, this group constituted less than 3\% of its
+training dataset. In contrast, the updated model presented here was
+trained on a dataset in which \emph{G. vermiculophylla} covered 26\% of
+approximately one million pixels. This improved dataset allowed the
+model to achieve an accuracy of \textbf{X\%}.
+
+Rhodophytes possess unique phycobilin pigments, enabling their spectral
+distinction from other macroalgal groups (Douay et al., 2022; Mcilwaine
+et al., 2019; Olmedo-Masat et al., 2020). Even with the ten-band
+multispectral sensor used in our study, it remained feasible to
+discriminate the major classes of intertidal macrophytes (Davies et al.,
+2023; Oiry et al., 2024b; Román et al., 2021). However, the model
+identifies \emph{G. vermiculophylla} at the class level (Rhodophyceae)
+rather than at the species level. Although hyperspectral approaches may
+allow finer taxonomic resolution (Douay et al., 2022; Olmedo-Masat et
+al., 2020), it is unlikely that Gracilaria species can be precisely
+distinguished using standard multispectral sensors.
+
+Ecological factors also aid in differentiating \emph{G.
+vermiculophylla}. Unlike many other macroalgae that require hard
+substrates,* G. vermiculophylla* establishes itself on soft-bottom
+sediments. In fact, it is commonly found on mudflats, anchoring its
+thalli in the top 10 cm of mud (Surget, 2017), and inhabits the upper
+intertidal zone---an unusual trait for a Rhodophyte (Abreu et al., 2011;
+Davoult et al., 2017). By reliably detecting \emph{G. vermiculophylla}
+in these soft-substrate, upper intertidal habitats, our method provides
+a framework for identifying environmental conditions that favor its
+spread, potentially offering managers early-warning indicators to
+control its expansion before it reaches nuisance levels. Thus, combining
+spectral data with sediment characteristics provides a strong indicator
+of \emph{G. vermiculophylla} presence in European Atlantic estuaries,
+complementing the physical variables already used in species
+distribution modeling (Mendoza-Segura et al., 2023).
+
+In addition, the scalability of drone-based surveying facilitates repeat
+mapping to detect temporal shifts in the distribution and abundance of
+\emph{G. vermiculophylla.} Such continuous monitoring could capture
+seasonal patterns of colonization, allowing researchers and
+environmental managers to evaluate the effectiveness of mitigation
+measures, track long-term ecological impacts, and anticipate future
+shifts in habitat suitability under changing climate conditions.
+
+\subsection{\texorpdfstring{\emph{G. vermiculophylla} spatial
+distribution and mudflat
+topography}{G. vermiculophylla spatial distribution and mudflat topography}}\label{g.-vermiculophylla-spatial-distribution-and-mudflat-topography}
+
+\subsection{Spatio-temporal monitoring of invasive
+macroalgae}\label{spatio-temporal-monitoring-of-invasive-macroalgae}
+
+Accurate, high-resolution maps of invasive or alien species are
+extremely scarce (\textbf{REF}), yet they enable in-depth evaluations of
+these species' ecology, temporal dynamics, and niche behavior in
+relation to their environment. In this study, using individual flights
+over monospecific algal mats, we quantified how this invasive alga
+associates with local mudflat topography, demonstrating that
+\textbf{\ldots{}}. Repeated monitoring of this type can further reveal
+phenological patterns, invasion dynamics, and local conspecific
+biological interactions---such as co-occurrence, displacement, or
+avoidance (\textbf{REF}).
+
+Remote sensing using multispectral drone mapping can provide
+high-resolution, spatially explicit data, but it must be combined with
+repeated, in situ field measurements to maximize its potential
+(\textbf{REF}). As noted, temporal repetition makes it possible to
+assess dynamic processes, and integrating these mapping approaches with
+in situ analyses of local infauna, carbon cycling, riverine inputs, and
+sedimentology would yield valuable insights for local managers. Such an
+integrated approach could help determine how the invasive alga affects
+the local ecosystem and, more broadly, forecast its potential impact on
+other estuarine environments facing similar invasion events. This
+holistic approach can guide strategic interventions aimed at mitigating
+the alga's spread, maintaining ecological balance, and protecting native
+biodiversity, ensuring that management efforts are informed by accurate,
+timely, and spatially explicit data.
+
+Invasive species like \emph{Gracilaria vermiculophylla} and
+\emph{Rugulopteryx okamurae} can be identified using drones equipped
+with multispectral sensors, taking advantage of the characteristic
+reflectance of rhodophytes (Roca et al., 2022). However, this capability
+has not yet been tested using standard RGB sensors found in readily
+available commercial drones. These drones are easy to deploy, can cover
+large areas when flying at speeds of 15 m s\^{}-1 at an altitude of 120
+m, and still maintain sufficient overlap between images to support
+photogrammetric reconstruction. Expanding these methodologies to
+RGB-based detection would significantly lower barriers to entry,
+allowing local stakeholders with limited resources to access valuable
+monitoring tools for early detection and rapid response. A promising
+avenue for operational applications lies in testing machine learning
+techniques on RGB imagery that do not rely on enhanced spectral
+resolution. Considering the low cost of RGB and multispectral commercial
+drones, coupled with ongoing advancements in machine learning,
+drone-based remote sensing has now matured into a practical tool for
+adoption by environmental authorities in coastal management. Integrating
+these technologies into routine monitoring protocols can enhance
+surveillance capabilities, improve understanding of invasive species
+dynamics, and ultimately contribute to more effective conservation and
+restoration strategies.
 
 \section{Conclusion}\label{conclusion}
 
@@ -505,6 +622,12 @@ monitoring of intertidal seagrass meadows beyond the visible spectrum
 using a remotely piloted aircraft system. Estuarine, Coastal and Shelf
 Science 255, 107299.
 
+\bibitem[\citeproctext]{ref-davies2023multi}
+Davies, B.F.R., Gernez, P., Geraud, A., Oiry, S., Rosa, P., Zoffoli,
+M.L., Barillé, L., 2023. Multi-and hyperspectral classification of
+soft-bottom intertidal vegetation using a spectral library for coastal
+biodiversity remote sensing. Remote Sensing of Environment 290, 113554.
+
 \bibitem[\citeproctext]{ref-davies2024sentinel}
 Davies, B.F.R., Oiry, S., Rosa, P., Zoffoli, M.L., Sousa, A.I., Thomas,
 O.R., Smale, D.A., Austen, M.C., Biermann, L., Attrill, M.J., others,
@@ -530,6 +653,11 @@ Diruit, W., Le Bris, A., Bajjouk, T., Richier, S., Helias, M., Burel,
 T., Lennon, M., Guyot, A., Ar Gall, E., 2022. Seaweed habitats on the
 shore: Characterization through hyperspectral UAV imagery and field
 sampling. Remote Sensing 14. \url{https://doi.org/10.3390/rs14133124}
+
+\bibitem[\citeproctext]{ref-rs14020346}
+Douay, F., Verpoorter, C., Duong, G., Spilmont, N., Gevaert, F., 2022.
+New hyperspectral procedure to discriminate intertidal macroalgae.
+Remote Sensing 14. \url{https://doi.org/10.3390/rs14020346}
 
 \bibitem[\citeproctext]{ref-douglas2024linking}
 Douglas, T.J., Coops, N.C., Drever, M.C., Hunt, B.P., Martin, T.G.,
@@ -582,6 +710,18 @@ biogeographic metropolitan french regions: Insights on distribution,
 origins and pathways of introduction. Diversity 15.
 \url{https://doi.org/10.3390/d15020161}
 
+\bibitem[\citeproctext]{ref-rs11060704}
+Mcilwaine, B., Casado, M.R., Leinster, P., 2019. Using 1st derivative
+reflectance signatures within a remote sensing framework to identify
+macroalgae in marine environments. Remote Sensing 11.
+\url{https://doi.org/10.3390/rs11060704}
+
+\bibitem[\citeproctext]{ref-jmse11020367}
+Mendoza-Segura, C., Fernández, E., Beca-Carretero, P., 2023. Predicted
+changes in the biogeographical range of gracilaria vermiculophylla under
+present and future climate scenarios. Journal of Marine Science and
+Engineering 11. \url{https://doi.org/10.3390/jmse11020367}
+
 \bibitem[\citeproctext]{ref-Michel2021}
 Michel, G., Le Bot, S., Lesourd, S., Lafite, R., 2021.
 Morpho-sedimentological and dynamic patterns in a ria type estuary: The
@@ -620,6 +760,12 @@ G., Gernez, P., Barillé, L., 2024b. Discriminating seagrasses from green
 macroalgae in european intertidal areas using high-resolution
 multispectral drone imagery. Remote Sensing 16.
 \url{https://doi.org/10.3390/rs16234383}
+
+\bibitem[\citeproctext]{ref-olmedo2020far}
+Olmedo-Masat, O.M., Raffo, M.P., Rodrı́guez-Pérez, D., Arijón, M.,
+Sánchez-Carnero, N., 2020. How far can we classify macroalgae remotely?
+An example using a new spectral library of species from the south west
+atlantic (argentine patagonia). Remote Sensing 12, 3870.
 
 \bibitem[\citeproctext]{ref-ortega2005fluxes}
 Ortega, T., Ponce, R., Forja, J., Gómez-Parra, A., 2005. Fluxes of
