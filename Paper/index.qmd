@@ -1191,8 +1191,6 @@ df_training %>%
 ```
 
 # Results
-
-
 ## Classification 
 
 ```{r DISCOV Belon Map}
@@ -1570,8 +1568,72 @@ for (i in 1:nrow(df_file)) {
 
 ```
 
+## Spatial distribution
+
+```{r}
+#| include: false
+#| message: false
+#| warning: false
+#| error: false
+
+library(tidyverse)
+library(Utilities.Package)
+library(mgcv)
+library(brms)
+library(tidybayes)
 
 
+Full_df<-read_csv("Data/Model/FullDF_10timesResample_DEMSlope_PredPercent.csv")
+
+m_Red <- brm(bf(Pred ~ DEM+Slope_Cat+ (1|Site)),
+         data = Full_df, family = Beta(), cores = 8, iter = 1000,
+         warmup = 100, control = list(adapt_delta = 0.9999),
+         save_pars = save_pars(latent = TRUE),
+         file = "Data/Model/Pred_Beta_agg_1000_DEM_SlopeCat_reSite_resampled")
+
+
+NewData_1<-expand_grid(DEM=seq(min(Full_df$DEM),max(Full_df$DEM),length.out=100),
+                       Slope_Cat=factor(c("Flat",
+                            "Slope",
+                            "Vertical")),
+                       Site=unique(Full_df$Site))
+
+NewData1_brms<-NewData_1%>% 
+  add_linpred_draws(m_Red, ndraws=2000,seed=123,transform=TRUE)
+
+Total<-NewData1_brms%>% 
+  group_by(DEM)%>% 
+  summarise(median_qi(.linpred,.width=c(0.89))) %>% 
+  expand_grid(Slope_Cat=factor(c("Flat",
+                            "Slope",
+                            "Vertical")))
+
+NewData1_brms%>% 
+  group_by(DEM,Slope_Cat)%>% 
+  summarise(median_qi(.linpred,.width=c(0.89)))%>%
+  ggplot(aes(x = DEM,y=y)) +
+  geom_ribbon(aes(ymax = ymax,ymin=ymin,fill=Slope_Cat),
+              alpha=0.3) +
+  geom_line(aes(colour=Slope_Cat),
+            linewidth=1)+
+  geom_line(data = Total,aes(x=DEM,y=y),colour="black")+
+  scale_fill_manual(name="Slope",values=c("#8E7CC3","#76A5AF","#93C47D"),
+                    labels=c("Flat",
+                            "Angled",
+                            "Vertical"))+
+  scale_colour_manual(name="Slope",values=c("#8E7CC3","#76A5AF","#93C47D"),
+                    labels=c("Flat",
+                            "Angled",
+                            "Vertical"))+
+  scale_y_continuous(breaks = c(0.1,0.2,0.3,0.4,0.5),
+                     labels = c("10","20","30","40","50"))+
+  labs(x="Bathymetry (m)",y="Intertidal Area Covered\n by Gracilaria vermiculophylla (%)")+
+  facet_wrap(~Slope_Cat,ncol =1)+
+  theme_Bede()+
+  theme(strip.text = element_blank(),
+        legend.position = "top")
+
+```
 
 
 
