@@ -1330,8 +1330,12 @@ data.frame(date = c(1952,1958),
   bind_rows(Pres_algae) %>% 
 ggplot(aes(x = date, y = prop))+
   geom_point()+
-  geom_smooth(method = "gam",se = F)
-  # geom_line()
+  geom_line()+
+  geom_vline(xintercept = 1971, linetype = "dashed", color = "darkred", linewidth=1)+
+  geom_vline(xintercept = 1994, linetype = "dashed", color = "goldenrod", linewidth=1)+
+  theme_Bede()
+  
+# geom_line()
   
 
 
