@@ -1312,6 +1312,10 @@ ggsave("Paper/Figures/Low_res/Historical_maps.png",plot_all, width = 10, height 
 #| warning: false
 #| eval: false
 
+library(tidyverse)
+library(sf)
+library(Utilities.Package)
+
 mask <- "Data/RemonterLeTemps/shp/mask/IntertidalMask_Belon_RemonterLeTemps.shp" %>% 
   read_sf() %>% 
   mutate(area = st_area(.)) %>% 
@@ -1325,21 +1329,56 @@ Pres_algae <- "Data/RemonterLeTemps/shp/shape_red_algae/Presence_Absence_RedAlga
   mutate(prop = as.numeric((area/mask)*100)) %>% 
   dplyr::select(-area)
 
-data.frame(date = c(1952,1958),
+plot <- data.frame(date = c(1952,1958),
            prop = c(0,0)) %>% 
   bind_rows(Pres_algae) %>% 
 ggplot(aes(x = date, y = prop))+
-  geom_point()+
-  geom_line()+
+  # geom_bar(stat = "identity",size = 10 )+
+  geom_point(size = 4)+
+  xlab("Year")+
+  ylab("Cover of Gracilaria (%)")+
+  
+  # geom_line()+
   geom_vline(xintercept = 1971, linetype = "dashed", color = "darkred", linewidth=1)+
   geom_vline(xintercept = 1994, linetype = "dashed", color = "goldenrod", linewidth=1)+
-  theme_Bede()
-  
-# geom_line()
-  
-
+    geom_rug(sides = "b") +  # Add ticks at the bottom for each x-value
+  geom_text(
+    x = 1970, 
+    y = 30, 
+    label = expression(paste("First introduction of ", italic("Crassostrea gigas"))), 
+    angle = 90
+  )+
+  geom_text(
+    x = 1972, 
+    y = 30, 
+    label = expression(paste("in France")), 
+    angle = 90
+  )+
+  geom_text(
+    x = 1993, 
+    y = 30, 
+    label = expression(paste("First record of ", italic("Gracilaria vermiculophylla"))), 
+    angle = 90
+  )+
+  geom_text(
+    x = 1995, 
+    y = 30, 
+    label = expression(paste("in the Belon Estuary")), 
+    angle = 90
+  )+
+  theme_Bede()+
+  theme(axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20), 
+        plot.background = element_rect(fill = "white", color = NA))
+ # geom_line()
+ggsave("Paper/Figures/High_res/Cover_Gracillaria_vs_Time.png", plot, width = 10, height = 6, dpi = 400)
+ggsave("Paper/Figures/Low_res/Cover_Gracillaria_vs_Time.png", plot, width = 10, height = 6, dpi = 200)
 
 ```
+
+A clear shift in sediment coloration over the paste 70 years were observed, closely aligned with the subsequent proliferation of the invasive red macroalga *Gracilaria vermiculophylla* (@fig-HistoricalMap). Before 1976, the sediments appeared relatively light, indicating no detectable presence of this species. Following its initial appearance in 1976, subtle darkening of the sediment became discernible, coinciding with the early establishment of *G. vermiculophylla*. During the subsequent decades, the late 1970s through the 1990s, this darkening trend became more pronounced and widespread, reflecting an increasing spatial coverage and biomass of the algae. By the early 2000s, and especially by 2024, the sediment exhibited consistently darker tones, indicative of extensive and persistent colonization by *G. vermiculophylla*.
 
 ```{r HistoricalMap}
 #| cache: false
@@ -1352,10 +1391,23 @@ ggplot(aes(x = date, y = prop))+
 #| out-width: "95%"
 
 knitr::include_graphics("./Figures/Low_res/Historical_maps.png")
-
 ```
 
+From the early recordings in the 1950s through the late 1970s, *Gracilaria vermiculophylla* coverage remained effectively at 0% (@fig-HistoricalPlot). Shortly after the introduction of *Crassostrea gigas* in the estuary (see vertical red dashed line in the figure), the first detectable presence of *G. vermiculophylla* emerged. By 1976, it covered 2.5% (0.7 ha) of the Pont du Guilly area, and by 1978 it had increased slightly to 3.0% (0.9 ha). From 1982 onward, coverage expanded more rapidly, increasing from 6.6% (2.0 ha) in 1982 to 14.7% (4.5 ha) in 1992 and nearly 30% (9.0 ha) by 1997. This upward trend continued into the 21st century, peaking at 43.8% (13.3 ha) in 2012. Although coverage fluctuated somewhat thereafter (40.6% in 2019 and 40.2% in 2024), it remained consistently high, indicating sustained and widespread colonization.
 
+```{r HistoricalPlot}
+#| cache: false
+#| echo: false
+#| warning: false
+#| fig-cap: Evolution of the Gracilaria vermiculophylla cover at Pont du Guilly in the Belon Estuary. The red vertical line indicates the date of Crassostrea gigas introduction in France [@grizel1991introduction], while the golden line represents the date of the first documented mention of Gracilaria vermiculophylla invasion in France in the literature [@rueness2005life].  
+#| label: fig-HistoricalPlot
+#| fig-width: 6
+#| fig-height: 10
+#| out-width: "95%"
+
+knitr::include_graphics("./Figures/Low_res/Cover_Gracillaria_vs_Time.png")
+
+```
 
 ## Classification 
 
@@ -1593,6 +1645,10 @@ ggsave("Paper/Figures/High_res/Prediction_Map/Belon_maps.png",Belon_patchwork,wi
 ggsave("Paper/Figures/Low_res/Belon_maps.png",Belon_patchwork,width = 7.89, height = 10, dpi = 200)
 
 ```
+
+The classification map illustrates the diversity of benthic communities and substrates in the study area (@fig-Belon A and B). Rhodophyceae (red) emerges as the dominant algal cover, forming extensive, continuous patches aligned with the mid-intertidal zones. In contrast, Bacillariophyceae (orange) and Chlorophyceae (green) exhibit more localized distributions, typically restricted to smaller, fragmented patches where specific microtopographic or hydrodynamic conditions favor their presence. Phaeophyceae (brown) is confined to limited patches, often found near transitional zones between sediment and water or in the upper intertidal area, where it is attached to rocky substrates. The water class (blue) delineates the main tidal channel, which meanders through the center of the area and influences the distribution of adjacent habitats.
+
+The bathymetric map reveals a continuous gradient in elevation relative to mean sea level (@fig-Belon C). A comparison of bathymetry and vegetation distribution highlights a clear elevation-driven pattern in algal presence. Higher intertidal zones, located above the deeper channel areas, are associated with more extensive algal communities. In contrast, lower intertidal zones closer to the channel consistently exhibit reduced macroalgal cover.
 
 ```{r Figure Map_Belon}
 #| cache: false
