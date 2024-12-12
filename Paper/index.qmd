@@ -1191,6 +1191,168 @@ df_training %>%
 ```
 
 # Results
+
+## Historical records in the Belon estuary
+
+```{r map plotting}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+
+library(tidyverse)
+library(sf)
+library(terra)
+library(tidyterra)
+
+img_list <- list.files("Data/RemonterLeTemps/img", full.names = T, include.dirs = F) %>% 
+  as_tibble() %>% 
+  rename(path ="value") %>% 
+  dplyr::filter(!str_detect(path, "RAW")) %>% 
+  mutate(filename = gsub(".*/","",path),
+         source = case_when(str_detect(filename, "IGNF") ~ "IGN",
+                          T ~ "Other"),
+         year = as.integer(case_when(source == "IGN" ~ substr(filename,15,18),
+                          T ~ substr(filename,1,4))))
+
+mask <- "Data/RemonterLeTemps/shp/mask/IntertidalMask_Belon_RemonterLeTemps.shp" %>% 
+  read_sf()
+
+Pres_algae <- "Data/RemonterLeTemps/shp/shape_red_algae/Presence_Absence_RedAlgae_Date.shp" %>% read_sf()
+
+
+
+Text_position <- data.frame(x = rep(ext(mask)[1]+0.9*(ext(mask)[2]-ext(mask)[1]),nrow(img_list)),
+                            y = rep(ext(mask)[3]+0.9*(ext(mask)[4]-ext(mask)[3]),nrow(img_list)),
+                            year = img_list$year)
+
+for(i in 1:nrow(img_list)){
+  
+
+  img <- rast(img_list$path[i]) %>% 
+    project(crs(mask)) %>% 
+    crop(mask, mask = T)
+  
+  date_i <- Text_position[i,]
+  # shp_i <- Pres_algae %>% 
+  #   dplyr::filter(date == img_list$year[i])
+  # 
+  # if(img_list$year[i] == 2024){
+  #   shp_i <- shp_i %>% 
+  #     st_buffer(dist = 0.3) %>% 
+  #     st_union()
+  # }
+  # 
+  
+Plot <-  
+  if(nlyr(img) != 1){
+    RGB(img)<-1:3
+    
+    ggplot()+
+      geom_spatraster_rgb(data = img)
+  }else{
+    names(img) = "layer"
+    ggplot()+
+      geom_spatraster(img, mapping = aes(fill = layer), show.legend = F)+
+      scale_fill_gradient(low = "black", high = "white", limits = c(0,240),na.value = NA, name = "Greyscale")
+  }
+
+a <- Plot +
+    geom_text(data = date_i, aes(x = x, y = y, label = year),
+              size = 7)+
+  # geom_sf(data = shp_i, fill = NA, color = "darkred")+ 
+   coord_sf(xlim = c(ext(mask)[1],ext(mask)[2]),
+            ylim = c(ext(mask)[3],ext(mask)[4]),
+            expand = F)+
+    # geom_text(data = date_i, aes(x = x, y = y, label = year),
+    #           size = 10)+
+    theme_Bede()+
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          strip.clip = "inherit",
+          panel.spacing = unit(0,"pt"), 
+          plot.margin = unit(c(0, 0, 0, 0), "lines"))+
+    if(img_list$year[i] == 2024){
+    ggspatial::annotation_scale(location = "bl",
+                                pad_y = unit(0.3, "cm"),
+                                text_cex=1)
+    }
+  
+  
+a 
+  
+assign(paste0("plot_",as.character(img_list$year[i])),a)
+  
+}
+
+
+# plot_all <- (plot_1952 + plot_1958)/
+# (plot_1976 + plot_1978)/
+# (plot_1982 + plot_1992)/
+# (plot_1997 + plot_2012)/
+# (plot_2019 + plot_2024)
+
+plot_all <- (plot_1952 + plot_1958 + plot_1976)/
+(plot_1978 + plot_1982 + plot_1992)/
+(plot_1997 + plot_2012 + plot_2024)
+
+
+ggsave("Paper/Figures/High_res/Historical_maps.png",plot_all, width = 10, height = 4.52, dpi = 400)
+ggsave("Paper/Figures/Low_res/Historical_maps.png",plot_all, width = 10, height = 4.52, dpi = 200)
+
+```
+
+```{r area_each_year}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+
+mask <- "Data/RemonterLeTemps/shp/mask/IntertidalMask_Belon_RemonterLeTemps.shp" %>% 
+  read_sf() %>% 
+  mutate(area = st_area(.)) %>% 
+  pull(as.numeric(area)[1])
+
+Pres_algae <- "Data/RemonterLeTemps/shp/shape_red_algae/Presence_Absence_RedAlgae_Date.shp" %>% 
+  read_sf() %>% 
+  mutate(area = st_area(.)) %>% 
+  group_by(date) %>% 
+  reframe(area = sum (area)) %>% 
+  mutate(prop = as.numeric((area/mask)*100)) %>% 
+  dplyr::select(-area)
+
+data.frame(date = c(1952,1958),
+           prop = c(0,0)) %>% 
+  bind_rows(Pres_algae) %>% 
+ggplot(aes(x = date, y = prop))+
+  geom_point()+
+  geom_smooth(method = "gam",se = F)
+  # geom_line()
+  
+
+
+```
+
+```{r HistoricalMap}
+#| cache: false
+#| echo: false
+#| warning: false
+#| fig-cap: Historical images of Pont du Guilly between 1952 and 2024.  
+#| label: fig-HistoricalMap
+#| fig-width: 4.52
+#| fig-height: 10
+#| out-width: "95%"
+
+knitr::include_graphics("./Figures/Low_res/Historical_maps.png")
+
+```
+
+
+
 ## Classification 
 
 ```{r DISCOV Belon Map}
@@ -1570,10 +1732,11 @@ for (i in 1:nrow(df_file)) {
 
 ## Spatial distribution
 
-```{r}
+```{r GAMmodel}
 #| include: false
 #| message: false
 #| warning: false
+#| eval: false
 #| error: false
 
 library(tidyverse)
@@ -1613,7 +1776,7 @@ NewData1_brms%>%
   summarise(median_qi(.linpred,.width=c(0.89)))%>%
   ggplot(aes(x = DEM,y=y)) +
   geom_ribbon(aes(ymax = ymax,ymin=ymin,fill=Slope_Cat),
-              alpha=0.3) +
+              alpha=0.05) +
   geom_line(aes(colour=Slope_Cat),
             linewidth=1)+
   geom_line(data = Total,aes(x=DEM,y=y),colour="black")+
@@ -1628,7 +1791,7 @@ NewData1_brms%>%
   scale_y_continuous(breaks = c(0.1,0.2,0.3,0.4,0.5),
                      labels = c("10","20","30","40","50"))+
   labs(x="Bathymetry (m)",y="Intertidal Area Covered\n by Gracilaria vermiculophylla (%)")+
-  facet_wrap(~Slope_Cat,ncol =1)+
+  # facet_wrap(~Slope_Cat,ncol =1)+
   theme_Bede()+
   theme(strip.text = element_blank(),
         legend.position = "top")
