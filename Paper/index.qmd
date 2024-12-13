@@ -1,5 +1,5 @@
 ---
-title: Spatial distribution of *Gracillaria vermiculophylla* in French and Spanish estuaries using Unmaned Aerial Vehicule. 
+title: Monitoring the marine invasive alien species *Gracilaria vermiculophylla* using unmanned aerial vehicles 
 shorttitle: DISCOV - Gracilaria
 author:
   - name: Simon Oiry¹
@@ -93,16 +93,13 @@ my_comma<-scales::label_comma(accuracy = NULL, big.mark = ",",decimal.mark = "."
 
 # Introduction
 
-The introduction of Non-Indigenous Species (NIS) in terrestrial, freshwater, and marine ecosystems is one of the major threats to biodiversity worldwide. In particular, the proliferation and rapid spread of Invasive Alien Species (IAS) can radically change the structure and functioning of marine ecosystems, , requiring effective inventorying and monitoring programs [@d15020161]. In Europe, 874 NIS have been introduced to the marine environment so far (i.e. until 2020) and it is expected that the rate of biological invasions will continue to increase in the coming years [@d14121077]. Macroalgae represent more than 40 % of the NIS introduced to Europe waters, with many species native to the Temperate Northern Pacific [@williams2007global]. 
-Amongst all invasive macroalgae, *Gracilaria vermiculophylla* [@WoRMS303450] (original name *Gracilariopsis vermiculophylla* [@ohmi1956contributions]; also known as *Agarophyton vermiculophyllum* [@gurgel2018systematics]), has spread extensively from its native distribution range in Japan and Korea [@terada2002review] across temperate estuaries in North America, Europe, and other regions, facilitated by aquaculture and maritime activities [@rueness2005life; @weinberger2008invasive; @krueger2017genetic]. While *G. vermiculophylla* can provide some ecosystem services, such as habitat for invertebrates and juvenile fish [@davoult2017multiple], it often outcompetes native vegetation, alters sediment composition [@nyberg2009flora], and disrupts trophic interactions [@van2018global]. In regions like the Baltic Sea and the eastern United States, it has been documented to negatively affect native fucoids and seagrasses [@van2003reintroduction; @thomsen2013effects ; @firth2024invasive]. These impacts underscore the importance of monitoring and managing the spread of *G. vermiculophylla*, particularly as climate change and anthropogenic pressures continue to facilitate biological invasions.
-*G. vermiculophylla* success as an invader stems from its tolerance to a wide range of environmental conditions, including temperature [@sotka2018combining], nutrient variability [@abreu2011nitrogen] and salinity [@weinberger2008invasive]. Its growth capacity at low salinities [@rueness2005life ; @nyberg2007introduced] explains its presence in the brackish waters of the Baltic Sea [@weinberger2008invasive] but also in the mesohaline sheltered part of estuaries of the Atlantic coast of Europe **(Surget et al., 2017)**. It is also present in confined areas of lagoons characterized by low hydrodynamism [@abreu2011nitrogen ; @sfriso2012spreading]. In Europe, it was first observed in 1996 in the Belon estuary (France) and later in many other estuaries on the Brittany coast of France [@rueness2005life]. It can be found on hard substrates such as invertebrate’s tubes and shells providing a substratum [@thomsen2007gracilaria] or attached to pebbles and rocks [@terada2002review] but the largest populations are colonizing soft-bottom sediment and particularly estuarine intertidal mudflats **(Surget et al., 2017)**. In this habitat, extensive dark red mats are observed at low tide, covering vast areas that have largely been unquantified in most studies. Therefore, *G. vermiculophylla* is capable of establishing populations in soft-bottom sediment habitats that were previously devoid of macroalgae [@ramus2017invasive]. These mats are usually monospecific with the alga thalli partially buried into the mud [@rueness2005life ; @surget2017processus]. Intertidal mats can however be temporarily overgrown by ephemeral green macroalgae [@weinberger2008invasive]. In the estuaries where *G. vermiculophylla* was first documented, large monospecific mats were reported to be confined to the upper intertidal zones [@rueness2005life]; however, their spatial distribution relative to the mudflat topography had not been quantitatively assessed. In fact, *G. vermiculophylla* has never been mapped using remote sensing techniques, and existing descriptions of its distribution lack spatially explicit mapping [@thomsen2007gracilaria ; @weinberger2008invasive ; @abreu2011nitrogen ; @sfriso2012spreading]
+The introduction of Non-Indigenous Species (NIS) in terrestrial, freshwater, and marine ecosystems is one of the major threats to biodiversity worldwide. In particular, the proliferation and rapid spread of Invasive Alien Species (IAS) can radically change the structure and functioning of marine ecosystems, , requiring effective inventorying and monitoring programs [@d15020161]. In Europe, 874 NIS have been introduced to the marine environment so far (i.e. until 2020) and it is expected that the rate of biological invasions will continue to increase in the coming years [@d14121077]. Macroalgae represent more than 40 % of the NIS introduced to Europe waters, with many species native to the Temperate Northern Pacific [@williams2007global]. Amongst all invasive macroalgae, *Gracilaria vermiculophylla* [@WoRMS303450] (original name *Gracilariopsis vermiculophylla* [@ohmi1956contributions]; also known as *Agarophyton vermiculophyllum* [@gurgel2018systematics]), has spread extensively from its native distribution range in Japan and Korea [@terada2002review] across temperate estuaries in North America, Europe, and other regions, facilitated by aquaculture and maritime activities [@rueness2005life; @weinberger2008invasive; @krueger2017genetic]. While *G. vermiculophylla* can provide some ecosystem services, such as habitat for invertebrates and juvenile fish [@davoult2017multiple], it often outcompetes native vegetation, alters sediment composition [@nyberg2009flora], and disrupts trophic interactions [@van2018global]. In regions like the Baltic Sea and the eastern United States, it has been documented to negatively affect native fucoids and seagrasses [@van2003reintroduction; @thomsen2013effects; @firth2024invasive]. These impacts underscore the importance of monitoring and managing the spread of *G. vermiculophylla*, particularly as climate change and anthropogenic pressures continue to facilitate biological invasions. *G. vermiculophylla* success as an invader stems from its tolerance to a wide range of environmental conditions, including temperature [@sotka2018combining], nutrient variability [@abreu2011nitrogen] and salinity [@weinberger2008invasive]. Its growth capacity at low salinities [@rueness2005life; @nyberg2007introduced] explains its presence in the brackish waters of the Baltic Sea [@weinberger2008invasive] but also in the mesohaline sheltered part of estuaries of the Atlantic coast of Europe **(Surget et al., 2017)**. It is also present in confined areas of lagoons characterized by low hydrodynamism [@abreu2011nitrogen; @sfriso2012spreading]. In Europe, it was first observed in 1996 in the Belon estuary (France) and later in many other estuaries on the Brittany coast of France [@rueness2005life]. It can be found on hard substrates such as invertebrate’s tubes and shells providing a substratum [@thomsen2007gracilaria] or attached to pebbles and rocks [@terada2002review] but the largest populations are colonizing soft-bottom sediment and particularly estuarine intertidal mudflats **(Surget et al., 2017)**. In this habitat, extensive dark red mats are observed at low tide, covering vast areas that have largely been unquantified in most studies. Therefore, *G. vermiculophylla* is capable of establishing populations in soft-bottom sediment habitats that were previously devoid of macroalgae [@ramus2017invasive]. These mats are usually monospecific with the alga thalli partially buried into the mud [@rueness2005life; @surget2017processus]. Intertidal mats can however be temporarily overgrown by ephemeral green macroalgae [@weinberger2008invasive]. In the estuaries where *G. vermiculophylla* was first documented, large monospecific mats were reported to be confined to the upper intertidal zones [@rueness2005life]; however, their spatial distribution relative to the mudflat topography had not been quantitatively assessed. In fact, *G. vermiculophylla* has never been mapped using remote sensing techniques, and existing descriptions of its distribution lack spatially explicit mapping [@thomsen2007gracilaria; @weinberger2008invasive; @abreu2011nitrogen; @sfriso2012spreading]
 
-Remote sensing has revolutionized our ability to monitor and manage coastal ecosystems, offering efficient and scalable methods for detecting environmental changes in intertidal vegetation across a wide range of spatio-temporal scales [@davies2024intertidal; @calleja2017long ; @davies2024sentinel ; @zoffoli2021decadal ; @valle2015mapping]. Among remote-sensing technologies, drone-based imagery has recently emerged as a particularly promising tool for studying the spatial distribution of intertidal primary producers such as benthic microalgae [@roman2021using ; @roman2024mapping], seagrass [@chand2021low ; @duffy2018spatial ; @roman2021using] and macroalgae [@rs14133124 ; @peidro2024quantifying]. While it lacks the temporal consistency of satellite missions, drone remote sensing makes it possible to acquire at extremely high spatial resolution (i.e. cm-scale), rapidly target specific areas of interest, and to provide observations in overcast conditions. In particular, the potential of drone remote sensing for monitoring the surface area occupied by IAS has been demonstrated [@roca2022monitoring]. Drone-based photogrammetry also makes it possible to characterize the distribution of intertidal vegetation together with mudflat geomorphology, thus improving our understanding of primary producers patterning [@brunier2022evolution ; @douglas2024linking].
+Remote sensing has revolutionized our ability to monitor and manage coastal ecosystems, offering efficient and scalable methods for detecting environmental changes in intertidal vegetation across a wide range of spatio-temporal scales [@davies2024intertidal; @calleja2017long; @davies2024sentinel; @zoffoli2021decadal; @valle2015mapping]. Among remote-sensing technologies, drone-based imagery has recently emerged as a particularly promising tool for studying the spatial distribution of intertidal primary producers such as benthic microalgae [@roman2021using; @roman2024mapping], seagrass [@chand2021low; @duffy2018spatial; @roman2021using] and macroalgae [@rs14133124; @peidro2024quantifying]. While it lacks the temporal consistency of satellite missions, drone remote sensing makes it possible to acquire at extremely high spatial resolution (i.e. cm-scale), rapidly target specific areas of interest, and to provide observations in overcast conditions. In particular, the potential of drone remote sensing for monitoring the surface area occupied by IAS has been demonstrated [@roca2022monitoring]. Drone-based photogrammetry also makes it possible to characterize the distribution of intertidal vegetation together with mudflat geomorphology, thus improving our understanding of primary producers patterning [@brunier2022evolution; @douglas2024linking].
 
 In this study, a drone-based multispectral remote sensing approach was applied to map *G. vermiculophylla* spatial distribution at a very-high spatial resolution in three intertidal estuaries of European Atlantic coast. We adapted the neural network classification model DISCOV (Drone Intertidal Substrate Classification Of Vegetation, @rs16234383, @oiry_2024_14218984) by specifically training the model with a new class corresponding to *G. vermiculophylla*. A validation dataset was obtained from *in situ* data to estimate the classification accuracy. LIDAR data were concurrently acquired to accurately map the intertidal elevation. We used a Generalized Additive Model (GAM) to examine the relationship between the seaweed spatial distribution and spatial metrics quantifying the mudflat topography. We expected the presence of G. vermiculophylla in mudflats to be associated to a specific height range as well as being more closely related to flat areas of the intertidal zone.
 
 # Materiel & Methods
-
 
 ```{r Workflow building}
 #| cache: true
@@ -315,8 +312,6 @@ a
 }else{
   ggsave("Paper/Figures/Workflow.png",a, units = "px")
 }
-
-
 ```
 
 ## Study sites
@@ -333,7 +328,7 @@ Field campaigns were conducted at three study sites in France and Spain. At each
 "
 ```
 
-The Saja-Besaya Estuary, situated along the Cantabrian Sea in northern Spain, is characterized by the confluence of the Saja and Besaya rivers near Torrelavega (@fig-location_sites C). The estuary, also known as San Martín de la Arena or Suances Estuary, has been subject to significant anthropogenic pressures, including industrial developments throughout the 20th century. These activities have led to contamination from mining, paper manufacturing, and carbonate discharges, classifying the estuary as highly polluted near its upper reaches [@ortega2005fluxes]. This contamination impacts the estuarine ecosystem, including water quality and biodiversity, with minimal aquatic life and sparse riverbank vegetation in its lower sections [@romero2008sintering]. 
+The Saja-Besaya Estuary, situated along the Cantabrian Sea in northern Spain, is characterized by the confluence of the Saja and Besaya rivers near Torrelavega (@fig-location_sites C). The estuary, also known as San Martín de la Arena or Suances Estuary, has been subject to significant anthropogenic pressures, including industrial developments throughout the 20th century. These activities have led to contamination from mining, paper manufacturing, and carbonate discharges, classifying the estuary as highly polluted near its upper reaches [@ortega2005fluxes]. This contamination impacts the estuarine ecosystem, including water quality and biodiversity, with minimal aquatic life and sparse riverbank vegetation in its lower sections [@romero2008sintering].
 
 ```{r intertidal mask}
 #| cache: true
@@ -1136,22 +1131,20 @@ At each location, reflectance images with a resolution of 1.2 million pixels wer
 
 LiDAR standing for Light Detection and Ranging uses lasers to measure distances by timing reflected pulses, creating detailed 3D maps of surfaces.
 
-Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1 LiDAR and RGB sensor was mounted on the drone alongside a multispectral camera. This setup enabled the simultaneous capture of LiDAR point clouds, high-resolution RGB images, and multispectral images collected by the MicaSense RedEdge Dual MX during the same flight. The same processing workflow as @sec-photo was applied to process LiDAR RGB images, resulting in ortho-mosaic with a resolution of 2.5 cm per pixel. Since the mapping focused solely on flat surfaces without dense vegetation, the LiDAR measured only a single return. Operating in repetitive scanning mode with a sampling rate of 240 kHz, the system achieved a point density of 350 points per square meter. The LiDAR point cloud was extracted and converted into LAS format using DJI Terra software. The LAS point cloud was then imported into Agisoft Metashape [@agisoft] to generate a DEM with a resolution of 2.5 cm.
+Using the Matrice 300 Series Dual Gimbal Connector, a DJI Zenmuse L1 LiDAR and RGB sensor was mounted on the drone alongside a multispectral camera. This setup enabled the simultaneous capture of LiDAR point clouds, high-resolution RGB images, and multispectral images collected by the MicaSense RedEdge Dual MX during the same flight. The same processing workflow as @sec-photo was applied to process LiDAR RGB images, resulting in ortho-mosaic with a resolution of 2.5 cm per pixel. Since the mapping focused solely on flat surfaces without dense vegetation, the LiDAR measured only a single return. Operating in repetitive scanning mode with a sampling rate of 240 kHz, the system achieved a point density of 350 points per square meter. The LiDAR point cloud was extracted and converted into LAS format using DJI Terra software. The LAS point cloud was then imported into Agisoft Metashape [@agisoft] to generate a Digital Surface Model (DSM) with a resolution of 2.5 cm. From the DSM, the slope of each pixel based on a grid of 8 surrounding pixels were computed using the terrain function of the 'terra' package in R [@terrapck]. The angle of the mudflat was categorized into three classes: Flat (angle \< 10°), Angled (10° ≤ angle ≤ 40°), and Vertical (angle \> 40°).
 
 ## Scene classification
 
-A neural network classification model (DISCOV; @rs16234383; @oiry_2024_14218984), previously applied with success to Micasense reflectance data for mapping intertidal vegetation along the Portuguese and French Atlantic coasts, has been used in this study. The training dataset of DISCOV v1.0 has been updated. As shown by @rs16234383 the DISCOV v1.0 model [@oiry_2024_14218984] was trained using only 5771 Rhodophyceae pixel (3% of the training dataset). To fill this gap the original training dataset of DISCOV v1.0 was updated using new training pixel coming from the 5 drone flights (@sec-DroneFlights). 
-
-```{r Training pixel}
+```{r statDiff_Discov}
+#| cache: true
 #| echo: false
 #| warning: false
-#| eval: false
-#| cache: true
+#| eval: true
 
 library(tidyverse)
 library(flextable)
 
-df_training <- "Data/Training_DISCOV/DISCOV_Invasea_Saja_filtered.txt" %>% 
+df_training <- "../Data/Training_DISCOV/DISCOV_Invasea_Saja_filtered.txt" %>% 
   read.delim(sep = ";")
 
 
@@ -1162,7 +1155,7 @@ brdr3 <- fp_border_default(color = "grey40", width = 1)
 i = 16.5 # width of the side borders in the word_document output (in centimeters)
 w = i*0.3937 # width of the side borders in the word_document output (in inches)
  
-df_training %>% 
+df_table <- df_training %>% 
   dplyr::filter(True_Class != "SunGlint") %>% 
   mutate(DISCOV1_n = case_when(True_Class == "Bacillariophyceae" ~ 4475,
                           True_Class == "Chlorophyta" ~ 17140,
@@ -1180,15 +1173,121 @@ df_training %>%
          True_Class = case_when(True_Class == "Sediment" ~ "-",
                                 True_Class == "Water" ~ "-",
                                 T ~ True_Class),
-         `Difference with DISCOV V1.0` = round((n)/DISCOV1_n,2),
-         `Difference with DISCOV V1.0` = case_when(`Difference with DISCOV V1.0` == 1 ~ "-",
-                                                   T ~ paste0("x",`Difference with DISCOV V1.0`))) %>%
-  rename(`Taxonomic Class` = "True_Class",
-         `Training Pixels` = "n") %>% 
-  dplyr::select(Name,`Taxonomic Class`,`Training Pixels`, `Difference with DISCOV V1.0`) %>% 
-  flextable()
+         `Difference with DISCOV v1.0` = round((n)/DISCOV1_n,2),
+         `Difference with DISCOV v1.0` = case_when(`Difference with DISCOV v1.0` == 1 ~ "-",
+                                                   T ~ paste0("x",`Difference with DISCOV v1.0`))) 
 
 ```
+
+A neural network classification model (DISCOV; @rs16234383; @oiry_2024_14218984), previously applied with success to Micasense reflectance data for mapping intertidal vegetation along the Portuguese and French Atlantic coasts, has been used in this study. The training dataset of DISCOV v1.0 has been updated. As shown by @rs16234383 the DISCOV v1.0 model [@oiry_2024_14218984] was trained using only 5771 Rhodophyceae pixel (3% of the training dataset). To fill this gap the original training dataset of DISCOV v1.0 was updated using new training pixel coming from the 5 drone flights (@sec-DroneFlights). A total of `r as.integer(round(sum(df_table$n) - sum(df_table$DISCOV1_n),-3))` pixels where added to the DISCOV training dataset compared to the version 1 (@tbl-Update_training).
+
+```{r Training pixel}
+#| label: tbl-Update_training
+#| tbl-cap: Class of the Neural Network model, with the number of training pixels used to train that class and the differences with the training dataset of DISCOV v1.0  
+#| echo: false
+#| error: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(flextable)
+
+df_table %>%
+  rename(`Taxonomic Class` = "True_Class",
+         `Training Pixels` = "n")  %>% 
+  dplyr::select(Name,`Taxonomic Class`,`Training Pixels`, `Difference with DISCOV v1.0`) %>% 
+  flextable() %>%
+  align(align = "center", part = "all") %>% # Align text to center
+  set_table_properties(layout = "autofit") # Adjust table layout
+
+```
+
+```{r ValidationPixels}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: true
+
+library(tidyverse)
+library(sf)
+
+df_validation <- 
+  "../Data/Shiny_Validation/shp_all_validation.shp" %>%
+  # "Data/Shiny_Validation/shp_all_validation.shp" %>%
+  read_sf() %>% 
+  mutate(user = sapply(strsplit(user_date, "_"), function(x) x[1]),
+         site = sapply(strsplit(snapshot, "_"), function(x) x[1]))
+
+```
+
+To validate the new version of the DISCOV model, a Shiny app was developed, enabling independent users to photo-interpret snapshots of the ortho-mosaic from each drone flight [@shinypck; @Simon2024ShinyApp]. Users could click on various parts of the snapshots to indicate the type of vegetation they believed was present. Using this method, `r length(unique(df_validation$user))` independent users contributed to creating a validation dataset of `r nrow(df_validation)` pixels across `r length(unique(df_validation$snapshot))` snapshots distributed among the four drone flights [@tbl-ValidationDataset]. The validation dataset was then simplify into two classes: Presence of Absence of Red Algae.
+
+```{r Validation Table}
+#| label: tbl-ValidationDataset
+#| tbl-cap: Presence and absence of red macroalgae for each drone flight 
+#| echo: false
+#| error: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(flextable)
+
+df_flx_valid <- df_validation %>%
+  mutate(site = case_when(site == "Aven" ~ "Notre-Dame De Tremor",
+                          site == "Belon" ~ "Pont de Guilly",
+                          site == "SajaNorth" ~ "Marisma de Cudón",
+                          site == "SajaSouth" ~ "Marisma de Cortiguera"),
+         PresenceAbs = case_when(Vegetation == "Red algae" ~ "Present",
+                                 T ~ "Absent")) %>% 
+  rename(Site = "site") 
+
+total <- df_flx_valid %>% 
+  group_by(PresenceAbs) %>% 
+  reframe(n = n()) %>% 
+  pivot_wider(names_from = PresenceAbs, values_from = n) %>% 
+  mutate(Site = "Total")
+
+table_data <- df_flx_valid %>% 
+  group_by(Site, PresenceAbs) %>% 
+  reframe(n = n()) %>% 
+  pivot_wider(names_from = "PresenceAbs", values_from = "n") %>% 
+  rbind(total) %>% 
+  rowwise() %>% 
+  mutate(Total = sum(c(Absent, Present)))
+
+# Get the number of rows for the table data
+n_rows <- nrow(table_data)
+
+# Create the flextable with a horizontal line
+table_data %>%
+  flextable() %>%
+  align(align = "center", part = "all") %>% 
+  set_table_properties(layout = "autofit") %>%
+  hline(i = n_rows - 1, border = officer::fp_border(color = "black", width = 1))
+  
+
+```
+
+## Historical Presence of *Gracilaria vermiculophylla* in the Bélon esturay
+
+To assess the historical presence of *G. vermiculophylla* in the Bélon Estuary, aerial imagery from flight campaigns was obtained via the IGN platform "Remonter Le Temps" [@RemonterLeTempsIGN]. Nine images were selected between 1952 and 2012 from the IGN plateform and an additional one has been added for the year 2024 (@tbl-IGNimg). Since most of the images retrieved from "Remonter Le Temps" were digitized versions of physical photographs, georeferencing were required.
+
+|    Date    |      Type       | Data Source  | Resolution (cm per Pixel) |
+|:----------:|:---------------:|:------------:|:-------------------------:|
+| 1952-04-26 | Black and White |     IGN      |            10             |
+| 1958-04-22 | Black and White |     IGN      |            90             |
+| 1976-07-?  | Black and White |     IGN      |             4             |
+| 1978-08-22 | Black and White |     IGN      |            44             |
+| 1982-08-11 | Black and White |     IGN      |            44             |
+| 1992-05-17 |   True Color    |     IGN      |            70             |
+| 1997-04-11 | Black and White |     IGN      |            64             |
+| 2012-07-24 |   True Color    |     IGN      |            18             |
+| 2024-04-11 |   True Color    | Drone Flight |             3             |
+
+: Images used to assess the historical presence of Gracilaria vermiculophylla in the Belon esturay. Images from the IGN data source have been retrieved from the "Remonter Le Temps" plateform [@RemonterLeTempsIGN]. Drone flight have been performed by the team using a Mavic 3 Entreprise. {#tbl-IGNimg}
+
+For each date, polygons have been drawn around *G. vermiculophylla* patches by visually photo-interpreting on each images. These polygons were used to calculate the total area of the mudflat covered by macroalgae within a common extent of 30 hectares in Pont de Guilly, located in the Bélon Estuary, South Brittany, France.
 
 # Results
 
@@ -1409,7 +1508,133 @@ knitr::include_graphics("./Figures/Low_res/Cover_Gracillaria_vs_Time.png")
 
 ```
 
-## Classification 
+## Spectral description
+
+```{r spectral extraction}
+#| cache: false
+#| echo: false
+#| warning: false
+#| eval: false
+
+library(tidyverse)
+library(terra)
+library(sf)
+
+multi_list <- "Data/Multi" %>% 
+  list.files(pattern = "tif", full.names = T) %>% 
+  as.tibble() %>% 
+  rename(path = "value") %>% 
+  mutate(filename = gsub(".*/","",path),
+         site = case_when(str_detect(filename, "Belon") ~ "Belon",
+                          str_detect(filename, "Aven") ~ "Aven",
+                          str_detect(filename, "Saja_North") ~ "SajaNorth",
+                          str_detect(filename, "Saja_South") ~ "SajaSouth"))
+
+DISCOV_list <- "Data/DISCOV" %>% 
+  list.files(pattern = "tif", full.names = T)%>% 
+  as.tibble() %>% 
+  rename(pred_path = "value") %>% 
+  mutate(filename = gsub(".*/","",pred_path),
+         site = case_when(str_detect(filename, "Belon") ~ "Belon",
+                          str_detect(filename, "Aven") ~ "Aven",
+                          str_detect(filename, "Saja_North") ~ "SajaNorth",
+                          str_detect(filename, "Saja_South") ~ "SajaSouth")) %>% 
+  select(pred_path,site)
+
+msk_list <- "Data/shp/mask" %>% 
+  list.files(pattern = ".shp",full.names = T)%>% 
+  as.tibble() %>% 
+  rename(shp_path = "value") %>% 
+  mutate(filename = gsub(".*/","",shp_path),
+         site = case_when(str_detect(filename, "Belon") ~ "Belon",
+                          str_detect(filename, "Aven") ~ "Aven",
+                          str_detect(filename, "SajaNorth") ~ "SajaNorth",
+                          str_detect(filename, "SajaSouth") ~ "SajaSouth")) %>% 
+  group_by(site) %>% 
+  slice(1) %>% 
+  select(shp_path,site)
+
+DEM_list <- "Data/DEM" %>% 
+  list.files(pattern = ".tif",full.names = T) %>% 
+  as.tibble() %>% 
+  rename(DEM_path = "value") %>% 
+  mutate(filename = gsub(".*/","",DEM_path),
+         site = case_when(str_detect(filename, "Belon") ~ "Belon",
+                          str_detect(filename, "Aven") ~ "Aven",
+                          str_detect(filename, "SajaNorth") ~ "SajaNorth",
+                          str_detect(filename, "SajaSouth") ~ "SajaSouth")) %>% 
+  group_by(site) %>% 
+  slice(1) %>% 
+  select(DEM_path,site)
+
+df_file <- multi_list %>% 
+  left_join(DISCOV_list, by ="site") %>% 
+  left_join(msk_list, by ="site")%>% 
+  left_join(DEM_list, by ="site")
+
+
+for (i in 1:nrow(df_file)) {
+  
+  msk <- df_file$shp_path[i] %>% read_sf()
+  
+  multi <- rast(df_file$path[i]) %>% 
+    project(crs(msk)) %>% 
+    crop(msk, mask = T)
+  names(multi) <- c(paste0("B",1:10))
+  
+  pred <- rast(df_file$pred_path[i])%>% 
+    project(crs(msk),method = "near") %>% 
+    crop(msk, mask = T) %>% 
+    resample(multi, method = "near")
+  names(pred) <- "Pred"
+  
+  DEM <- rast(df_file$DEM_path[i]) %>% 
+    resample(multi, method = "bilinear") %>% 
+    crop(msk, mask = T)
+  names(DEM) <- "DEM"
+  
+  
+  
+  stk <- c(multi,pred,DEM) %>% 
+    as.data.frame() %>% 
+    mutate(site = df_file$site[i]) %>% 
+    dplyr::filter(B1 > 0,
+                  Pred !=0) %>% 
+    mutate(ID = c(1:nrow(.)),
+           NDVI = (B10-B6)/(B10+B6))
+  
+  sp <- stk %>% 
+    pivot_longer(-c(Pred,DEM,site, ID, NDVI), names_to = "bands", values_to = "values") %>% 
+    group_by(Pred, bands) %>% 
+    reframe(mean = mean(values, na.rm = T),
+            sd = sd(values, na.rm = T))
+  
+  
+  wv <- data.frame(bands = paste0("B",c(1:10)),
+                   wv = c(444,475,531,560,650,668,705,717,740,840))
+  # 
+  # sp %>% 
+  #   left_join(wv, by = "bands") %>% 
+  #   ggplot()+
+  #   geom_line(aes(x = wv, y = mean, color = as.factor(Pred), group = Pred))
+  
+  stk %>%
+    dplyr::filter(Pred == 5) %>% 
+    ggplot()+
+    geom_density_2d(aes(x = DEM, y = NDVI))
+  
+  if(i == 1){
+    df_all <- stk
+  }else{
+    df_all <- rbind(df_all, stk)
+  }
+}
+
+
+
+```
+
+## Spatial distribution
 
 ```{r DISCOV Belon Map}
 #| cache: false
@@ -1650,6 +1875,36 @@ The classification map illustrates the diversity of benthic communities and subs
 
 The bathymetric map reveals a continuous gradient in elevation relative to mean sea level (@fig-Belon C). A comparison of bathymetry and vegetation distribution highlights a clear elevation-driven pattern in algal presence. Higher intertidal zones, located above the deeper channel areas, are associated with more extensive algal communities. In contrast, lower intertidal zones closer to the channel consistently exhibit reduced macroalgal cover.
 
+```{r Validation dataset opening}
+#| include: false
+#| message: false
+#| warning: false
+#| eval: false
+#| error: false
+
+file_list <- "Data/Shiny_Validation" %>% 
+  list.files(".shp",recursive = T, full.names = T) %>% 
+  as_tibble() %>% 
+  rename(path = "value") %>% 
+  mutate(filename = gsub(".*/","",path) %>% 
+           gsub("shp","",.),
+         User_date = sapply(strsplit(path, "/"), function(x) x[3]))
+
+for(i in 1:nrow(file_list)){
+  shp_i <- read_sf(file_list$path[i]) %>% 
+    mutate(user_date = file_list$User_date[i],
+           snapshot =  file_list$filename[i])
+  
+  if(i == 1){
+    shp <- shp_i
+  }else{
+    shp <- rbind(shp,shp_i)
+  }
+}
+
+write_sf(shp,"Data/Shiny_Validation/shp_all_validation.shp")
+```
+
 ```{r Figure Map_Belon}
 #| cache: false
 #| echo: false
@@ -1664,134 +1919,6 @@ knitr::include_graphics("./Figures/Low_res/Belon_maps.png")
 
 ```
 
-## Spectral description
-
-```{r spectral extraction}
-#| cache: false
-#| echo: false
-#| warning: false
-#| eval: false
-
-library(tidyverse)
-library(terra)
-library(sf)
-
-multi_list <- "Data/Multi" %>% 
-  list.files(pattern = "tif", full.names = T) %>% 
-  as.tibble() %>% 
-  rename(path = "value") %>% 
-  mutate(filename = gsub(".*/","",path),
-         site = case_when(str_detect(filename, "Belon") ~ "Belon",
-                          str_detect(filename, "Aven") ~ "Aven",
-                          str_detect(filename, "Saja_North") ~ "SajaNorth",
-                          str_detect(filename, "Saja_South") ~ "SajaSouth"))
-
-DISCOV_list <- "Data/DISCOV" %>% 
-  list.files(pattern = "tif", full.names = T)%>% 
-  as.tibble() %>% 
-  rename(pred_path = "value") %>% 
-  mutate(filename = gsub(".*/","",pred_path),
-         site = case_when(str_detect(filename, "Belon") ~ "Belon",
-                          str_detect(filename, "Aven") ~ "Aven",
-                          str_detect(filename, "Saja_North") ~ "SajaNorth",
-                          str_detect(filename, "Saja_South") ~ "SajaSouth")) %>% 
-  select(pred_path,site)
-
-msk_list <- "Data/shp/mask" %>% 
-  list.files(pattern = ".shp",full.names = T)%>% 
-  as.tibble() %>% 
-  rename(shp_path = "value") %>% 
-  mutate(filename = gsub(".*/","",shp_path),
-         site = case_when(str_detect(filename, "Belon") ~ "Belon",
-                          str_detect(filename, "Aven") ~ "Aven",
-                          str_detect(filename, "SajaNorth") ~ "SajaNorth",
-                          str_detect(filename, "SajaSouth") ~ "SajaSouth")) %>% 
-  group_by(site) %>% 
-  slice(1) %>% 
-  select(shp_path,site)
-
-DEM_list <- "Data/DEM" %>% 
-  list.files(pattern = ".tif",full.names = T) %>% 
-  as.tibble() %>% 
-  rename(DEM_path = "value") %>% 
-  mutate(filename = gsub(".*/","",DEM_path),
-         site = case_when(str_detect(filename, "Belon") ~ "Belon",
-                          str_detect(filename, "Aven") ~ "Aven",
-                          str_detect(filename, "SajaNorth") ~ "SajaNorth",
-                          str_detect(filename, "SajaSouth") ~ "SajaSouth")) %>% 
-  group_by(site) %>% 
-  slice(1) %>% 
-  select(DEM_path,site)
-
-df_file <- multi_list %>% 
-  left_join(DISCOV_list, by ="site") %>% 
-  left_join(msk_list, by ="site")%>% 
-  left_join(DEM_list, by ="site")
-
-
-for (i in 1:nrow(df_file)) {
-  
-  msk <- df_file$shp_path[i] %>% read_sf()
-  
-  multi <- rast(df_file$path[i]) %>% 
-    project(crs(msk)) %>% 
-    crop(msk, mask = T)
-  names(multi) <- c(paste0("B",1:10))
-  
-  pred <- rast(df_file$pred_path[i])%>% 
-    project(crs(msk),method = "near") %>% 
-    crop(msk, mask = T) %>% 
-    resample(multi, method = "near")
-  names(pred) <- "Pred"
-  
-  DEM <- rast(df_file$DEM_path[i]) %>% 
-    resample(multi, method = "bilinear") %>% 
-    crop(msk, mask = T)
-  names(DEM) <- "DEM"
-  
-  
-  
-  stk <- c(multi,pred,DEM) %>% 
-    as.data.frame() %>% 
-    mutate(site = df_file$site[i]) %>% 
-    dplyr::filter(B1 > 0,
-                  Pred !=0) %>% 
-    mutate(ID = c(1:nrow(.)),
-           NDVI = (B10-B6)/(B10+B6))
-  
-  sp <- stk %>% 
-    pivot_longer(-c(Pred,DEM,site, ID, NDVI), names_to = "bands", values_to = "values") %>% 
-    group_by(Pred, bands) %>% 
-    reframe(mean = mean(values, na.rm = T),
-            sd = sd(values, na.rm = T))
-  
-  
-  wv <- data.frame(bands = paste0("B",c(1:10)),
-                   wv = c(444,475,531,560,650,668,705,717,740,840))
-  
-  sp %>% 
-    left_join(wv, by = "bands") %>% 
-    ggplot()+
-    geom_line(aes(x = wv, y = mean, color = as.factor(Pred), group = Pred))
-  
-  stk %>%
-    dplyr::filter(Pred == 5) %>% 
-    ggplot()+
-    geom_density_2d(aes(x = DEM, y = NDVI))
-  
-  if(i == 1){
-    df_all <- stk
-  }else{
-    df_all <- rbind(df_all, stk)
-  }
-}
-
-
-
-```
-
-## Spatial distribution
-
 ```{r GAMmodel}
 #| include: false
 #| message: false
@@ -1804,6 +1931,7 @@ library(Utilities.Package)
 library(mgcv)
 library(brms)
 library(tidybayes)
+library(cowplot)
 
 
 Full_df<-read_csv("Data/Model/FullDF_10timesResample_DEMSlope_PredPercent.csv")
@@ -1831,12 +1959,51 @@ Total<-NewData1_brms%>%
                             "Slope",
                             "Vertical")))
 
-NewData1_brms%>% 
+# (plot <- NewData1_brms%>% 
+#   group_by(DEM,Slope_Cat)%>% 
+#   summarise(median_qi(.linpred,.width=c(0.89)))%>%
+#   ggplot(aes(x = DEM,y=y)) +
+#   geom_ribbon(aes(ymax = ymax,ymin=ymin,color=Slope_Cat),
+#               fill = NA,
+#               linetype = "dashed") +
+#   geom_line(aes(colour=Slope_Cat),
+#             linewidth=1)+
+#   geom_line(data = Total,aes(x=DEM,y=y),colour="black")+
+#   scale_fill_manual(name="Slope",values=c("#8E7CC3","#76A5AF","#93C47D"),
+#                     labels=c("Flat",
+#                             "Angled",
+#                             "Vertical"))+
+#   scale_colour_manual(name="Slope",values=c("#8E7CC3","#76A5AF","#93C47D"),
+#                     labels=c("Flat",
+#                             "Angled",
+#                             "Vertical"))+
+#   scale_y_continuous(breaks = c(0.1,0.2,0.3,0.4,0.5),
+#                      labels = c("10","20","30","40","50"))+
+#   labs(x="Bathymetry (m)",y="Intertidal Area Covered\n by Gracilaria vermiculophylla (%)")+
+#   facet_wrap(~Slope_Cat,ncol =2)+
+#   theme_Bede()+
+#   theme(strip.text = element_blank(),
+#         legend.position= c(0.75,0.25), 
+#         legend.title = element_text(size = 20, margin = margin(b = 20)),
+#         legend.text = element_text(size  = 15),
+#         legend.key.size = unit(1,"cm"),
+#         legend.spacing.y = unit(1, "cm"),
+#         axis.text.x = element_text(size = 15),
+#         axis.text.y = element_text(size = 15),
+#         axis.title.x = element_text(size = 20),
+#         axis.title.y = element_text(size = 20), 
+#         plot.background = element_rect(fill = "white", color = NA))+
+#   guides(fill = guide_legend(nrow = 1),
+#          colour = guide_legend(nrow = 1))
+#   )
+
+(plot <- NewData1_brms%>% 
   group_by(DEM,Slope_Cat)%>% 
   summarise(median_qi(.linpred,.width=c(0.89)))%>%
   ggplot(aes(x = DEM,y=y)) +
-  geom_ribbon(aes(ymax = ymax,ymin=ymin,fill=Slope_Cat),
-              alpha=0.05) +
+  geom_ribbon(aes(ymax = ymax,ymin=ymin,color=Slope_Cat),
+              fill = NA,
+              linetype = "dashed") +
   geom_line(aes(colour=Slope_Cat),
             linewidth=1)+
   geom_line(data = Total,aes(x=DEM,y=y),colour="black")+
@@ -1851,20 +2018,43 @@ NewData1_brms%>%
   scale_y_continuous(breaks = c(0.1,0.2,0.3,0.4,0.5),
                      labels = c("10","20","30","40","50"))+
   labs(x="Bathymetry (m)",y="Intertidal Area Covered\n by Gracilaria vermiculophylla (%)")+
-  # facet_wrap(~Slope_Cat,ncol =1)+
+  facet_wrap(~Slope_Cat,ncol =3)+
   theme_Bede()+
   theme(strip.text = element_blank(),
-        legend.position = "top")
+        # legend.title = element_text(size = 17),
+        legend.title = element_blank(),
+        legend.text = element_text(size  = 15),
+        legend.key.spacing.x = unit(5,"cm"),
+        legend.position = "top",
+        legend.key.size = unit(0.7,"cm"),
+        # legend.key.spacing.y = unit(-10, "cm"),
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15),
+        axis.title.x = element_text(size = 17),
+        axis.title.y = element_text(size = 17), 
+        plot.background = element_rect(fill = "white", color = NA))
+  )
+
+ggsave("Paper/Figures/High_res/GAM_slope_cover.png", width = 10, height = 5, dpi = 400)
+ggsave("Paper/Figures/Low_res/GAM_slope_cover.png", width = 10, height = 5, dpi = 200)
+```
+
+```{r Figure GAM_slope}
+#| cache: false
+#| echo: false
+#| warning: false
+#| fig-cap: DISCOV Prediction (A), RGB composition (B) and Bathymetry (C) of the Bélon estuary site in Brttany, France. The total extent of this flight was 21 hectars with a resolution of 8 mm per pixel. Bathymetry is represented as the height above mean sea level. 
+#| label: fig-Gam_Slope
+#| fig-width: 10
+#| fig-height: 10
+#| out-width: "95%"
+
+knitr::include_graphics("./Figures/Low_res/GAM_slope_cover.png")
 
 ```
 
-
-
-
-
-
-
 # Discussion
+
 ## Drone mapping *G. vermiculophylla* with machine learning
 
 In this study, we produced the first spatial distribution maps of the invasive red alga *Gracilaria vermiculophylla* using a multispectral drone survey conducted at low tide in Atlantic estuaries representing varied environmental conditions. In southern Brittany, the species formed monospecific mats, while in the Cantabrian region of Spain, it was intermixed with other intertidal vegetation. Distinguishing among these vegetation types was a key prerequisite for the analysis.
@@ -1873,20 +2063,19 @@ To achieve this, we adapted the deep learning-based classification model DISCOV 
 
 Rhodophytes possess unique phycobilin pigments, enabling their spectral distinction from other macroalgal groups [@rs14020346; @olmedo2020far; @rs11060704]. Even with the ten-band multispectral sensor used in our study, it remained feasible to discriminate the major classes of intertidal macrophytes [@roman2021using; @rs16234383; @davies2023multi]. However, the model identifies *G. vermiculophylla* at the class level (Rhodophyceae) rather than at the species level. Although hyperspectral approaches may allow finer taxonomic resolution [@rs14020346; @olmedo2020far], it is unlikely that Gracilaria species can be precisely distinguished using standard multispectral sensors.
 
-Ecological factors also aid in differentiating *G. vermiculophylla*. Unlike many other macroalgae that require hard substrates,* G. vermiculophylla* establishes itself on soft-bottom sediments. In fact, it is commonly found on mudflats, anchoring its thalli in the top 10 cm of mud [@surget2017processus], and inhabits the upper intertidal zone—an unusual trait for a Rhodophyte [@abreu2011nitrogen; @davoult2017multiple]. By reliably detecting *G. vermiculophylla* in these soft-substrate, upper intertidal habitats, our method provides a framework for identifying environmental conditions that favor its spread, potentially offering managers early-warning indicators to control its expansion before it reaches nuisance levels. Thus, combining spectral data with sediment characteristics provides a strong indicator of *G. vermiculophylla* presence in European Atlantic estuaries, complementing the physical variables already used in species distribution modeling [@jmse11020367].
+Ecological factors also aid in differentiating *G. vermiculophylla*. Unlike many other macroalgae that require hard substrates,\* G. vermiculophylla\* establishes itself on soft-bottom sediments. In fact, it is commonly found on mudflats, anchoring its thalli in the top 10 cm of mud [@surget2017processus], and inhabits the upper intertidal zone—an unusual trait for a Rhodophyte [@abreu2011nitrogen; @davoult2017multiple]. By reliably detecting *G. vermiculophylla* in these soft-substrate, upper intertidal habitats, our method provides a framework for identifying environmental conditions that favor its spread, potentially offering managers early-warning indicators to control its expansion before it reaches nuisance levels. Thus, combining spectral data with sediment characteristics provides a strong indicator of *G. vermiculophylla* presence in European Atlantic estuaries, complementing the physical variables already used in species distribution modeling [@jmse11020367].
 
 In addition, the scalability of drone-based surveying facilitates repeat mapping to detect temporal shifts in the distribution and abundance of *G. vermiculophylla.* Such continuous monitoring could capture seasonal patterns of colonization, allowing researchers and environmental managers to evaluate the effectiveness of mitigation measures, track long-term ecological impacts, and anticipate future shifts in habitat suitability under changing climate conditions.
 
 ## *G. vermiculophylla* spatial distribution and mudflat topography
 
-## Spatio-temporal monitoring of invasive macroalgae 
+## Spatio-temporal monitoring of invasive macroalgae
 
 Accurate, high-resolution maps of invasive or alien species are extremely scarce (**REF**), yet they enable in-depth evaluations of these species’ ecology, temporal dynamics, and niche behavior in relation to their environment. In this study, using individual flights over monospecific algal mats, we quantified how this invasive alga associates with local mudflat topography, demonstrating that **…**. Repeated monitoring of this type can further reveal phenological patterns, invasion dynamics, and local conspecific biological interactions—such as co-occurrence, displacement, or avoidance (**REF**).
 
 Remote sensing using multispectral drone mapping can provide high-resolution, spatially explicit data, but it must be combined with repeated, in situ field measurements to maximize its potential (**REF**). As noted, temporal repetition makes it possible to assess dynamic processes, and integrating these mapping approaches with in situ analyses of local infauna, carbon cycling, riverine inputs, and sedimentology would yield valuable insights for local managers. Such an integrated approach could help determine how the invasive alga affects the local ecosystem and, more broadly, forecast its potential impact on other estuarine environments facing similar invasion events. This holistic approach can guide strategic interventions aimed at mitigating the alga’s spread, maintaining ecological balance, and protecting native biodiversity, ensuring that management efforts are informed by accurate, timely, and spatially explicit data.
 
-Invasive species like *Gracilaria vermiculophylla* and *Rugulopteryx okamurae* can be identified using drones equipped with multispectral sensors, taking advantage of the characteristic reflectance of rhodophytes [@roca2022monitoring]. However, this capability has not yet been tested using standard RGB sensors found in readily available commercial drones. These drones are easy to deploy, can cover large areas when flying at speeds of 15 m s^-1 at an altitude of 120 m, and still maintain sufficient overlap between images to support photogrammetric reconstruction. Expanding these methodologies to RGB-based detection would significantly lower barriers to entry, allowing local stakeholders with limited resources to access valuable monitoring tools for early detection and rapid response.
-A promising avenue for operational applications lies in testing machine learning techniques on RGB imagery that do not rely on enhanced spectral resolution. Considering the low cost of RGB and multispectral commercial drones, coupled with ongoing advancements in machine learning, drone-based remote sensing has now matured into a practical tool for adoption by environmental authorities in coastal management. Integrating these technologies into routine monitoring protocols can enhance surveillance capabilities, improve understanding of invasive species dynamics, and ultimately contribute to more effective conservation and restoration strategies.
+Invasive species like *Gracilaria vermiculophylla* and *Rugulopteryx okamurae* can be identified using drones equipped with multispectral sensors, taking advantage of the characteristic reflectance of rhodophytes [@roca2022monitoring]. However, this capability has not yet been tested using standard RGB sensors found in readily available commercial drones. These drones are easy to deploy, can cover large areas when flying at speeds of 15 m s\^-1 at an altitude of 120 m, and still maintain sufficient overlap between images to support photogrammetric reconstruction. Expanding these methodologies to RGB-based detection would significantly lower barriers to entry, allowing local stakeholders with limited resources to access valuable monitoring tools for early detection and rapid response. A promising avenue for operational applications lies in testing machine learning techniques on RGB imagery that do not rely on enhanced spectral resolution. Considering the low cost of RGB and multispectral commercial drones, coupled with ongoing advancements in machine learning, drone-based remote sensing has now matured into a practical tool for adoption by environmental authorities in coastal management. Integrating these technologies into routine monitoring protocols can enhance surveillance capabilities, improve understanding of invasive species dynamics, and ultimately contribute to more effective conservation and restoration strategies.
 
 # Conclusion
 

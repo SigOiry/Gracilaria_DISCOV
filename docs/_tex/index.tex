@@ -127,6 +127,18 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{fontspec}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{colortbl}
+\usepackage{hhline}
+\newlength\Oldarrayrulewidth
+\newlength\Oldtabcolsep
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{wrapfig}
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
@@ -175,7 +187,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Spatial distribution of Gracillaria vermiculophylla in French and Spanish estuaries using Unmaned Aerial Vehicule.},
+  pdftitle={Monitoring the marine invasive alien species Gracilaria vermiculophylla using unmanned aerial vehicles},
   pdfauthor={Simon Oiry¹; Bede Ffinian Rowe Davies¹; Pierre Gernez¹; Laurent Barillé¹},
   pdfkeywords={Remote Sensing, Invasive species, Coastal
 Ecosystems, Biodiversity},
@@ -187,8 +199,8 @@ Ecosystems, Biodiversity},
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{Spatial distribution of \emph{Gracillaria vermiculophylla} in
-French and Spanish estuaries using Unmaned Aerial Vehicule.}
+\title{Monitoring the marine invasive alien species \emph{Gracilaria
+vermiculophylla} using unmanned aerial vehicles}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
 \date{2024-12-13}
@@ -425,7 +437,12 @@ repetitive scanning mode with a sampling rate of 240 kHz, the system
 achieved a point density of 350 points per square meter. The LiDAR point
 cloud was extracted and converted into LAS format using DJI Terra
 software. The LAS point cloud was then imported into Agisoft Metashape
-(Agisoft, 2019) to generate a DEM with a resolution of 2.5 cm.
+(Agisoft, 2019) to generate a Digital Surface Model (DSM) with a
+resolution of 2.5 cm. From the DSM, the slope of each pixel based on a
+grid of 8 surrounding pixels were computed using the terrain function of
+the `terra' package in R (Hijmans, 2024). The angle of the mudflat was
+categorized into three classes: Flat (angle \textless{} 10°), Angled
+(10° ≤ angle ≤ 40°), and Vertical (angle \textgreater{} 40°).
 
 \subsection{Scene classification}\label{scene-classification}
 
@@ -438,6 +455,240 @@ the DISCOV v1.0 model (Oiry et al., 2024a) was trained using only 5771
 Rhodophyceae pixel (3\% of the training dataset). To fill this gap the
 original training dataset of DISCOV v1.0 was updated using new training
 pixel coming from the 5 drone flights (Section~\ref{sec-DroneFlights}).
+A total of 427000 pixels where added to the DISCOV training dataset
+compared to the version 1 (Table~\ref{tbl-Update_training}).
+
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{cccc}
+
+\caption{\label{tbl-Update_training}Class of the Neural Network model,
+with the number of training pixels used to train that class and the
+differences with the training dataset of DISCOV v1.0}
+
+\tabularnewline
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Name}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Taxonomic\ Class}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Training\ Pixels}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Difference\ with\ DISCOV\ v1.0}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endfirsthead 
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Name}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Taxonomic\ Class}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Training\ Pixels}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Difference\ with\ DISCOV\ v1.0}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endhead
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Benthic\ Diatoms}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Bacillariophyceae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{62,436}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x13.95}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Green\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Chlorophyta}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{92,585}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x5.4}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Seagrass}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Magnoliopsida}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{221,065}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Brown\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Phaeophyta}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{169,936}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Red\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Rhodophyta}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{268,637}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x46.55}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Sediment}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{117,956}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x1.24}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Water}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{91,614}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x1.09}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}
+
+
+\end{longtable}
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
+To validate the new version of the DISCOV model, a Shiny app was
+developed, enabling independent users to photo-interpret snapshots of
+the ortho-mosaic from each drone flight (Chang et al., 2024; Simon,
+2024). Users could click on various parts of the snapshots to indicate
+the type of vegetation they believed was present. Using this method, 3
+independent users contributed to creating a validation dataset of 6755
+pixels across 79 snapshots distributed among the four drone flights
+Table~\ref{tbl-ValidationDataset}. The validation dataset was then
+simplify into two classes: Presence of Absence of Red Algae.
+
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{cccc}
+
+\caption{\label{tbl-ValidationDataset}Presence and absence of red
+macroalgae for each drone flight}
+
+\tabularnewline
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Site}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Absent}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Present}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endfirsthead 
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Site}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Absent}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Present}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endhead
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Marisma\ de\ Cortiguera}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,531}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{483}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2,014}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Marisma\ de\ Cudón}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,237}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{136}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,373}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Notre-Dame\ De\ Tremor}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,073}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{463}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,536}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Pont\ de\ Guilly}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,389}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{443}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,832}}}} \\
+
+\ascline{1pt}{000000}{1-4}
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{5,230}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,525}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{6,755}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}
+
+
+\end{longtable}
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
+\subsection{\texorpdfstring{Historical Presence of \emph{Gracilaria
+vermiculophylla} in the Bélon
+esturay}{Historical Presence of Gracilaria vermiculophylla in the Bélon esturay}}\label{historical-presence-of-gracilaria-vermiculophylla-in-the-buxe9lon-esturay}
+
+To assess the historical presence of \emph{G. vermiculophylla} in the
+Bélon Estuary, aerial imagery from flight campaigns was obtained via the
+IGN platform ``Remonter Le Temps'' (IGN, 2024). Nine images were
+selected between 1952 and 2012 from the IGN plateform and an additional
+one has been added for the year 2024 (Table~\ref{tbl-IGNimg}). Since
+most of the images retrieved from ``Remonter Le Temps'' were digitized
+versions of physical photographs, georeferencing were required.
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1714}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2429}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3857}}@{}}
+\caption{Images used to assess the historical presence of Gracilaria
+vermiculophylla in the Belon esturay. Images from the IGN data source
+have been retrieved from the ``Remonter Le Temps'' plateform (IGN,
+2024). Drone flight have been performed by the team using a Mavic 3
+Entreprise.}\label{tbl-IGNimg}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+Date
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Data Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Resolution (cm per Pixel)
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+Date
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Data Source
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Resolution (cm per Pixel)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1952-04-26 & Black and White & IGN & 10 \\
+1958-04-22 & Black and White & IGN & 90 \\
+1976-07-? & Black and White & IGN & 4 \\
+1978-08-22 & Black and White & IGN & 44 \\
+1982-08-11 & Black and White & IGN & 44 \\
+1992-05-17 & True Color & IGN & 70 \\
+1997-04-11 & Black and White & IGN & 64 \\
+2012-07-24 & True Color & IGN & 18 \\
+2024-04-11 & True Color & Drone Flight & 3 \\
+\end{longtable}
+
+For each date, polygons have been drawn around \emph{G. vermiculophylla}
+patches by visually photo-interpreting on each images. These polygons
+were used to calculate the total area of the mudflat covered by
+macroalgae within a common extent of 30 hectares in Pont de Guilly,
+located in the Bélon Estuary, South Brittany, France.
 
 \section{Results}\label{results}
 
@@ -504,7 +755,9 @@ invasion in France in the literature (Rueness, 2005).}
 
 \end{figure}%
 
-\subsection{Classification}\label{classification}
+\subsection{Spectral description}\label{spectral-description}
+
+\subsection{Spatial distribution}\label{spatial-distribution}
 
 The classification map illustrates the diversity of benthic communities
 and substrates in the study area (Figure~\ref{fig-Belon} A and B).
@@ -544,9 +797,21 @@ pixel. Bathymetry is represented as the height above mean sea level.}
 
 \end{figure}%
 
-\subsection{Spectral description}\label{spectral-description}
+\phantomsection\label{cell-fig-Gam_Slope}
+\begin{figure}[H]
 
-\subsection{Spatial distribution}\label{spatial-distribution}
+\centering{
+
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/GAM_slope_cover.png}
+
+}
+
+\caption{\label{fig-Gam_Slope}DISCOV Prediction (A), RGB composition (B)
+and Bathymetry (C) of the Bélon estuary site in Brttany, France. The
+total extent of this flight was 21 hectars with a resolution of 8 mm per
+pixel. Bathymetry is represented as the height above mean sea level.}
+
+\end{figure}%
 
 \section{Discussion}\label{discussion}
 
@@ -709,6 +974,12 @@ monitoring of intertidal seagrass meadows beyond the visible spectrum
 using a remotely piloted aircraft system. Estuarine, Coastal and Shelf
 Science 255, 107299.
 
+\bibitem[\citeproctext]{ref-shinypck}
+Chang, W., Cheng, J., Allaire, J., Sievert, C., Schloerke, B., Xie, Y.,
+Allen, J., McPherson, J., Dipert, A., Borges, B., 2024.
+\href{https://CRAN.R-project.org/package=shiny}{Shiny: Web application
+framework for r}.
+
 \bibitem[\citeproctext]{ref-davies2023multi}
 Davies, B.F.R., Gernez, P., Geraud, A., Oiry, S., Rosa, P., Zoffoli,
 M.L., Barillé, L., 2023. Multi-and hyperspectral classification of
@@ -780,6 +1051,14 @@ Gurgel, C.F.D., Norris, J.N., Schmidt, W.E., Le, H.N., Fredericq, S.,
 2018. Systematics of the gracilariales (rhodophyta) including new
 subfamilies, tribes, subgenera, and two new genera, agarophyton gen.
 Nov. And crassa gen. nov. Phytotaxa 374, 1--23.
+
+\bibitem[\citeproctext]{ref-terrapck}
+Hijmans, R.J., 2024.
+\href{https://CRAN.R-project.org/package=terra}{Terra: Spatial data
+analysis}.
+
+\bibitem[\citeproctext]{ref-RemonterLeTempsIGN}
+IGN, 2024. Remonter le temps.
 
 \bibitem[\citeproctext]{ref-krueger2017genetic}
 Krueger-Hadfield, S.A., Kollars, N.M., Strand, A.E., Byers, J.E.,
@@ -914,6 +1193,11 @@ Spreading and autoecology of the invasive species gracilaria
 vermiculophylla (gracilariales, rhodophyta) in the lagoons of the
 north-western adriatic sea (mediterranean sea, italy). Estuarine,
 Coastal and Shelf Science 114, 192--198.
+
+\bibitem[\citeproctext]{ref-Simon2024ShinyApp}
+Simon, O., 2024.
+\href{https://oirysimon.shinyapps.io/shiny_validate/}{Shiny app for
+validation dataset building}.
 
 \bibitem[\citeproctext]{ref-sotka2018combining}
 Sotka, E.E., Baumgardner, A.W., Bippus, P.M., Destombe, C., Duermit,
