@@ -1,5 +1,5 @@
 ---
-title: Monitoring the marine invasive alien species *Gracilaria vermiculophylla* using unmanned aerial vehicles 
+title: Coucou - Monitoring the marine invasive alien species *Gracilaria vermiculophylla* using unmanned aerial vehicles 
 shorttitle: DISCOV - Gracilaria
 author:
   - name: Simon Oiry¹
@@ -132,7 +132,6 @@ if (length(large_files) > 0) {
   message("No files larger than 100 MB found.")
 }
 ```
-
 
 # Introduction
 
