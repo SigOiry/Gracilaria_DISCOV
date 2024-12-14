@@ -2217,11 +2217,11 @@ Total<-NewData1_brms%>%
   scale_fill_manual(name="Slope",values=c("#8E7CC3","#76A5AF","#93C47D"),
                     labels=c("Flat",
                             "Angled",
-                            "Vertical"))+
+                            "Steep"))+
   scale_colour_manual(name="Slope",values=c("#8E7CC3","#76A5AF","#93C47D"),
                     labels=c("Flat",
                             "Angled",
-                            "Vertical"))+
+                            "Steep"))+
   scale_y_continuous(breaks = c(0.1,0.2,0.3,0.4,0.5),
                      labels = c("10","20","30","40","50"))+
   labs(x="Bathymetry (m)",y="Intertidal Area Covered\n by Gracilaria vermiculophylla (%)")+
