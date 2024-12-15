@@ -2115,7 +2115,7 @@ The bathymetric map reveals a continuous gradient in elevation relative to mean 
 #| cache: false
 #| echo: false
 #| warning: false
-#| fig-cap: DISCOV Prediction (A), RGB composition (B) and Bathymetry (C) of the Bélon estuary site in Brttany, France. The total extent of this flight was 21 hectars with a resolution of 8 mm per pixel. Bathymetry is represented as the height above mean sea level. 
+#| fig-cap: DISCOV Prediction (A), RGB composition (B), Bathymetry (C) and mudflat angle (D) of the Bélon estuary site in Brttany, France. The total extent of this flight was 21 hectars with a resolution of 8 mm per pixel. Bathymetry is represented as the height above mean sea level. 
 #| label: fig-Belon
 #| fig-width: 7.89
 #| fig-height: 10
@@ -2241,9 +2241,20 @@ Total<-NewData1_brms%>%
         plot.background = element_rect(fill = "white", color = NA))
   )
 
+NewData1_brms%>% 
+  group_by(DEM,Slope_Cat)%>% 
+  summarise(median_qi(.linpred,.width=c(0.89))) %>% 
+  group_by(Slope_Cat) %>% 
+  reframe(min = min(y),
+          max = max(y))
+
 ggsave("Paper/Figures/High_res/GAM_slope_cover.png", width = 10, height = 5, dpi = 400)
 ggsave("Paper/Figures/Low_res/GAM_slope_cover.png", width = 10, height = 5, dpi = 200)
 ```
+
+Overall, the percent cover of *Gracilaria vermiculophylla* increases with bathymetry, as shown by the general relationship (@fig-Gam_Slope, black line), which rises from approximately 16% at the lowest elevation to about 30% at the highest elevation. This indicates a consistent positive association between bathymetry and algal cover.
+
+When accounting for slope, the flatter the slope, the higher the percent cover of *G. vermiculophylla*. For flat slopes, the cover ranges from approximately 20% at the lowest elevation to nearly 38% at the highest elevation. In contrast, for angled slopes, the increase is less pronounced, ranging from around 16% to 32%. On steep slopes, the cover is the lowest, starting at about 15% and rising only slightly above 30% at the highest elevation (@fig-Gam_Slope). This demonstrates that slope modifies the relationship, with flatter slopes supporting a greater percent cover of the algae.
 
 ```{r Figure GAM_slope}
 #| cache: false
