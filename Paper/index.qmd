@@ -1561,118 +1561,150 @@ knitr::include_graphics("./Figures/Low_res/Cover_Gracillaria_vs_Time.png")
 library(tidyverse)
 library(terra)
 library(sf)
+library(signal)
+library(Utilities.Package)
 
-multi_list <- "Data/Multi" %>% 
-  list.files(pattern = "tif", full.names = T) %>% 
-  as.tibble() %>% 
-  rename(path = "value") %>% 
-  mutate(filename = gsub(".*/","",path),
-         site = case_when(str_detect(filename, "Belon") ~ "Belon",
-                          str_detect(filename, "Aven") ~ "Aven",
-                          str_detect(filename, "Saja_North") ~ "SajaNorth",
-                          str_detect(filename, "Saja_South") ~ "SajaSouth"))
+ # Set the path to the directory containing the CSV files
+csv_directory <- "Data/ASD"
 
-DISCOV_list <- "Data/DISCOV" %>% 
-  list.files(pattern = "tif", full.names = T)%>% 
-  as.tibble() %>% 
-  rename(pred_path = "value") %>% 
-  mutate(filename = gsub(".*/","",pred_path),
-         site = case_when(str_detect(filename, "Belon") ~ "Belon",
-                          str_detect(filename, "Aven") ~ "Aven",
-                          str_detect(filename, "Saja_North") ~ "SajaNorth",
-                          str_detect(filename, "Saja_South") ~ "SajaSouth")) %>% 
-  select(pred_path,site)
+# List all CSV files in the directory
+csv_files <- list.files(path = csv_directory, pattern = "\\.csv$", full.names = TRUE)
 
-msk_list <- "Data/shp/mask" %>% 
-  list.files(pattern = ".shp",full.names = T)%>% 
-  as.tibble() %>% 
-  rename(shp_path = "value") %>% 
-  mutate(filename = gsub(".*/","",shp_path),
-         site = case_when(str_detect(filename, "Belon") ~ "Belon",
-                          str_detect(filename, "Aven") ~ "Aven",
-                          str_detect(filename, "SajaNorth") ~ "SajaNorth",
-                          str_detect(filename, "SajaSouth") ~ "SajaSouth")) %>% 
-  group_by(site) %>% 
-  slice(1) %>% 
-  select(shp_path,site)
-
-DEM_list <- "Data/DEM" %>% 
-  list.files(pattern = ".tif",full.names = T) %>% 
-  as.tibble() %>% 
-  rename(DEM_path = "value") %>% 
-  mutate(filename = gsub(".*/","",DEM_path),
-         site = case_when(str_detect(filename, "Belon") ~ "Belon",
-                          str_detect(filename, "Aven") ~ "Aven",
-                          str_detect(filename, "SajaNorth") ~ "SajaNorth",
-                          str_detect(filename, "SajaSouth") ~ "SajaSouth")) %>% 
-  group_by(site) %>% 
-  slice(1) %>% 
-  select(DEM_path,site)
-
-df_file <- multi_list %>% 
-  left_join(DISCOV_list, by ="site") %>% 
-  left_join(msk_list, by ="site")%>% 
-  left_join(DEM_list, by ="site")
+# Read and combine all CSV files into one dataframe
+df <- csv_files %>%
+  lapply(read.csv) %>%  # Read each CSV file into a list of dataframes
+  bind_rows() %>%         # Combine all dataframes into one
+  dplyr::filter(Letter == "Field") %>% 
+  dplyr::select(c(Wavelength, mean_RAW, ID)) %>% 
+  pivot_wider(names_from = ID, values_from = mean_STD)
 
 
-for (i in 1:nrow(df_file)) {
-  
-  msk <- df_file$shp_path[i] %>% read_sf()
-  
-  multi <- rast(df_file$path[i]) %>% 
-    project(crs(msk)) %>% 
-    crop(msk, mask = T)
-  names(multi) <- c(paste0("B",1:10))
-  
-  pred <- rast(df_file$pred_path[i])%>% 
-    project(crs(msk),method = "near") %>% 
-    crop(msk, mask = T) %>% 
-    resample(multi, method = "near")
-  names(pred) <- "Pred"
-  
-  DEM <- rast(df_file$DEM_path[i]) %>% 
-    resample(multi, method = "bilinear") %>% 
-    crop(msk, mask = T)
-  names(DEM) <- "DEM"
-  
-  
-  
-  stk <- c(multi,pred,DEM) %>% 
-    as.data.frame() %>% 
-    mutate(site = df_file$site[i]) %>% 
-    dplyr::filter(B1 > 0,
-                  Pred !=0) %>% 
-    mutate(ID = c(1:nrow(.)),
-           NDVI = (B10-B6)/(B10+B6))
-  
-  sp <- stk %>% 
-    pivot_longer(-c(Pred,DEM,site, ID, NDVI), names_to = "bands", values_to = "values") %>% 
-    group_by(Pred, bands) %>% 
-    reframe(mean = mean(values, na.rm = T),
-            sd = sd(values, na.rm = T))
-  
-  
-  wv <- data.frame(bands = paste0("B",c(1:10)),
-                   wv = c(444,475,531,560,650,668,705,717,740,840))
-  # 
-  # sp %>% 
-  #   left_join(wv, by = "bands") %>% 
-  #   ggplot()+
-  #   geom_line(aes(x = wv, y = mean, color = as.factor(Pred), group = Pred))
-  
-  stk %>%
-    dplyr::filter(Pred == 5) %>% 
-    ggplot()+
-    geom_density_2d(aes(x = DEM, y = NDVI))
-  
-  if(i == 1){
-    df_all <- stk
-  }else{
-    df_all <- rbind(df_all, stk)
-  }
+
+# User-defined parameters
+p <- 3      # polynomial order for Savitzky-Golay
+n <- 11     # frame length (odd number, e.g. 11)
+factor <- 5 # degrade resolution by a factor of 5
+
+# Assuming your initial dataframe is called df
+# df: first column is wavelength, subsequent columns are spectra
+wavelength <- df[[1]]
+reflectances <- df[,-1]
+
+# Compute original wavelength spacing
+d_lambda <- wavelength[2] - wavelength[1]
+
+# 1. Degrade the spectral resolution
+# Create a new wavelength vector with coarser spacing
+new_wavelength <- seq(from = min(wavelength), to = max(wavelength), by = factor * d_lambda)
+
+# Interpolate the spectra onto the new wavelength grid
+degraded_spectra <- apply(reflectances, 2, function(spec) {
+  approx(x = wavelength, y = spec, xout = new_wavelength)$y
+})
+
+# Now our working wavelength and reflectances become:
+wavelength <- new_wavelength
+reflectances <- degraded_spectra
+
+# Update the spacing to reflect the new degraded resolution
+d_lambda <- wavelength[2] - wavelength[1]
+
+# 2. Perform initial Savitzky-Golay smoothing on each degraded-resolution spectrum
+smooth_spectra <- apply(reflectances, 2, sgolayfilt, p = p, n = n)
+
+# Define a function for first derivative using central differences
+first_derivative <- function(x, d) {
+  n <- length(x)
+  d1 <- numeric(n)
+  d1[2:(n-1)] <- (x[3:n] - x[1:(n-2)]) / (2*d)
+  d1[1] <- NA
+  d1[n] <- NA
+  return(d1)
 }
 
+# 3. Compute the first derivative from the smoothed spectra
+d1_spectra <- apply(smooth_spectra, 2, first_derivative, d = d_lambda)
 
+# Helper function to safely smooth a vector that may have NAs at boundaries
+safe_sgolay <- function(x, p, n) {
+  # Replace NAs at edges with nearest non-NA values before smoothing
+  if (is.na(x[1])) {
+    first_valid <- which(!is.na(x))[1]
+    x[1:(first_valid-1)] <- x[first_valid]
+  }
+  if (is.na(x[length(x)])) {
+    last_valid <- rev(which(!is.na(x)))[1]
+    x[(last_valid+1):length(x)] <- x[last_valid]
+  }
+  sgolayfilt(x, p = p, n = n)
+}
+
+# 4. Smooth the first derivative again using Savitzky-Golay
+d1_spectra_smooth <- apply(d1_spectra, 2, safe_sgolay, p = p, n = n)
+
+# Define a function for second derivative using central differences
+second_derivative <- function(x, d) {
+  n <- length(x)
+  d2 <- numeric(n)
+  d2[2:(n-1)] <- (x[3:n] - 2*x[2:(n-1)] + x[1:(n-2)]) / (d^2)
+  d2[1] <- NA
+  d2[n] <- NA
+  return(d2)
+}
+
+# 5. Compute the second derivative from the smoothed first derivative
+d2_spectra <- apply(d1_spectra_smooth, 2, second_derivative, d = d_lambda)
+
+# 6. Finally, smooth the second derivative again using Savitzky-Golay
+d2_spectra_smooth <- apply(d2_spectra, 2, safe_sgolay, p = p, n = n)
+
+# Combine results into a final dataframe
+result_df <- data.frame(wavelength = wavelength, d2_spectra_smooth) %>% 
+  as_tibble() %>% 
+  pivot_longer(-wavelength, names_to = "spectra", values_to = "deriv") %>% 
+  group_by(wavelength) %>% 
+  reframe(mean = mean(deriv, na.rm = T),
+          sd = sd(deriv, na.rm=T))
+
+
+df_spectra <- csv_files %>%
+  lapply(read.csv) %>%  # Read each CSV file into a list of dataframes
+  bind_rows() %>%         # Combine all dataframes into one
+  dplyr::filter(Letter == "Field")%>% 
+  group_by(Wavelength) %>% 
+  reframe(mean = mean(mean_RAW, na.rm = T),
+          sd = sd(mean_RAW, na.rm=T))
+
+chla= 678
+PE = 565
+PC = 620
+
+a <- ggplot(result_df) +
+  geom_line(aes(x = wavelength+10, y = mean))+
+  geom_ribbon(aes(x = wavelength+10, y = mean, ymin = mean-sd, ymax = mean+sd), alpha = 0.05)+
+  geom_vline(xintercept = chla)+ # chl-a
+  geom_vline(xintercept = PE)+ 
+  geom_vline(xintercept = PC)+
+  xlim(400, 900)+
+  theme_Bede()+
+  ylab("Second derivative")+
+  theme(
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+
+b <- ggplot(df_spectra) +
+  geom_line(aes(x = Wavelength, y = mean))+
+  geom_ribbon(aes(x = Wavelength, y = mean, ymin = mean-sd, ymax = mean+sd), alpha = 0.05)+
+  geom_vline(xintercept = chla)+ # chl-a
+  geom_vline(xintercept = PE)+ #
+  geom_vline(xintercept = PC)+
+  ylab("Reflectance")+
+  theme_Bede()
+
+(a)/(b)
 
 ```
 
