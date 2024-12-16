@@ -2,8 +2,12 @@
     "chunk_output_type": "console",
     "source_window_id": "",
     "Source": "Source",
-    "cursorPosition": "1558,14",
-    "scrollLine": "1265",
-    "docOutlineVisible": "0",
-    "docOutlineSize": "146"
+    "cursorPosition": "2517,1623",
+    "scrollLine": "2513",
+    "docOutlineVisible": "1",
+    "docOutlineSize": "146",
+    "rmdVisualMode": "false",
+    "rmdVisualWrapConfigured": "true",
+    "rmdVisualModeLocation": "91610:6215.45458984375",
+    "rmdVisualCollapsedChunks": "1,1522,1742,1888,9489,17437,19498,25318,30213,31590,34383,37540,40654,43866,44567,45051,50178,52895,53563,54655,56624,58297,61581,64536,65669,66297,77440,78047,80294,81938,84109,86451,87989,90424,92351,92847,98630"
 }

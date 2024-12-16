@@ -203,7 +203,7 @@ Ecosystems, Biodiversity},
 \emph{Gracilaria vermiculophylla} using unmanned aerial vehicles}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2024-12-15}
+\date{2024-12-16}
 
 \begin{document}
 \maketitle
@@ -372,18 +372,69 @@ represent intertidal areas.}
 \subsection{Remote sensing data acquisition and
 pre-processing}\label{sec-DroneFlights}
 
-\begin{table}
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{ccccc}
 
 \caption{\label{tbl-flights}List of drone flights, summarising the
 location, the date, and the total extent of each flight (in hectars).}
 
-\centering{
+\tabularnewline
 
-\includegraphics[width=8.84in,height=\textheight,keepaspectratio]{Figures/High_res/table_flights.png}
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Country}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Site}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Flight}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Date}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Area}}}} \\
 
-}
+\ascline{0.5pt}{000000}{1-5}\endfirsthead 
 
-\end{table}%
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Country}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Site}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Flight}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Date}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Area}}}} \\
+
+\ascline{0.5pt}{000000}{1-5}\endhead
+
+
+
+\multicolumn{1}{>{}c}{} & \multicolumn{1}{>{}c}{} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Notre-Dame\ De\ Tremor}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2024-04-11}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{26.7}}}} \\
+
+\ascline{1pt}{BEBEBE}{3-5}
+
+
+
+\multicolumn{1}{>{}c}{\multirow[c]{-2}{*}{\parbox{1.3in}{\centering \textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{France}}}}}} & \multicolumn{1}{>{}c}{\multirow[c]{-2}{*}{\parbox{1.3in}{\centering \textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Aven\ \&\ Belon}}}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Pont\ du\ Guilly}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2024-04-11}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{21.3}}}} \\
+
+\ascline{0.5pt}{000000}{1-5}
+
+
+
+\multicolumn{1}{>{}c}{} & \multicolumn{1}{>{}c}{} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Marisma\ de\ Cortiguera}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2024-06-25}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{20.4}}}} \\
+
+\ascline{1pt}{BEBEBE}{3-5}
+
+
+
+\multicolumn{1}{>{}c}{\multirow[c]{-2}{*}{\parbox{1.3in}{\centering \textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Spain}}}}}} & \multicolumn{1}{>{}c}{\multirow[c]{-2}{*}{\parbox{1.3in}{\centering \textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Saja\ Estuary}}}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Marisma\ de\ Cudón}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2024-06-25}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{8.4}}}} \\
+
+\ascline{0.5pt}{000000}{1-5}
+
+
+\end{longtable}
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
 
 A total of 6 drone flights were done spread in the 3 study sites. Each
 time, flights were done at an altitude of 120 m and at a speed of 10
@@ -637,52 +688,104 @@ one has been added for the year 2024 (Table~\ref{tbl-IGNimg}). Since
 most of the images retrieved from ``Remonter Le Temps'' were digitized
 versions of physical photographs, georeferencing were required.
 
-\begin{longtable}[]{@{}
-  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1714}}
-  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2429}}
-  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2000}}
-  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3857}}@{}}
-\caption{Images used to assess the historical presence of Gracilaria
-vermiculophylla in the Belon esturay. Images from the IGN data source
-have been retrieved from the ``Remonter Le Temps'' plateform (IGN,
-2024). Drone flight have been performed by the team using a Mavic 3
-Entreprise.}\label{tbl-IGNimg}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\centering
-Date
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Type
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Data Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Resolution (cm per Pixel)
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\centering
-Date
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Type
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Data Source
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Resolution (cm per Pixel)
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-1952-04-26 & Black and White & IGN & 10 \\
-1958-04-22 & Black and White & IGN & 90 \\
-1976-07-? & Black and White & IGN & 4 \\
-1978-08-22 & Black and White & IGN & 44 \\
-1982-08-11 & Black and White & IGN & 44 \\
-1992-05-17 & True Color & IGN & 70 \\
-1997-04-11 & Black and White & IGN & 64 \\
-2012-07-24 & True Color & IGN & 18 \\
-2024-04-11 & True Color & Drone Flight & 3 \\
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{cccc}
+
+\caption{\label{tbl-IGNimg}Images used to assess the historical presence
+of Gracilaria vermiculophylla in the Belon esturay. Images from the IGN
+data source have been retrieved from the ``Remonter Le Temps'' plateform
+(IGN, 2024). Drone flight have been performed by the team using a Mavic
+3 Entreprise.}
+
+\tabularnewline
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Date}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Type}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Data\ Source}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Resolution\ (cm\ per\ Pixel)}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endfirsthead 
+
+\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Date}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Type}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Data\ Source}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Resolution\ (cm\ per\ Pixel)}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}\endhead
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1952-04-26}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Black\ and\ White}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{IGN}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{10}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1958-04-22}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Black\ and\ White}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{IGN}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{90}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1976-07-?\ }}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Black\ and\ White}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{IGN}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{4}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1978-08-22}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Black\ and\ White}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{IGN}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{44}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1982-08-11}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Black\ and\ White}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{IGN}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{44}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1992-05-17}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{True\ Color}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{IGN}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{70}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1997-04-11}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Black\ and\ White}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{IGN}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{64}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2012-07-24}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{True\ Color}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{IGN}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{18}}}} \\
+
+
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2024-04-11}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{True\ Color}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Drone\ Flight}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{3}}}} \\
+
+\ascline{1.5pt}{666666}{1-4}
+
+
 \end{longtable}
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
 
 For each date, polygons have been drawn around \emph{G. vermiculophylla}
 patches by visually photo-interpreting on each images. These polygons
@@ -756,6 +859,38 @@ invasion in France in the literature (Rueness, 2005).}
 \end{figure}%
 
 \subsection{Spectral description}\label{spectral-description}
+
+The spectral signature of \emph{Gracilaria vermiculophylla} was
+characterized by a wavy reflectance pattern in the visible region of the
+spectrum, between 500 and 700 nm (Figure~\ref{fig-SpecDescri} A). This
+pattern was primarily driven by the presence of phycoerythrin and
+phycocyanin, which exhibited maximum absorption peaks at approximately
+565 nm and 620 nm, respectively. An additional absorption feature around
+495 nm was likely attributable to the presence of accessory carotenoid
+pigments. The most pronounced absorption peak occurred at 675 nm,
+corresponding to chlorophyll-a absorption. The second derivative
+analysis clearly highlighted the inflection points corresponding to the
+main absorption peaks at 495, 565, 620, and 675 nm, allowing for a more
+precise identification of the spectral contributions of these pigments
+(Figure~\ref{fig-SpecDescri} B).
+
+\phantomsection\label{cell-fig-SpecDescri}
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/plot_spectral_signature.png}
+
+}
+
+\caption{\label{fig-SpecDescri}Hyperspectral signature of
+\emph{Gracilaria vermiculophylla} (A) and its second derivative (B). The
+black line represents the average spectra, while the shaded ribbon
+indicates the standard deviation. Dashed lines mark the absorption
+maxima of Phycoerythrin, Phycocyanin, and Chlorophyll-a, shown in green,
+orange, and red, respectively.}
+
+\end{figure}%
 
 \subsection{Spatial distribution}\label{spatial-distribution}
 
@@ -856,7 +991,7 @@ Rhodophyceae as a class, this group constituted less than 3\% of its
 training dataset. In contrast, the updated model presented here was
 trained on a dataset in which \emph{G. vermiculophylla} covered 26 \% of
 approximately one million pixels. This improved dataset allowed the
-model to achieve an accuracy of \textbf{X\%}.
+model to achieve an accuracy of 91.1 \%.
 
 Rhodophytes possess unique phycobilin pigments, enabling their spectral
 distinction from other macroalgal groups (Douay et al., 2022; Mcilwaine
@@ -902,45 +1037,55 @@ topography}{G. vermiculophylla spatial distribution and mudflat topography}}\lab
 macroalgae}\label{spatio-temporal-monitoring-of-invasive-macroalgae}
 
 Accurate, high-resolution maps of invasive or alien species are
-extremely scarce (\textbf{REF}), yet they enable in-depth evaluations of
-these species' ecology, temporal dynamics, and niche behavior in
-relation to their environment. In this study, using individual flights
-over monospecific algal mats, we quantified how this invasive alga
-associates with local mudflat topography, demonstrating that
-\textbf{\ldots{}}. Repeated monitoring of this type can further reveal
-phenological patterns, invasion dynamics, and local conspecific
-biological interactions---such as co-occurrence, displacement, or
-avoidance (\textbf{REF}).
+extremely scarce (Fourcade et al., 2014; Vilizzi et al., 2021), yet they
+enable in-depth evaluations of these species' ecology, temporal
+dynamics, and niche behavior in relation to their environment. In this
+study, using individual flights over monospecific algal mats, we
+quantified how this invasive alga associates with local mudflat
+topography, demonstrating that its distribution is closely tied to
+specific topographical features, such as elevation and slope gradients.
+This relationship reveals how physical features of the mudflat can
+influence the extent and density of \emph{Gracilaria vermiculophylla}
+mats. Understanding the drivers of the spatial distribution of the algae
+helps to anticipate the future development of this species and identify
+areas vulnerable to its invasion. Repeated monitoring of this type can
+further reveal phenological patterns, invasion dynamics, and local
+conspecific biological interactions---such as co-occurrence,
+displacement, or avoidance (Arim et al., 2006; Godoy et al., 2009).
 
 Remote sensing using multispectral drone mapping can provide
 high-resolution, spatially explicit data, but it must be combined with
-repeated, in situ field measurements to maximize its potential
-(\textbf{REF}). As noted, temporal repetition makes it possible to
-assess dynamic processes, and integrating these mapping approaches with
-in situ analyses of local infauna, carbon cycling, riverine inputs, and
-sedimentology would yield valuable insights for local managers. Such an
-integrated approach could help determine how the invasive alga affects
-the local ecosystem and, more broadly, forecast its potential impact on
-other estuarine environments facing similar invasion events. This
-holistic approach can guide strategic interventions aimed at mitigating
-the alga's spread, maintaining ecological balance, and protecting native
-biodiversity, ensuring that management efforts are informed by accurate,
-timely, and spatially explicit data.
+repeated, in situ field measurements to maximize its potential (Chadwick
+et al., 2020; Zoffoli et al., 2023). As noted, temporal repetition makes
+it possible to assess dynamic processes, and integrating these mapping
+approaches with in situ analyses of local infauna, carbon cycling,
+riverine inputs, and sedimentology would yield valuable insights for
+local managers. Such an integrated approach could help determine how the
+invasive algae affects the local ecosystem and, more broadly, forecast
+its potential impact on other estuarine environments facing similar
+invasion events. This holistic approach can guide strategic
+interventions aimed at mitigating the alga's spread, maintaining
+ecological balance, and protecting native biodiversity, ensuring that
+management efforts are informed by accurate, timely, and spatially
+explicit data.
 
 Invasive species like \emph{Gracilaria vermiculophylla} and
 \emph{Rugulopteryx okamurae} can be identified using drones equipped
 with multispectral sensors, taking advantage of the characteristic
-reflectance of rhodophytes (Roca et al., 2022). However, this capability
-has not yet been tested using standard RGB sensors found in readily
-available commercial drones. These drones are easy to deploy, can cover
-large areas when flying at speeds of 15 m s\^{}-1 at an altitude of 120
-m, and still maintain sufficient overlap between images to support
-photogrammetric reconstruction. Expanding these methodologies to
-RGB-based detection would significantly lower barriers to entry,
-allowing local stakeholders with limited resources to access valuable
-monitoring tools for early detection and rapid response. A promising
-avenue for operational applications lies in testing machine learning
-techniques on RGB imagery that do not rely on enhanced spectral
+reflectance of rhodophytes (Barillé et al., 2025; Nurdin et al., 2023).
+However, while RGB sensors on readily available commercial drones can be
+used to perform accurate scene classification, their effectiveness for
+mapping invasive species has not yet been demonstrated (Cheng et al.,
+2017; Kazakeviciute-Januskeviciene et al., 2020). These drones are easy
+to deploy, can cover large areas when flying at speeds of 15 m
+s\textsuperscript{-1} at an altitude of 120 m, and still maintain
+sufficient overlap between images to support photogrammetric
+reconstruction. Expanding these methodologies to RGB-based detection
+would significantly lower barriers to entry, allowing local stakeholders
+with limited resources to access valuable monitoring tools for early
+detection and rapid response. A promising avenue for operational
+applications lies in testing machine learning techniques for coastal
+habitat mapping using RGB imagery that do not rely on enhanced spectral
 resolution. Considering the low cost of RGB and multispectral commercial
 drones, coupled with ongoing advancements in machine learning,
 drone-based remote sensing has now matured into a practical tool for
@@ -966,6 +1111,17 @@ Journal of Experimental Marine Biology and Ecology 407, 190--199.
 \bibitem[\citeproctext]{ref-agisoft}
 Agisoft, 2019. \href{https://www.agisoft.com/}{Agisoft metashape}.
 
+\bibitem[\citeproctext]{ref-arim2006spread}
+Arim, M., Abades, S.R., Neill, P.E., Lima, M., Marquet, P.A., 2006.
+Spread dynamics of invasive species. Proceedings of the National Academy
+of Sciences 103, 374--378.
+
+\bibitem[\citeproctext]{ref-barille2025variability}
+Barillé, L., Paterson, I.L., Oiry, S., Aris, A., Cook-Cottier, E.J.,
+Nurdin, N., 2025. Variability of kappaphycus alvarezii cultivation in
+south-sulawesi (indonesia) related to the monsoon shift: Water quality,
+growth and colour quantification. Aquaculture Reports 40, 102557.
+
 \bibitem[\citeproctext]{ref-Blanchet2014}
 Blanchet, H., Gouillieux, B., Alizier, S., others, 2014. Multiscale
 patterns in the diversity and organization of benthic intertidal fauna
@@ -989,6 +1145,13 @@ Castaing, P., Guilcher, A., 1995. Morphosedimentary evolution of
 ria-type estuaries. Earth Surface Processes and Landforms 20, 361--376.
 \url{https://doi.org/10.1002/esp.3290200408}
 
+\bibitem[\citeproctext]{ref-chadwick2020integrating}
+Chadwick, K.D., Brodrick, P.G., Grant, K., Goulden, T., Henderson, A.,
+Falco, N., Wainwright, H., Williams, K.H., Bill, M., Breckheimer, I.,
+others, 2020. Integrating airborne remote sensing and field campaigns
+for ecology and earth system science. Methods in Ecology and Evolution
+11, 1492--1508.
+
 \bibitem[\citeproctext]{ref-chand2021low}
 Chand, S., Bollard, B., 2021. Low altitude spatial assessment and
 monitoring of intertidal seagrass meadows beyond the visible spectrum
@@ -1000,6 +1163,11 @@ Chang, W., Cheng, J., Allaire, J., Sievert, C., Schloerke, B., Xie, Y.,
 Allen, J., McPherson, J., Dipert, A., Borges, B., 2024.
 \href{https://CRAN.R-project.org/package=shiny}{Shiny: Web application
 framework for r}.
+
+\bibitem[\citeproctext]{ref-cheng2017remote}
+Cheng, G., Han, J., Lu, X., 2017. Remote sensing image scene
+classification: Benchmark and state of the art. Proceedings of the IEEE
+105, 1865--1883.
 
 \bibitem[\citeproctext]{ref-davies2023multi}
 Davies, B.F.R., Gernez, P., Geraud, A., Oiry, S., Rosa, P., Zoffoli,
@@ -1056,12 +1224,24 @@ Firth, L.B., Foggo, A., Watts, T., Knights, A.M., DeAmicis, S., 2024.
 Invasive macroalgae in native seagrass beds: Vectors of spread and
 impacts. Annals of Botany 133, 41--50.
 
+\bibitem[\citeproctext]{ref-fourcade2014mapping}
+Fourcade, Y., Engler, J.O., Rödder, D., Secondi, J., 2014. Mapping
+species distributions with MAXENT using a geographically biased sample
+of presence data: A performance assessment of methods for correcting
+sampling bias. PloS one 9, e97122.
+
 \bibitem[\citeproctext]{ref-van2018global}
 Ginneken, V. van, Vries, E. de, others, 2018. The global dispersal of
 the non-endemic invasive red alga gracilaria vermiculophylla in the
 ecosystems of the euro-asia coastal waters including the wadden sea
 unesco world heritage coastal area: Awful or awesome? Oceanography \&
 Fisheries Open Access Journal 8, 4--26.
+
+\bibitem[\citeproctext]{ref-godoy2009different}
+Godoy, O., Castro-Dı́ez, P., Valladares, F., Costa-Tenorio, M., 2009.
+Different flowering phenology of alien invasive species in spain:
+Evidence for the use of an empty temporal niche? Plant Biology 11,
+803--811.
 
 \bibitem[\citeproctext]{ref-grizel1991introduction}
 Grizel, H., Heral, M., 1991. Introduction into france of the japanese
@@ -1080,6 +1260,11 @@ analysis}.
 
 \bibitem[\citeproctext]{ref-RemonterLeTempsIGN}
 IGN, 2024. Remonter le temps.
+
+\bibitem[\citeproctext]{ref-kazakeviciute2020assessment}
+Kazakeviciute-Januskeviciene, G., Janusonis, E., Bausys, R., Limba, T.,
+Kiskis, M., 2020. Assessment of the segmentation of RGB remote sensing
+images: A subjective approach. Remote Sensing 12, 4152.
 
 \bibitem[\citeproctext]{ref-krueger2017genetic}
 Krueger-Hadfield, S.A., Kollars, N.M., Strand, A.E., Byers, J.E.,
@@ -1124,6 +1309,13 @@ Nebel, S., Beege, M., Schneider, S., Rey, G.D., 2020. A review of
 photogrammetry and photorealistic 3D models in education from a
 psychological perspective, in: Frontiers in Education. Frontiers Media
 SA, p. 144.
+
+\bibitem[\citeproctext]{ref-rs15143674}
+Nurdin, N., Alevizos, E., Syamsuddin, R., Asis, H., Zainuddin, E.N.,
+Aris, A., Oiry, S., Brunier, G., Komatsu, T., Barillé, L., 2023.
+Precision aquaculture drone mapping of the spatial distribution of
+kappaphycus alvarezii biomass and carrageenan. Remote Sensing 15.
+\url{https://doi.org/10.3390/rs15143674}
 
 \bibitem[\citeproctext]{ref-nyberg2007introduced}
 Nyberg, C.D., 2007. Introduced marine macroalgae and habitat modifiers:
@@ -1274,6 +1466,13 @@ Challenges to the Wadden Sea Area. In: Proceedings of the 10th
 International Scientific Wadden Sea Symposium, Groningen, the
 Netherlands. pp. 173--195.
 
+\bibitem[\citeproctext]{ref-vilizzi2021global}
+Vilizzi, L., Copp, G.H., Hill, J.E., Adamovich, B., Aislabie, L., Akin,
+D., Al-Faisal, A.J., Almeida, D., Azmai, M.A., Bakiu, R., others, 2021.
+A global-scale screening of non-native aquatic organisms to identify
+potentially invasive species under current and future climate
+conditions. Science of the Total Environment 788, 147868.
+
 \bibitem[\citeproctext]{ref-weinberger2008invasive}
 Weinberger, F., Buchholz, B., Karez, R., Wahl, M., 2008. The invasive
 red alga gracilaria vermiculophylla in the baltic sea: Adaptation to
@@ -1302,6 +1501,13 @@ Zoffoli, M.L., Gernez, P., Godet, L., Peters, S., Oiry, S., Barillé, L.,
 2021. Decadal increase in the ecological status of a north-atlantic
 intertidal seagrass meadow observed with multi-mission satellite
 time-series. Ecological Indicators 130, 108033.
+
+\bibitem[\citeproctext]{ref-zoffoli2023remote}
+Zoffoli, M.L., Gernez, P., Oiry, S., Godet, L., Dalloyau, S., Davies,
+B.F.R., Barillé, L., 2023. Remote sensing in seagrass ecology: Coupled
+dynamics between migratory herbivorous birds and intertidal meadows
+observed by satellite during four decades. Remote Sensing in Ecology and
+Conservation 9, 420--433.
 
 \end{CSLReferences}
 
