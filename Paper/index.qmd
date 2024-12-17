@@ -1,5 +1,5 @@
 ---
-title: Coucou - Monitoring the marine invasive alien species *Gracilaria vermiculophylla* using unmanned aerial vehicles 
+title: Remote Sensing Mapping of *Gracilaria vermiculophylla* in the site of its First European Observation
 shorttitle: DISCOV - Gracilaria
 author:
   - name: Simon Oiry¹
@@ -132,6 +132,18 @@ if (length(large_files) > 0) {
   message("No files larger than 100 MB found.")
 }
 ```
+
+# Title proposition
+
+- Remote Sensing of *Gracilaria vermiculophylla* in the site of its First European Observation
+
+- Monitoring the marine invasive alien species *Gracilaria vermiculophylla* using unmanned aerial vehicles
+
+- Remote Sensing of *Gracilaria vermiculophylla*: Mapping its Distribution at the Site of its First European Description
+
+- Mapping the Spread of the Invasive Species *Gracilaria vermiculophylla* using Remote Sensing at the Site of its Initial Description in Europe
+
+- Quantifying *Gracilaria vermiculophylla* Spatial and Temporal Distribution Through Remote Sensing at its First Recorded European Site
 
 # Introduction
 
@@ -1110,6 +1122,28 @@ knitr::include_graphics("Figures/Low_res/Figure1/Map_site.png")
 
 ## Remote sensing data acquisition and pre-processing {#sec-DroneFlights}
 
+```{r Picture Figure}
+#| cache: true
+#| echo: false
+#| eval: false
+#| warning: false
+
+
+
+```
+
+
+## Hyperspectral measurements
+
+At each location, hyperspectral reflectance signatures were recorded using an ASD FieldSpec HandHeld 2 spectroradiometer (Malvern Panalytical, Worcestershire, UK), which measures reflectance from 325 to 1075 nm with a spectral resolution of approximately 1 nm. Each spectrum was subsequently smoothed using a Savitzky–Golay filter [@savitzky1964smoothing] with a third-order polynomial and an 11-point window, selected to minimize noise while preserving salient spectral features. After this initial smoothing, the first and second derivatives were computed using a central difference approximation (@eq-SecondDerivative).
+
+$$
+f''(\lambda_i) \approx \frac{f(\lambda_{i+1}) - 2f(\lambda_i) + f(\lambda_{i-1})}{(\Delta \lambda)^2}
+$${#eq-SecondDerivative}
+
+where $ f(\lambda_i) $ is the reflectance at wavelength $\lambda_i$ and $\Delta \lambda$ is the uniform spectral sampling interval.
+
+## Drone data
 ```{r Table1}
 #| label: tbl-flights
 #| tbl-cap: List of drone flights, summarising the location, the date, and the total extent of each flight (in hectars).
@@ -1158,11 +1192,11 @@ flextable(df)  %>%
 
 A total of 6 drone flights were done spread in the 3 study sites. Each time, flights were done at an altitude of 120 m and at a speed of 10 m.s^-1^ (@tbl-flights).
 
-### Multispectral data {#sec-photo}
+#### Multispectral data {#sec-photo}
 
 At each location, reflectance images with a resolution of 1.2 million pixels were captured using a DJI Matrice 300 quadcopter drone equipped with a Micasense RedEdge Dual MX multispectral camera. The camera recorded data across ten spectral bands, spanning from blue to near-infrared (NIR) wavelengths (444, 475, 531, 560, 650, 668, 705, 717, 740, and 840 nm) (). To ensure consistent lighting conditions, the drone's flight trajectory was aligned to maintain a solar azimuth angle of 90 degrees. Image acquisition was carried out with an overlap of 70% between side-by-side images and 80% between successive images along the flight path. A downwelling light sensor (DLS2) was used to measure real-time irradiance, enabling the correction of reflectance values for variations in light intensity caused by cloud cover during the flight. The raw image data were subsequently calibrated to reflectance using a calibration panel with \~50% reflectivity, provided by the camera's manufacturer. Images were processed using structure-from-motion photogrammetry software [@agisoft] to generate multispectral ortho-mosaics for each flight. The ortho-mosaicking workflow was consistent across all flights. Initially, key tie points were identified within each image and across overlapping images to create a sparse point cloud. This point cloud was refined by removing noisy points using a reprojection accuracy metric. Subsequently, a dense point cloud was generated using a structure-from-motion algorithm. A digital surface model (DSM) was then created through surface interpolation of the dense point cloud, which served as the basis for reconstructing the multispectral ortho-image [@nebel2020review]. The resolution of the multispectral ortho-mosaic obtained were 8 cm per pixel.
 
-### LiDAR data
+#### LiDAR data
 
 LiDAR standing for Light Detection and Ranging uses lasers to measure distances by timing reflected pulses, creating detailed 3D maps of surfaces.
 
