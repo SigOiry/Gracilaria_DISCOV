@@ -1,5 +1,5 @@
 ---
-title: Remote Sensing Mapping of *Gracilaria vermiculophylla* in the site of its First European Observation
+title: Spatial and temporal distribution of the invasive *Gracilaria vermiculophylla* through remote sensing at its first described European site
 shorttitle: DISCOV - Gracilaria
 author:
   - name: Simon Oiry¹
