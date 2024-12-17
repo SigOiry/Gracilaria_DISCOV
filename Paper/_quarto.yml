@@ -1,7 +1,7 @@
 project:
   type: manuscript
   output-dir: ../docs
-manuscript: 
+manuscript:
   article: index.qmd
 format:
   html: 

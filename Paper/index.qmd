@@ -1132,15 +1132,15 @@ knitr::include_graphics("Figures/Low_res/Figure1/Map_site.png")
 #| fig-height: 10
 #| out-width: "95%"
 
-knitr::include_graphics("./Figures/Low_res/FigurePictures.png")
+knitr::include_graphics("./Figures/Low_res/FigurePictures_censored.png")
 
 
 ```
 
 
-## Hyperspectral measurements
+### Hyperspectral measurements
 
-At each location, hyperspectral reflectance signatures were recorded using an ASD FieldSpec HandHeld 2 spectroradiometer (Malvern Panalytical, Worcestershire, UK), which measures reflectance from 325 to 1075 nm with a spectral resolution of approximately 1 nm. Each spectrum was subsequently smoothed using a Savitzky–Golay filter [@savitzky1964smoothing] with a third-order polynomial and an 11-point window, selected to minimize noise while preserving salient spectral features. After this initial smoothing, the first and second derivatives were computed using a central difference approximation (@eq-SecondDerivative).
+At each location, hyperspectral reflectance signatures were recorded using an ASD FieldSpec HandHeld 2 spectroradiometer (Malvern Panalytical, Worcestershire, UK), which measures reflectance from 325 to 1075 nm with a spectral resolution of approximately 1 nm [@fig-PictureFigure D]. Each spectrum was subsequently smoothed using a Savitzky–Golay filter [@savitzky1964smoothing] with a third-order polynomial and an 11-point window, selected to minimize noise while preserving salient spectral features. After this initial smoothing, the first and second derivatives were computed using a central difference approximation (@eq-SecondDerivative).
 
 $$
 f''(\lambda_i) \approx \frac{f(\lambda_{i+1}) - 2f(\lambda_i) + f(\lambda_{i-1})}{(\Delta \lambda)^2}
@@ -1148,7 +1148,7 @@ $${#eq-SecondDerivative}
 
 where $ f(\lambda_i) $ is the reflectance at wavelength $\lambda_i$ and $\Delta \lambda$ is the uniform spectral sampling interval.
 
-## Drone data
+### Drone data
 ```{r Table1}
 #| label: tbl-flights
 #| tbl-cap: List of drone flights, summarising the location, the date, and the total extent of each flight (in hectars).

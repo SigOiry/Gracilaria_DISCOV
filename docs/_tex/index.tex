@@ -400,7 +400,7 @@ pre-processing}\label{sec-DroneFlights}
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/FigurePictures.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/FigurePictures_censored.png}
 
 }
 
@@ -413,19 +413,19 @@ spectroradiometer.}
 
 \end{figure}%
 
-\subsection{Hyperspectral
+\subsubsection{Hyperspectral
 measurements}\label{hyperspectral-measurements}
 
 At each location, hyperspectral reflectance signatures were recorded
 using an ASD FieldSpec HandHeld 2 spectroradiometer (Malvern
 Panalytical, Worcestershire, UK), which measures reflectance from 325 to
-1075 nm with a spectral resolution of approximately 1 nm. Each spectrum
-was subsequently smoothed using a Savitzky--Golay filter (Savitzky and
-Golay, 1964) with a third-order polynomial and an 11-point window,
-selected to minimize noise while preserving salient spectral features.
-After this initial smoothing, the first and second derivatives were
-computed using a central difference approximation
-(Equation~\ref{eq-SecondDerivative}).
+1075 nm with a spectral resolution of approximately 1 nm
+Figure~\ref{fig-PictureFigure}. Each spectrum was subsequently smoothed
+using a Savitzky--Golay filter (Savitzky and Golay, 1964) with a
+third-order polynomial and an 11-point window, selected to minimize
+noise while preserving salient spectral features. After this initial
+smoothing, the first and second derivatives were computed using a
+central difference approximation (Equation~\ref{eq-SecondDerivative}).
 
 \begin{equation}\phantomsection\label{eq-SecondDerivative}{
 f''(\lambda_i) \approx \frac{f(\lambda_{i+1}) - 2f(\lambda_i) + f(\lambda_{i-1})}{(\Delta \lambda)^2}
@@ -434,7 +434,7 @@ f''(\lambda_i) \approx \frac{f(\lambda_{i+1}) - 2f(\lambda_i) + f(\lambda_{i-1})
 where \$ f(\lambda\_i) \$ is the reflectance at wavelength \(\lambda_i\)
 and \(\Delta \lambda\) is the uniform spectral sampling interval.
 
-\subsection{Drone data}\label{drone-data}
+\subsubsection{Drone data}\label{drone-data}
 
 \global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
 

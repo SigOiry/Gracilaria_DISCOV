@@ -1,0 +1,76 @@
+---
+title: "Image Consent Form for Publication"
+format: pdf
+---
+
+# Consent Form for Image Publication in a Scientific Journal
+
+**Title of Project/Paper:**\
+`[Insert title of your research paper/project here]`
+
+**Purpose of the Image Use:**\
+The purpose of this form is to obtain your consent to use photographs, images, or videos in which you appear for publication in a scientific journal. These images may be used for illustrative or educational purposes as part of the publication.
+
+------------------------------------------------------------------------
+
+## I. Consent Statement
+
+By signing this form:
+
+1.  I, the undersigned, **grant permission** to Elsevier to use images, photographs, or videos featuring me for inclusion in the research project/paper titled:\
+    *"\[Insert title\]."*
+
+2.  I understand that the images may be:
+
+    -   Published in a scientific journal (including Elsevier or similar journals).\
+    -   Shared as part of the journal’s printed, electronic, or online versions.
+
+3.  I understand that I will not receive any financial compensation for the use of the image(s).
+
+4.  I understand that my identity may be recognizable in the image(s) and that Elsevier will ensure ethical use and publication.
+
+5.  I have the right to withdraw my consent at any time prior to publication. After publication, the image(s) may be difficult or impossible to remove.
+
+------------------------------------------------------------------------
+
+## II. Optional Anonymity Request
+
+☐ I request that my identity be anonymized or blurred where possible.
+
+------------------------------------------------------------------------
+
+## III. Personal Information
+
+-   **Full Name:** `___________________________`\
+-   **Contact Information (Email/Phone):** `___________________________`\
+-   **Date:** `___________________________`
+
+------------------------------------------------------------------------
+
+## IV. Signature
+
+I hereby consent to the use of my image(s) as described above:
+
+**Signature:** `___________________________`
+
+**Printed Name:** `___________________________`
+
+**Date:** `___________________________`
+
+------------------------------------------------------------------------
+
+## For Minors (Under 18 Years Old):
+
+I, as the parent or legal guardian of the above-named individual, consent to the use of their image(s) as outlined in this form.
+
+**Parent/Guardian Name:** `___________________________`\
+**Signature:** `___________________________`\
+**Date:** `___________________________`
+
+------------------------------------------------------------------------
+
+## For the Researcher/Author:
+
+-   **Researcher/Author’s Name:** `___________________________`\
+-   **Institution/Organization:** `___________________________`\
+-   **Contact Information:** `___________________________`
