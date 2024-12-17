@@ -1137,7 +1137,6 @@ knitr::include_graphics("./Figures/Low_res/FigurePictures_censored.png")
 
 ```
 
-
 ### Hyperspectral measurements
 
 At each location, hyperspectral reflectance signatures were recorded using an ASD FieldSpec HandHeld 2 spectroradiometer (Malvern Panalytical, Worcestershire, UK), which measures reflectance from 325 to 1075 nm with a spectral resolution of approximately 1 nm [@fig-PictureFigure D]. Each spectrum was subsequently smoothed using a Savitzky–Golay filter [@savitzky1964smoothing] with a third-order polynomial and an 11-point window, selected to minimize noise while preserving salient spectral features. After this initial smoothing, the first and second derivatives were computed using a central difference approximation (@eq-SecondDerivative).
@@ -2547,6 +2546,8 @@ Ecological factors also aid in differentiating *G. vermiculophylla*. Unlike many
 In addition, the scalability of drone-based surveying facilitates repeat mapping to detect temporal shifts in the distribution and abundance of *G. vermiculophylla.* Such continuous monitoring could capture seasonal patterns of colonization, allowing researchers and environmental managers to evaluate the effectiveness of mitigation measures, track long-term ecological impacts, and anticipate future shifts in habitat suitability under changing climate conditions.
 
 ## *G. vermiculophylla* spatial distribution and mudflat topography
+
+The spatial distribution of *Gracilaria vermiculophylla* across intertidal zones reveals a distinct relationship with mudflat topography, which significantly influences algal density and coverage. Our results show that higher elevations within the intertidal zone support greater densities of *G. vermiculophylla*, a pattern that aligns with findings by @thomsen2009distribution, where elevated areas provided optimal conditions for algal survival. Conversely, areas with steeper slopes exhibited lower algal abundance. This inverse relationship between slope and algal density may be attributed to increased erosion or less stable sediment conditions, which inhibit the algae’s ability to anchor and accumulate [@besterman2021predicting]
 
 ## Spatio-temporal monitoring of invasive macroalgae
 
