@@ -187,7 +187,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Coucou - Monitoring the marine invasive alien species Gracilaria vermiculophylla using unmanned aerial vehicles},
+  pdftitle={Remote Sensing Mapping of Gracilaria vermiculophylla in the site of its First European Observation},
   pdfauthor={Simon Oiry¹; Bede Ffinian Rowe Davies¹; Pierre Gernez¹; Laurent Barillé¹},
   pdfkeywords={Remote Sensing, Invasive species, Coastal
 Ecosystems, Biodiversity},
@@ -199,11 +199,11 @@ Ecosystems, Biodiversity},
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{Coucou - Monitoring the marine invasive alien species
-\emph{Gracilaria vermiculophylla} using unmanned aerial vehicles}
+\title{Remote Sensing Mapping of \emph{Gracilaria vermiculophylla} in
+the site of its First European Observation}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2024-12-16}
+\date{2024-12-17}
 
 \begin{document}
 \maketitle
@@ -214,6 +214,28 @@ To be Written
 
 \footnote{Institut des Substances et Organismes de la Mer, ISOMer,
   Nantes Université, UR 2160, F-44000 Nantes, France}
+
+\section{Title proposition}\label{title-proposition}
+
+\begin{itemize}
+\item
+  Remote Sensing of \emph{Gracilaria vermiculophylla} in the site of its
+  First European Observation
+\item
+  Monitoring the marine invasive alien species \emph{Gracilaria
+  vermiculophylla} using unmanned aerial vehicles
+\item
+  Remote Sensing of \emph{Gracilaria vermiculophylla}: Mapping its
+  Distribution at the Site of its First European Description
+\item
+  Mapping the Spread of the Invasive Species \emph{Gracilaria
+  vermiculophylla} using Remote Sensing at the Site of its Initial
+  Description in Europe
+\item
+  Quantifying \emph{Gracilaria vermiculophylla} Spatial and Temporal
+  Distribution Through Remote Sensing at its First Recorded European
+  Site
+\end{itemize}
 
 \section{Introduction}\label{introduction}
 
@@ -372,6 +394,47 @@ represent intertidal areas.}
 \subsection{Remote sensing data acquisition and
 pre-processing}\label{sec-DroneFlights}
 
+\phantomsection\label{cell-fig-PictureFigure}
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/FigurePictures.png}
+
+}
+
+\caption{\label{fig-PictureFigure}Pictures of \emph{Gracilaria
+vermiculophylla}. A: Quadrat of 0.25 m² with a high cover of \emph{G.
+vermiculophylla}; B: Single thallus of the algae; C: Landscape view with
+a high coverage of G. vermiculophylla; D: Recording of the spectral
+signature of the algae using an ASD FieldSpec HandHeld 2
+spectroradiometer.}
+
+\end{figure}%
+
+\subsection{Hyperspectral
+measurements}\label{hyperspectral-measurements}
+
+At each location, hyperspectral reflectance signatures were recorded
+using an ASD FieldSpec HandHeld 2 spectroradiometer (Malvern
+Panalytical, Worcestershire, UK), which measures reflectance from 325 to
+1075 nm with a spectral resolution of approximately 1 nm. Each spectrum
+was subsequently smoothed using a Savitzky--Golay filter (Savitzky and
+Golay, 1964) with a third-order polynomial and an 11-point window,
+selected to minimize noise while preserving salient spectral features.
+After this initial smoothing, the first and second derivatives were
+computed using a central difference approximation
+(Equation~\ref{eq-SecondDerivative}).
+
+\begin{equation}\phantomsection\label{eq-SecondDerivative}{
+f''(\lambda_i) \approx \frac{f(\lambda_{i+1}) - 2f(\lambda_i) + f(\lambda_{i-1})}{(\Delta \lambda)^2}
+}\end{equation}
+
+where \$ f(\lambda\_i) \$ is the reflectance at wavelength \(\lambda_i\)
+and \(\Delta \lambda\) is the uniform spectral sampling interval.
+
+\subsection{Drone data}\label{drone-data}
+
 \global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
@@ -440,7 +503,7 @@ A total of 6 drone flights were done spread in the 3 study sites. Each
 time, flights were done at an altitude of 120 m and at a speed of 10
 m.s\textsuperscript{-1} (Table~\ref{tbl-flights}).
 
-\subsubsection{Multispectral data}\label{sec-photo}
+\paragraph{Multispectral data}\label{sec-photo}
 
 At each location, reflectance images with a resolution of 1.2 million
 pixels were captured using a DJI Matrice 300 quadcopter drone equipped
@@ -469,7 +532,7 @@ point cloud, which served as the basis for reconstructing the
 multispectral ortho-image (Nebel et al., 2020). The resolution of the
 multispectral ortho-mosaic obtained were 8 cm per pixel.
 
-\subsubsection{LiDAR data}\label{lidar-data}
+\paragraph{LiDAR data}\label{lidar-data}
 
 LiDAR standing for Light Detection and Ranging uses lasers to measure
 distances by timing reflected pulses, creating detailed 3D maps of
@@ -1399,6 +1462,11 @@ sediments. Ceramics International 34, 1917--1924.
 Rueness, J., 2005. Life history and molecular sequences of gracilaria
 vermiculophylla (gracilariales, rhodophyta), a new introduction to
 european waters. Phycologia 44, 120--128.
+
+\bibitem[\citeproctext]{ref-savitzky1964smoothing}
+Savitzky, A., Golay, M.J., 1964. Smoothing and differentiation of data
+by simplified least squares procedures. Analytical chemistry 36,
+1627--1639.
 
 \bibitem[\citeproctext]{ref-sfriso2012spreading}
 Sfriso, A., Wolf, M.A., Maistro, S., Sciuto, K., Moro, I., 2012.

@@ -1123,11 +1123,16 @@ knitr::include_graphics("Figures/Low_res/Figure1/Map_site.png")
 ## Remote sensing data acquisition and pre-processing {#sec-DroneFlights}
 
 ```{r Picture Figure}
-#| cache: true
+#| cache: false
 #| echo: false
-#| eval: false
 #| warning: false
+#| fig-cap: "Pictures of *Gracilaria vermiculophylla*. A: Quadrat of 0.25 m² with a high cover of *G. vermiculophylla*; B: Single thallus of the algae; C: Landscape view with a high coverage of G. vermiculophylla; D: Recording of the spectral signature of the algae using an ASD FieldSpec HandHeld 2 spectroradiometer."  
+#| label: fig-PictureFigure
+#| fig-width: 7.13
+#| fig-height: 10
+#| out-width: "95%"
 
+knitr::include_graphics("./Figures/Low_res/FigurePictures.png")
 
 
 ```
