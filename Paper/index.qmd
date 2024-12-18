@@ -147,7 +147,7 @@ if (length(large_files) > 0) {
 
 # Introduction
 
-The introduction of Non-Indigenous Species (NIS) in terrestrial, freshwater, and marine ecosystems is one of the major threats to biodiversity worldwide. In particular, the proliferation and rapid spread of Invasive Alien Species (IAS) can radically change the structure and functioning of marine ecosystems, , requiring effective inventorying and monitoring programs [@d15020161]. In Europe, 874 NIS have been introduced to the marine environment so far (i.e. until 2020) and it is expected that the rate of biological invasions will continue to increase in the coming years [@d14121077]. Macroalgae represent more than 40 % of the NIS introduced to Europe waters, with many species native to the Temperate Northern Pacific [@williams2007global]. Amongst all invasive macroalgae, *Gracilaria vermiculophylla* [@WoRMS303450] (original name *Gracilariopsis vermiculophylla* [@ohmi1956contributions]; also known as *Agarophyton vermiculophyllum* [@gurgel2018systematics]), has spread extensively from its native distribution range in Japan and Korea [@terada2002review] across temperate estuaries in North America, Europe, and other regions, facilitated by aquaculture and maritime activities [@rueness2005life; @weinberger2008invasive; @krueger2017genetic]. While *G. vermiculophylla* can provide some ecosystem services, such as habitat for invertebrates and juvenile fish [@davoult2017multiple], it often outcompetes native vegetation, alters sediment composition [@nyberg2009flora], and disrupts trophic interactions [@van2018global]. In regions like the Baltic Sea and the eastern United States, it has been documented to negatively affect native fucoids and seagrasses [@van2003reintroduction; @thomsen2013effects; @firth2024invasive]. These impacts underscore the importance of monitoring and managing the spread of *G. vermiculophylla*, particularly as climate change and anthropogenic pressures continue to facilitate biological invasions. *G. vermiculophylla* success as an invader stems from its tolerance to a wide range of environmental conditions, including temperature [@sotka2018combining], nutrient variability [@abreu2011nitrogen] and salinity [@weinberger2008invasive]. Its growth capacity at low salinities [@rueness2005life; @nyberg2007introduced] explains its presence in the brackish waters of the Baltic Sea [@weinberger2008invasive] but also in the mesohaline sheltered part of estuaries of the Atlantic coast of Europe **(Surget et al., 2017)**. It is also present in confined areas of lagoons characterized by low hydrodynamism [@abreu2011nitrogen; @sfriso2012spreading]. In Europe, it was first observed in 1996 in the Belon estuary (France) and later in many other estuaries on the Brittany coast of France [@rueness2005life]. It can be found on hard substrates such as invertebrate's tubes and shells providing a substratum [@thomsen2007gracilaria] or attached to pebbles and rocks [@terada2002review] but the largest populations are colonizing soft-bottom sediment and particularly estuarine intertidal mudflats **(Surget et al., 2017)**. In this habitat, extensive dark red mats are observed at low tide, covering vast areas that have largely been unquantified in most studies. Therefore, *G. vermiculophylla* can establish populations in soft-bottom sediment habitats, previously devoid of macroalgae [@ramus2017invasive]. These mats are usually monospecific, with the alga thalli partially buried in the mud [@rueness2005life; @surget2017processus]. Intertidal mats can, however, be temporarily overgrown by ephemeral green macroalgae [@weinberger2008invasive]. In the European estuaries where *G. vermiculophylla* was first documented, large monospecific mats were reported to be confined to the upper intertidal zones [@rueness2005life]; however, their spatial distribution relative to the mudflat topography and elevation had not been quantitatively assessed. In coastal lagoons of the East Atlantic coast, @besterman2020impact have shown that the mudflat topography was a significant predictor of its abundance. In fact, *G. vermiculophylla* has never been mapped using remote sensing techniques, and existing descriptions of its distribution lack spatially explicit mapping [@thomsen2007gracilaria; @weinberger2008invasive; @abreu2011nitrogen; @sfriso2012spreading]. 
+The introduction of Non-Indigenous Species (NIS) in terrestrial, freshwater, and marine ecosystems is one of the major threats to biodiversity worldwide. In particular, the proliferation and rapid spread of Invasive Alien Species (IAS) can radically change the structure and functioning of marine ecosystems, , requiring effective inventorying and monitoring programs [@d15020161]. In Europe, 874 NIS have been introduced to the marine environment so far (i.e. until 2020) and it is expected that the rate of biological invasions will continue to increase in the coming years [@d14121077]. Macroalgae represent more than 40 % of the NIS introduced to Europe waters, with many species native to the Temperate Northern Pacific [@williams2007global]. Amongst all invasive macroalgae, *Gracilaria vermiculophylla* [@WoRMS303450] (original name *Gracilariopsis vermiculophylla* [@ohmi1956contributions]; also known as *Agarophyton vermiculophyllum* [@gurgel2018systematics]), has spread extensively from its native distribution range in Japan and Korea [@terada2002review] across temperate estuaries in North America, Europe, and other regions, facilitated by aquaculture and maritime activities [@rueness2005life; @weinberger2008invasive; @krueger2017genetic]. While *G. vermiculophylla* can provide some ecosystem services, such as habitat for invertebrates and juvenile fish [@davoult2017multiple], it often outcompetes native vegetation, alters sediment composition [@nyberg2009flora], and disrupts trophic interactions [@van2018global]. In regions like the Baltic Sea and the eastern United States, it has been documented to negatively affect native fucoids and seagrasses [@van2003reintroduction; @thomsen2013effects; @firth2024invasive]. These impacts underscore the importance of monitoring and managing the spread of *G. vermiculophylla*, particularly as climate change and anthropogenic pressures continue to facilitate biological invasions. *G. vermiculophylla* success as an invader stems from its tolerance to a wide range of environmental conditions, including temperature [@sotka2018combining], nutrient variability [@abreu2011nitrogen] and salinity [@weinberger2008invasive]. Its growth capacity at low salinities [@rueness2005life; @nyberg2007introduced] explains its presence in the brackish waters of the Baltic Sea [@weinberger2008invasive] but also in the mesohaline sheltered part of estuaries of the Atlantic coast of Europe **(Surget et al., 2017)**. It is also present in confined areas of lagoons characterized by low hydrodynamism [@abreu2011nitrogen; @sfriso2012spreading]. In Europe, it was first observed in 1996 in the Belon estuary (France) and later in many other estuaries on the Brittany coast of France [@rueness2005life]. It can be found on hard substrates such as invertebrate's tubes and shells providing a substratum [@thomsen2007gracilaria] or attached to pebbles and rocks [@terada2002review] but the largest populations are colonizing soft-bottom sediment and particularly estuarine intertidal mudflats **(Surget et al., 2017)**. In this habitat, extensive dark red mats are observed at low tide, covering vast areas that have largely been unquantified in most studies. Therefore, *G. vermiculophylla* can establish populations in soft-bottom sediment habitats, previously devoid of macroalgae [@ramus2017invasive]. These mats are usually monospecific, with the alga thalli partially buried in the mud [@rueness2005life; @surget2017processus]. Intertidal mats can, however, be temporarily overgrown by ephemeral green macroalgae [@weinberger2008invasive]. In the European estuaries where *G. vermiculophylla* was first documented, large monospecific mats were reported to be confined to the upper intertidal zones [@rueness2005life]; however, their spatial distribution relative to the mudflat topography and elevation had not been quantitatively assessed. In coastal lagoons of the East Atlantic coast, @besterman2021predicting have shown that the mudflat topography was a significant predictor of its abundance. In fact, *G. vermiculophylla* has never been mapped using remote sensing techniques, and existing descriptions of its distribution lack spatially explicit mapping [@thomsen2007gracilaria; @weinberger2008invasive; @abreu2011nitrogen; @sfriso2012spreading]. 
 
 Remote sensing has revolutionized our ability to monitor and manage coastal ecosystems, offering efficient and scalable methods for detecting environmental changes in intertidal vegetation across a wide range of spatio-temporal scales [@davies2024intertidal; @calleja2017long; @davies2024sentinel; @zoffoli2021decadal; @valle2015mapping]. Among remote-sensing technologies, drone-based imagery has recently emerged as a particularly promising tool for studying the spatial distribution of intertidal primary producers such as benthic microalgae [@roman2021using; @roman2024mapping], seagrass [@chand2021low; @duffy2018spatial; @roman2021using] and macroalgae [@rs14133124; @peidro2024quantifying]. While it lacks the temporal consistency of satellite missions, drone remote sensing makes it possible to acquire at extremely high spatial resolution (i.e. cm-scale), rapidly target specific areas of interest, and provide observations in overcast conditions. In particular, the potential of drone remote sensing for monitoring the surface area occupied by IAS has been demonstrated [@roca2022monitoring]. Drone-based photogrammetry also makes it possible to characterize the distribution of intertidal vegetation together with mudflat geomorphology, thus improving our understanding of primary producers patterning [@brunier2022evolution; @douglas2024linking].
 
@@ -1408,6 +1408,20 @@ library(flextable)
 
 For each date, polygons have been drawn around *G. vermiculophylla* patches by visually photo-interpreting on each images. These polygons were used to calculate the total area of the mudflat covered by macroalgae within a common extent of 30 hectares in Pont de Guilly, located in the Bélon Estuary, South Brittany, France.
 
+
+```{r Workflow}
+#| cache: false
+#| echo: false
+#| warning: false
+#| fig-cap: Schematic representation of the workflow. Parallelograms represent input or output data, rectangles represent Python processing algorithms, long rectangle represent instruments used and ovals represent study sites. Red shows Drone data; Orange shows the model training; Blue shows processing performed on the Digital Surface Model; Green shows the validation of the model; Purple shows the statistical analysis.
+#| label: fig-Workflow
+#| fig-width: 10
+#| fig-height: 7.62
+#| out-width: "95%"
+
+knitr::include_graphics("./Figures/Low_res/Flowchart gracillaria.png")
+```
+
 # Results
 
 ## Historical records in the Belon estuary
@@ -2152,28 +2166,42 @@ DEM_rast <- rast("Data/DEM/Belon_DEM_LiDAR.tif") %>%
 Angle_df<-read_csv("Data/Model/FullDF_10timesResample_DEMSlope_PredPercent.csv") %>% 
   dplyr::filter(Site  == "Belon")
 
-
+angle_rast <- Angle_df %>% 
+  dplyr::select(x,y,Slope_Cat) %>% 
+  mutate(Slope_Cat = case_when(Slope_Cat == "Slope" ~ 1,
+                               Slope_Cat == "Flat" ~ 2,
+                               Slope_Cat == "Vertical" ~ 3)) %>% 
+  terra::rast(type="xyz", crs="EPSG:32630") %>% 
+  crop(msk, mask = T) %>%
+  as.factor()
+  
 
 angle_plot <- ggplot()+
-    tidyterra::geom_spatraster(data = DEM_rast, 
-                               mapping = aes(fill = Belon_DEM_LiDAR ),
-                               maxcell = 100,
-                               alpha=0, 
-                               show.legend = F)+
-  scico::scale_fill_scico(palette = "batlow", na.value = NA,
-                   name = "Bathymetry",
-                   breaks = c(0,1.5,3),
-                   limits = c(0,3),
-                   labels = c("0 m","1.5 m", "3 m"))+
-  ggnewscale::new_scale_fill()+
-  geom_tile(Angle_df, mapping = aes(x = x, y = y, fill = Slope_Cat)) +
-  scale_fill_manual(
-                    values=c("#8E7CC3","#76A5AF","#93C47D"),
+  #   tidyterra::geom_spatraster(data = DEM_rast, 
+  #                              mapping = aes(fill = Belon_DEM_LiDAR ),
+  #                              maxcell = 100,
+  #                              alpha=0, 
+  #                              show.legend = F)+
+  # scico::scale_fill_scico(palette = "batlow", na.value = NA,
+  #                  name = "Bathymetry",
+  #                  breaks = c(0,1.5,3),
+  #                  limits = c(0,3),
+  #                  labels = c("0 m","1.5 m", "3 m"))+
+  # ggnewscale::new_scale_fill()+
+  # geom_tile(Angle_df, mapping = aes(x = x, y = y, fill = Slope_Cat)) +
+  tidyterra::geom_spatraster(data = angle_rast, 
+                               mapping = aes(fill = Slope_Cat  ),
+                               maxcell = 1310*581,
+                               # alpha=0, 
+                               show.legend = T)+
+  scale_fill_manual(breaks = c(2,1,3),
+                    values=c("#8E7CC3", "#76A5AF", "#93C47D"),
                     na.value = NA,
                     name = "Angle",
                     labels = c("Flat",
                                "Angled",
                                "Steep"))+
+  # geom_sf(data = msk, fill = "white", color = "white",show.legend = F)+
   geom_text(aes(x =  ext(Belon_RGB)[1]+0.04*(ext(Belon_RGB)[2]-ext(Belon_RGB)[1]),
                 y =  ext(Belon_RGB)[4]-0.08*(ext(Belon_RGB)[4]-ext(Belon_RGB)[3]),
                 label = "D"),
