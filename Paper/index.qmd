@@ -48,10 +48,8 @@ keywords:
   - Invasive species
   - Coastal Ecosystems
   - Biodiversity 
-abstract:
-  To be Written 
-plain-language-summary: |
-  To be written
+abstract: "The invasive red macroalga *Gracilaria vermiculophylla* has significantly impacted intertidal ecosystems in temperate estuaries globally. This study utilized drone-based multispectral remote sensing to map the spatial and temporal distribution of *G. vermiculophylla* in its first documented European site, the Bélon Estuary, alongside additional sites in Spain and France. By adapting the neural network classification model DISCOV, trained with a comprehensive dataset, we achieved 91.1% accuracy in distinguishing *G. vermiculophylla* from other macroalgal taxa. Historical aerial imagery revealed a progressive expansion of *G. vermiculophylla* from its initial appearance in 1976, approximately 20 years before its first description in the literature, to extensive colonization by 2024. Concurrent LiDAR data enabled precise characterization of intertidal topography, demonstrating a strong association between algal cover, elevation, and slope. Dense mats were consistently observed in flat, elevated mudflat areas, with reduced presence in steeper or lower zones. These patterns highlight the species' preference for stable sedimentary environments with reduced hydrodynamic forces. Temporal analyses also linked its spread to anthropogenic activities, notably aquaculture. Our findings emphasize the utility of high-resolution drone imaging for invasive species monitoring and habitat mapping, offering critical insights into the ecological dynamics of *G. vermiculophylla* and its drivers. This scalable method facilitates proactive management strategies by enabling early detection and detailed assessment of invasion patterns. The integration of remote sensing and in situ validation establishes a robust framework for ecological monitoring, contributing to the understanding of biological invasions and their environmental consequences. This approach can inform management interventions to mitigate the impacts of *G. vermiculophylla* and similar invasive species." 
+
 key-points:
   To be Written
 date: last-modified
@@ -63,6 +61,8 @@ editor_options:
   chunk_output_type: console
 csl: RSE.csl
 ---
+
+
 
 [^1]
 
@@ -1148,52 +1148,6 @@ $${#eq-SecondDerivative}
 where $f(\lambda_i)$ is the reflectance at wavelength $\lambda_i$ and $\Delta \lambda$ is the uniform spectral sampling interval.
 
 ### Drone data
-```{r Table1}
-#| label: tbl-flights
-#| tbl-cap: List of drone flights, summarising the location, the date, and the total extent of each flight (in hectars).
-#| echo: false
-#| error: false
-#| message: false
-#| warning: false
-#| eval: false
-
-
-library(flextable)
-library(tidyverse)
-
-df <- data.frame(Country = c("France", "France","Spain", "Spain"),
-                 Site = c("Aven & Belon","Aven & Belon", "Saja Estuary","Saja Estuary"),
-                 Flight  = c("Notre-Dame De Tremor","Pont du Guilly","Marisma de Cortiguera","Marisma de Cudón"),
-                 Date = c("2024-04-11","2024-04-11","2024-06-25","2024-06-25"), 
-                 Area = c(266582,213064,204133,83757)) %>% 
-  mutate(Area = round(Area * 0.0001,1))
-
-
-
-brdr1 <- fp_border_default(color = "black", width = 0.5)
-brdr2 <- fp_border_default(color = "grey", width = 1)
-brdr3 <- fp_border_default(color = "grey40", width = 1)
-
- i = 16.5 # width of the side borders in the word_document output (in centimeters)
- w = i*0.3937 # width of the side borders in the word_document output (in inches)
- 
-flextable(df)  %>%
-  flextable::width(width = (w/(ncol(df)))) %>% 
-  merge_v(j = 1) %>%
-  merge_v(j = 2) %>%
-    border_remove() %>%
-    hline_top(border=brdr1) %>%
-    hline_bottom(border=brdr1) %>% 
-    hline(i=4, border=brdr1) %>% 
-    hline(i=2, border=brdr1) %>% 
-    hline(i=1, border=brdr2)%>% 
-    hline(i=3, border=brdr2)%>% 
-    # hline(i=5, border=brdr2) %>% 
-    flextable::align(align = "center",part = "all") %>%
-    flextable::align(align = "center",part = "header") %>%
-  # set_caption(caption = "Table 1 List of drone Flight, summarising the date, the altitude and the purpose of each flight.") %>%
-  set_table_properties(layout = "autofit") 
-```
 
 A total of four drone flights were conducted across the three study sites. All flights were performed at an altitude of 120 m and a speed of 10 m·s⁻¹. Two flights were carried out in the Saja Estuary on June 25, 2024, covering areas of 20.4 hectares (Marisma de Cortiguera) and 8.4 hectares (Marisma de Cudón), respectively (@fig-location_sites). The other two flights took place in the Bélon and Aven Estuary on April 11, 2024, covering areas of 21.3 hectares and 26.7 hectares, respectively.
 
@@ -1293,6 +1247,10 @@ knitr::include_graphics("./Figures/Low_res/Flowchart gracillaria.png")
 To assess the historical presence of *G. vermiculophylla* in the Bélon Estuary, aerial imagery from flight campaigns was obtained via the IGN platform "Remonter Le Temps" [@RemonterLeTempsIGN]. Nine images were selected between 1952 and 2012 from the IGN plateform and an additional one has been added for the year 2024 (@sec-AnnexeC). Since most of the images retrieved from "Remonter Le Temps" were digitized versions of physical photographs, georeferencing were required.
 
 For each date, polygons have been drawn around *G. vermiculophylla* patches by visually photo-interpreting on each images. These polygons were used to calculate the total area of the mudflat covered by macroalgae within a common extent of 30 hectares in Pont de Guilly, located in the Bélon Estuary, South Brittany, France.
+
+## Statistical analysis 
+
+We used a Generalized Linear Mixed Model (GLMM) within a Bayesian framework using the 'brms' package in R [@brm1; @brm2; @brm3]. The response variable, the cover of *G. vermiculophylla*, was modeled using a Beta distribution as a function of bathymetry elevation and the slope of the mudflat (categorized as Flat, Angled, Steep). A random intercept for site was included to account for potential hierarchical variation among sampling sites. The Beta distribution was chosen because the response variable is continuous and constrained between 0 and 1. We visually assessed sample vs. fitted residuals and quartile–quartile (Q-Q) plots to ensure that the model assumptions, including appropriate model fit and absence of patterns in residuals, were satisfied.
 
 # Results
 
@@ -2453,25 +2411,21 @@ As a result, *Gracilaria vermiculophylla* compensates for its vulnerability to h
 The negative relationship between slope steepness and the density of *Gracilaria vermiculophylla* can be explained by the physical and ecological characteristics of steeper mudflat areas. Steeper slopes are typically associated with higher rates of water runoff during tidal exchanges, resulting in stronger hydrodynamic forces. These forces can lead to increased sediment erosion, reduced sedimentation, and less stable substrate conditions, which are unfavorable for *G. vermiculophylla* to anchor its thalli effectively [@besterman2021predicting]. Furthermore, steeper slopes may limit the retention of organic matter and nutrients, reducing the availability of essential resources needed for algal growth.
 In contrast, flatter areas within the intertidal zone are more likely to accumulate fine sediments and retain water for longer durations during low tides, creating a more stable and nutrient-rich environment conducive to *G. vermiculophylla* proliferation. Additionally, these conditions may favor the formation of dense algal mats, which further stabilize the sediment and promote growth.
 
-## Spatio-temporal monitoring of invasive macroalgae
+## Monitoring *Gracilaria vermiculophylla* Invasion Dynamics
 
-Accurate, high-resolution maps of invasive or alien species are extremely scarce [@fourcade2014mapping ; @vilizzi2021global], yet they enable in-depth evaluations of these species' ecology, temporal dynamics, and niche behavior in relation to their environment. In this study, using individual flights over monospecific algal mats, we quantified how this invasive alga associates with local mudflat topography, demonstrating that  its distribution is closely tied to specific topographical features, such as elevation and slope gradients. This relationship reveals how physical features of the mudflat can influence the extent and density of *Gracilaria vermiculophylla* mats. Understanding the drivers of the spatial distribution of the algae helps to anticipate the future development of this species and identify areas vulnerable to its invasion. Repeated monitoring of this type can further reveal phenological patterns, invasion dynamics, and local conspecific biological interactions---such as co-occurrence, displacement, or avoidance [@godoy2009different ; @arim2006spread].
+The invasive red alga *Gracilaria vermiculophylla* represents a significant example of delayed recognition and documentation in biological invasions. Historical aerial imagery and photo-interpretation analyses from the Bélon Estuary suggest the initial presence of this species in 1976 [@fig-HistoricalMap], preceding its first formal description in European waters in 1996 by two decades [@rueness2005life]. This delay likely stems from insufficient early monitoring frameworks and limited awareness of its ecological impacts, which often characterize the early stages of invasive species colonization. It also arises from the fact that others red macroalgae species, resembling *G. vermiculophylla* and native to this area (e.g. *Gracilaria gracilis*) were already present at sites where *G. vermiculophylla* was introduced, further complicating its detection. This lag highlights challenges associated with the detection, monitoring, and reporting of invasive species and their ecological impacts during early colonization.
 
-Remote sensing using multispectral drone mapping can provide high-resolution, spatially explicit data, but it must be combined with repeated, in situ field measurements to maximize its potential [@chadwick2020integrating ; @zoffoli2023remote]. As noted, temporal repetition makes it possible to assess dynamic processes, and integrating these mapping approaches with in situ analyses of local infauna, carbon cycling, riverine inputs, and sedimentology would yield valuable insights for local managers. Such an integrated approach could help determine how the invasive algae affects the local ecosystem and, more broadly, forecast its potential impact on other estuarine environments facing similar invasion events. This holistic approach can guide strategic interventions aimed at mitigating the alga's spread, maintaining ecological balance, and protecting native biodiversity, ensuring that management efforts are informed by accurate, timely, and spatially explicit data.
+The appearance of *G. vermiculophylla* in 1976 corresponds with the introduction of the Pacific oyster (*Crassostrea gigas*) into the estuary, a few years before, between 1971 and 1975, and a potential vector for algal dispersal through aquaculture activities [@grizel1991introduction ; @rueness2005life]. Aquaculture practices, such as the transfer of oyster spat and equipment between regions, facilitate the unintentional transport of invasive algal fragments. For instance, *G. vermiculophylla* may have attached to shells or nets used in oyster farming, enabling its spread to new estuarine habitats. After initial establishment, the alga progressively occupied suitable habitats, consistent with theoretical invasion dynamics involving a lag phase followed by rapid spread [@arim2006spread]. The establishment of *G. vermiculophylla* likely induced changes in sediment characteristics, trophic interactions, and habitat structure prior to formal recognition [@bendor2006spatial]. Such shifts are comparable to documented impacts in similar systems [@crowl2008spread ; @gallardo2016global], yet remain difficult to quantify without early monitoring data. Remote sensing using multispectral drone mapping can provide high-resolution, spatially explicit data, but it must be combined with repeated, *in situ* field measurements to maximize its potential [@chadwick2020integrating ; @zoffoli2023remote]. Temporal repetition makes it possible to assess dynamic processes, and integrating these mapping approaches with *in situ* analyses of local infauna, carbon cycling, riverine inputs, and sedimentology yields valuable data for local managers. Such an integrated approach can determine how the invasive algae affects the local ecosystem and, more broadly, forecast its potential impact on other estuarine environments facing similar invasion events.
 
-Invasive species like *Gracilaria vermiculophylla* and *Rugulopteryx okamurae* can be identified using drones equipped with multispectral sensors, taking advantage of the characteristic reflectance of rhodophytes [@barille2025variability ; @rs15143674]. However, while RGB sensors on readily available commercial drones can be used to perform accurate scene classification, their effectiveness for mapping invasive species has not yet been demonstrated [@cheng2017remote ; @kazakeviciute2020assessment]. These drones are easy to deploy, can cover large areas when flying at speeds of 15 m s^-1^ at an altitude of 120 m, and still maintain sufficient overlap between images to support photogrammetric reconstruction. Expanding these methodologies to RGB-based detection would significantly lower barriers to entry, allowing local stakeholders with limited resources to access valuable monitoring tools for early detection and rapid response. A promising avenue for operational applications lies in testing machine learning techniques for coastal habitat mapping using RGB imagery that do not rely on enhanced spectral resolution. Considering the low cost of RGB and multispectral commercial drones, coupled with ongoing advancements in machine learning, drone-based remote sensing has now matured into a practical tool for adoption by environmental authorities in coastal management. Integrating these technologies into routine monitoring protocols can enhance surveillance capabilities, improve understanding of invasive species dynamics, and ultimately contribute to more effective conservation and restoration strategies.
-
-## Timing of the Invasion of Gracilaria vermiculophylla in the Bélon Estuary
-
-The invasive red alga *Gracilaria vermiculophylla* represents a significant example of delayed recognition and documentation in biological invasions. Historical aerial imagery and photo-interpretation analyses from the Bélon Estuary suggest the initial presence of this species in 1976 [@fig-HistoricalMap], preceding its first formal description in European waters in 1996 by two decades [@rueness2005life]. This lag highlights challenges associated with the detection, monitoring, and reporting of invasive species and their ecological impacts during early colonization.
-
-The appearance of *G. vermiculophylla* in 1976 corresponds with the introduction of the Pacific oyster (Crassostrea gigas) into the estuary, a few years before, between 1971 and 1975, and a potential vector for algal dispersal through aquaculture activities [@grizel1991introduction ; @rueness2005life]. After initial establishment, the alga progressively occupied suitable habitats, consistent with theoretical invasion dynamics involving a lag phase followed by rapid spread [@arim2006spread]. The establishment of *G. vermiculophylla* likely induced changes in sediment characteristics, trophic interactions, and habitat structure prior to formal recognition [@bendor2006spatial]. Such shifts are comparable to documented impacts in similar systems, yet remain difficult to quantify without early monitoring data.
-
-The temporal gap between the first presence and documentation reflects limitations in early surveillance, potentially underestimating ecological and economic impacts during the initial colonization phase. Studies on invasion dynamics demonstrate that early detection is crucial for effective containment and management, particularly before an invasion reaches the exponential spread phase, which complicates control efforts [@bendor2006spatial ; @arim2006spread]. In the Bélon Estuary, *G. vermiculophylla* appears to have thrived under ecological conditions favorable to its proliferation enabling the formation of dense mats in about 6 years (between 1976 and 1982; @fig-HistoricalMap). This undocumented growth likely contributed to substantial changes in the estuarine ecosystem.
-
-Remote sensing technologies, including aerial imagery and drone-based multispectral imaging, are proving to be valuable tools for the early detection and monitoring of invasive species. Historical aerial imagery has provided valuable insights into long-term invasion patterns by enabling the retrospective identification of shifts in habitat characteristics. Modern drone-based systems enhance this capacity through high spatial and temporal resolution, enabling the rapid detection of invasive species at early stages of establishment. By capturing detailed data on the spatial distribution and habitat preferences of species such as *G. vermiculophylla*, remote sensing facilitates timely interventions, allowing stakeholders to take rapid measures to limit the invasion. Integrating these tools into routine monitoring programs offers a scalable and efficient means to track invasive species dynamics and inform targeted management strategies.
+The temporal gap between the first presence and documentation reflects limitations in early surveillance, potentially underestimating ecological and economic impacts during the initial colonization phase. Studies on invasion dynamics demonstrate that early detection is crucial for effective containment and management, particularly before an invasion reaches the exponential spread phase, which complicates control efforts [@bendor2006spatial ; @arim2006spread ; @elton2020ecology]. Specific practices, such as the removal of early-stage algal mats, implementation of physical barriers to prevent further spread, and public awareness campaigns, could mitigate the impacts during this critical phase [@jones2021use ; @green2021functional ; @simberloff2021maintenance]. In the Bélon Estuary, *G. vermiculophylla* appears to have thrived under ecological conditions favorable to its proliferation, enabling the formation of dense mats in about 6 years (between 1976 and 1982; @fig-HistoricalMap) after its first detection in the estuary. This undocumented growth likely contributed to substantial changes in the estuarine ecosystem. Historical aerial imagery has provided valuable insights into long-term invasion patterns by enabling the retrospective identification of shifts in habitat characteristics. Modern drone-based systems enhance this capacity through high spatial and temporal resolution, enabling the rapid detection of invasive species at early stages of establishment. By capturing detailed data on the spatial distribution and habitat preferences of species such as *G. vermiculophylla*, remote sensing facilitates timely interventions, allowing stakeholders to take rapid measures to limit the invasion. Integrating these tools into routine monitoring programs offers a scalable and efficient means to track invasive species dynamics and inform targeted management strategies, such as habitat restoration, removal of invasive mats, and prevention of further spread through targeted interventions. Expanding these methodologies to lower-cost RGB-based detection would further democratize access to monitoring tools, enabling more widespread application for early detection and rapid response. These tools could also be integrated into community-driven management programs, empowering local stakeholders to monitor invasive species and implement timely control measures.
 
 # Conclusion
+
+In this study, we demonstrated the potential of high-resolution drone-based multispectral remote sensing to map the spatial and temporal distribution of the invasive red macroalga *Gracilaria vermiculophylla* in European estuaries. By employing the DISCOV model, updated to include an extensive dataset of Rhodophyceae pixels, we achieved a classification accuracy of 91.1%. Our analysis revealed a clear spatial relationship between *G. vermiculophylla* and intertidal topography retrieved from LiDAR, with its cover consistently higher in flat, elevated mudflats compared to lower and steeper areas. The temporal progression, derived from a historical dataset spanning over seven decades, highlights the progressive establishment and expansion of the algae. Notably, our remote sensing analysis confirmed the presence of *G. vermiculophylla* in the Bélon Estuary approximately 20 years before its first scientific description, emphasizing the value of retrospective mapping.
+
+The historical analysis of aerial imagery provided crucial insights into the dynamics of *G. vermiculophylla*'s invasion, revealing a lag phase followed by rapid colonization. This expansion coincided with the development of oyster aquaculture, suggesting a potential link between human activities and the proliferation of this invasive species. The remarkable physiological plasticity of *G. vermiculophylla*, enabling it to thrive in diverse environmental conditions, further underscores its adaptability and invasive potential. However, its reliance on sediment stability and vulnerability to hydrodynamic forces delineate its preferred habitats within intertidal zones.
+
+These findings underscore the crucial role of remote sensing in ecological research, particularly in studying invasive species. By leveraging high-resolution, scalable technologies, we can not only map current distributions but also uncover historical patterns that would otherwise remain unknown. The identification of *G. vermiculophylla* decades prior to its formal description exemplifies this capability. This discovery provides a compelling basis for re-evaluating historical data to understand the broader implications of invasive species dynamics. Moving forward, integrating hyperspectral sensors could enhance species-level discrimination, while adopting low-cost RGB-based methods could extend monitoring capacities to a broader range of stakeholders. Incorporating these advancements into environmental management frameworks can enable proactive monitoring, timely interventions, and habitat restoration efforts. These advancements will be crucial for informing management strategies, fostering community engagement, and preserving estuarine biodiversity in the face of ongoing ecological changes.
 
 # Annexes
 
