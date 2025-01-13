@@ -1,0 +1,9 @@
+True_Class;n
+Bacillariophyceae;62436
+Chlorophyta;92585
+Magnoliopsida;221065
+Phaeophyta;169936
+Rhodophyta;268637
+Sediment;117956
+SunGlint;177
+Water;91614
