@@ -203,7 +203,7 @@ Ecosystems, Biodiversity},
 vermiculophylla} at the Site of its First European Observation}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2025-01-13}
+\date{2025-01-17}
 
 \begin{document}
 \maketitle
@@ -778,134 +778,132 @@ machine
 learning}{Drone mapping G. vermiculophylla with machine learning}}\label{drone-mapping-g.-vermiculophylla-with-machine-learning}
 
 In this study, we produced the first spatial distribution maps of the
-invasive red alga \emph{Gracilaria vermiculophylla} using a
+invasive red macroalgae \emph{Gracilaria vermiculophylla} using a
 multispectral drone survey conducted at low tide in Atlantic estuaries
 representing varied environmental conditions. The species formed
 monospecific mats in southern Brittany, while in the Cantabrian region
-of Spain, it was intermixed with other intertidal vegetation.
-Distinguishing among these vegetation types was a key prerequisite for
-the analysis.
-
-To achieve this, we created a neural network algorithm inspired by a
-machine learning-based classification model developed to discriminate
-seagrass from green macroalgae (Oiry et al., 2024). Although DISCOV
-included Rhodophyceae as a class, this group constituted less than 3\%
-of its training dataset. In contrast, the new model presented here was
-trained on a dataset in which \emph{G. vermiculophylla} represented 26
-\% of approximately one million pixels. This improved dataset allowed
-the model to achieve an accuracy of 91.1 \%.
+of Spain, it was mixed with other intertidal vegetation. Distinguishing
+among these vegetation types was a key prerequisite for the analysis. To
+achieve this, we developed a new version of the deep learning-based
+classification model DISCOV initially developed to discriminate seagrass
+from green macrophytes (Oiry et al., 2024). DISCOV v2.0 was based on an
+improved training dataset, which included a larger number of pixels on
+red macroalgae covering approximately 26 \% of one million pixels and
+allowed the model to achieve an accuracy of 91.1 \% in predicting
+\emph{G. vermiculophylla} presence.
 
 Rhodophytes possess unique phycobilin pigments, enabling their spectral
 distinction from other macroalgal groups (Douay et al., 2022; Mcilwaine
 et al., 2019; Olmedo-Masat et al., 2020). Even with the ten-band
 multispectral sensor used in our study, it remained feasible to
 discriminate the major classes of intertidal macrophytes (Davies et al.,
-2023; Oiry et al., 2024; Román et al., 2021). However, the model
+2023; Oiry et al., 2024; Román et al., 2021). Note that DISCOV V2.0
 identifies \emph{G. vermiculophylla} at the class level (Rhodophyceae)
-rather than at the species level. Although hyperspectral approaches may
-allow finer taxonomic resolution (Douay et al., 2022; Olmedo-Masat et
-al., 2020), it is unlikely that Gracilaria species can be precisely
-distinguished using standard multispectral sensors.
-
-Ecological factors also contribute to distinguishing \emph{G.
-vermiculophylla}. Macroalgae that require hard substrates for spore
-settlement, but some Gracilariale species can establis on soft-bottom
-sediments. \emph{G. vermiculophylla} is found on mudflats, anchoring its
-thalli in the top 10 cm of mud (Surget, 2017), and inhabits the upper
-intertidal zone of estuaries in Western Europe ---an unusual trait for a
-Rhodophyte (Abreu et al., 2011; Davoult et al., 2017). By reliably
-detecting \emph{G. vermiculophylla} in these soft-sediment
-environements, the methodology develoepd in this study provides a
-framework mapping this species in coastal areas. A multispectral sensor
-is necessary to obtain spatially explicit maps when this species is
-mixed with other classes of intertidal vegetation. However, when
-monospecific mats are the primary vegetation colonising tidal flats, RGB
-drone imagery can be exploited.
+rather than at the species level. Although it is unlikely that
+Gracilaria can be precisely distinguished at the species level using
+standard multispectral, hyperspectral data may allow mapping on a finer
+taxonomic resolution (Douay et al., 2022; Olmedo-Masat et al., 2020).
+Ecological factors also aided in identifying \emph{G. vermiculophylla}.
+Unlike many other macroalgae that require hard substrates for the spores
+to settle, \emph{G. vermiculophylla} establishes itself on soft-bottom
+sediments. In fact, it is commonly found on mudflats, anchoring its
+thalli in the top 10 cm of mud (Surget, 2017), and inhabiting the upper
+intertidal zone---an unusual trait for a Rhodophyte (Abreu et al., 2011;
+Davoult et al., 2017). By effectively detecting \emph{G.
+vermiculophylla} in these soft-substrate, upper intertidal habitats, our
+method provides a framework for identifying niche conditions that favour
+its spread. This information may provide managers with early warning
+indicators to control its expansion before it reaches nuisance levels.
+Therefore, integrating spectral data with sediment characteristics
+serves as a strong indicator of \emph{G. vermiculophylla} presence in
+European Atlantic estuaries, complementing the physical variables
+already used in species distribution modelling (Mendoza-Segura et al.,
+2023). A multispectral sensor is necessary to obtain spatially explicit
+maps when this species is mixed with other classes of intertidal
+vegetation. However, when monospecific mats are the primary vegetation
+colonising tidal flats, RGB drone imagery can be exploited.
 
 \subsection{\texorpdfstring{\emph{G. vermiculophylla} spatial
 distribution and mudflat
 topography}{G. vermiculophylla spatial distribution and mudflat topography}}\label{g.-vermiculophylla-spatial-distribution-and-mudflat-topography}
 
 The spatial distribution of \emph{G. vermiculophylla} across intertidal
-zones of Western European estuaries revealed a relationship with mudflat
-topography significantly influencing algal abundance. Our results showed
-that higher elevations within the intertidal zone supported greater
-abundance of \emph{G. vermiculophylla}. Thomsen et al. (2009) observed
-this species inhabiting areas as elevated as the mudflat- marsh border.
-This capacity to colonise the upper intertidal is related to its
-physiological plasticity and high-stress resistence (Thomsen et al.,
-2007). Its capacity for sustained growth under dessication, light and
+zones of West European estuaries revealed a relationship with mudflat
+topography, significantly influencing algal abundance. Our results
+showed that higher elevations within the intertidal zone supported a
+greater abundance of \emph{G. vermiculophylla}. Thomsen et al. (2009)
+observed this species inhabiting areas as elevated as the mudflat-marsh
+border. This capacity to colonise the upper intertidal is related to its
+physiological plasticity and high-stress resistance (Thomsen et al.,
+2007). Its capacity for sustained growth under desiccation, light and
 salinity extremes (Nyberg, 2007; Raikar et al., 2001; Rueness, 2005)
 explains its successful establishment at high elevations in mesohaline
-estuarine environments underpins its successful establishment and
-persistence within polyhaline and mesohaline estuarine environments
-(Weinberger et al., 2008). In the Belon estuary, most \emph{G.
-vermiculophylla} was found between 1 and 2m above MSL, which are high
-elevations for which rapid desiccation of this macroalgae was described
-by Thomsen and McGlathery (2007) in shallow lagoons of the Eastern
-Atlantic coast. The thick mat structure observed in Western Europe may
-explain this discrepancy by retraining more water.
-
-A lower hydrodynamism also characterizes these areas. Unlike seagrasses,
-another type of marine plant that can colonize soft sediment but
-possesses rhizomes that provide robust anchorage, \emph{G.
-vermiculophylla} lacks such specialized structures. Consequently, it
-more vulnerable to disturbance and displacement by waves and tidal
-currents than seagrass. In the estuaries of South Brittany, this species
-can bury part of its thalli into the ipper layers of soft sediment
-(Surget, 2017). This mode of anchorage likely helps \emph{G.
-vermiculophylla} withstand strong currents or wave action and
-contributes to forming these thick mats. The creation of such mats
-probably also requires areas with high sedimentation rates, typacally
-found in the upper intertidal or the vicinity of marshes, promoteing
-sediment deposition (Mudd et al., 2010). This observation aligns with
-the findings illustrated in Figure~\ref{fig-HistoricalMap}, which show
-that one of the first area colonized by \emph{G. vermiculophylla} in
-1992 in the Belon estuary, was located near a patch of salt marsh.\\
-These dense mats enhance its stability and facilitate its persistence
-and proliferation in intertidal and estuarine environments with low to
-moderate hydrodynamic conditions (Surget, 2017).
+estuarine environments (Weinberger et al., 2008). In the Belon estuary,
+most of \emph{G. vermiculophylla} was found between 1 and 2 m above MSL,
+which are high elevations for which rapid desiccation of this macroalgae
+was described by Thomsen and McGlathery (2007) in shallow lagoons of the
+Eastern Atlantic coast. The thick mat structure observed in Western
+Europe may explain this discrepancy by retaining more water. A lower
+hydrodynamism also characterizes these areas. Unlike seagrasses, another
+type of marine plant that can colonize soft sediment, but possesses
+rhizomes that provide robust anchorage, \emph{G. vermiculophylla} lacks
+such specialized structures. Consequently, it is more vulnerable to
+disturbance and displacement by waves and tidal currents than seagrass.
+In the estuaries of South Brittany, this species can bury part of its
+thalli into the upper layers of soft sediment (Surget, 2017). This mode
+of anchorage likely helps \emph{G. vermiculophylla} withstand strong
+currents or wave action and contributes to forming these thick mats. The
+creation of such mats probably also requires areas with high
+sedimentation rates, typically found in the upper intertidal or the
+vicinity of marshes, promoting sediment deposition (Mudd et al., 2010).
+This observation aligns with the findings illustrated in
+Figure~\ref{fig-HistoricalMap}, which show that one of the first areas
+colonized by \emph{G. vermiculophylla} in the Belon estuary was located
+near a salt marsh patch. These dense mats enhance its stability and
+facilitate its persistence and proliferation in intertidal and estuarine
+environments with low to moderate hydrodynamic conditions (Surget,
+2017).
 
 There was a significant negative relationship between slope steepness
 and the density of \emph{G. vermiculophylla}. Besterman et al. (2021)
-showed that mudflat topography was a good predictor for \emph{G.
-vermiculophylla} abundance, while Thomsen et al. (2009) reported a high
+showed that mudflat topography was a good predictor of \emph{G.
+vermiculophylla} abundance, while Thomsen et al. (2009) rreported a high
 abundance in marshes with low slopes. Mudflat topography integrates
 several flow-related variables (Besterman et al., 2021). Steeper slopes
-are typacilly associated with highercurrent velocities during tidal
+are typically associated with higher current velocities during tidal
 exchanges, resulting in stronger erosion and reduced sedimentation.
-areas with steeper slopes may also limit the retention of organic matter
+Areas with steeper slopes may also limit the retention of organic matter
 and nutrients, reducing the availability of essential resources needed
 for algal growth. In contrast, flatter areas within the intertidal zone
 are more likely to accumulate fine sediments and retain water for longer
 durations during low tides, creating a more stable and nutrient-rich
 environment conducive to \emph{G. vermiculophylla} proliferation. These
-low-slope conditions may also favor dense algal mat formation, futher
+low-slope conditions may also favour dense algal mat formation, further
 stabilising the sediment and promoting growth.
 
 \subsection{\texorpdfstring{Monitoring \emph{Gracilaria vermiculophylla}
 Invasion
 Dynamics}{Monitoring Gracilaria vermiculophylla Invasion Dynamics}}\label{monitoring-gracilaria-vermiculophylla-invasion-dynamics}
 
-The invasive red alga \emph{G. vermiculophylla} represents a significant
-example of delayed recognition and documentation in biological
-invasions. Historical aerial imagery and photo-interpretation analyses
-from the Belon Estuary suggest the initial presence of this species in
-1976 Figure~\ref{fig-HistoricalMap}, preceding its first formal
-description in European waters in 1996 by two decades (Rueness, 2005).
-This delay likely stems from insufficient early monitoring frameworks
-and limited awareness of its ecological impacts, which often
+The invasive red macroalga \emph{G. vermiculophylla} represents a
+significant example of delayed recognition and documentation in
+biological invasions. Historical aerial imagery and photo-interpretation
+analyses from the Belon Estuary suggest the initial presence of this
+species in 1976 Figure~\ref{fig-HistoricalMap}, preceding its first
+formal description in European waters in 1996 by two decades (Rueness,
+2005). This delay likely stems from insufficient early monitoring
+frameworks and limited awareness of its ecological impacts, which often
 characterize the early stages of invasive species colonization. It also
 arises from the fact that other red macroalgae species resembling
 \emph{G. vermiculophylla} and native to this area (e.g.~\emph{Gracilaria
 gracilis}) were already present at sites where \emph{G. vermiculophylla}
 was introduced, further complicating its detection. This lag highlights
-challenges associated with the detecting, monitoring, and reporting of
-invasive species and their ecological impacts during early colonization.
+challenges associated with detecting, monitoring, and reporting invasive
+species and their ecological impacts during early colonization.
 
-The appearance of \emph{G. vermiculophylla} in 1976 corresponds with the
+The appearance of \emph{G. vermiculophylla} corresponds with the
 introduction of the Pacific oyster (\emph{Crassostrea gigas}) into the
-estuary, a few years before, between 1971 and 1975, and a potential
+estuary a few years before, between 1971 and 1975, and a potential
 vector for algal dispersal through aquaculture activities (Grizel and
 Heral, 1991; Rueness, 2005). Aquaculture practices, such as the transfer
 of oyster spat and equipment between regions, facilitate the
@@ -972,36 +970,32 @@ monitor invasive species and implement timely control measures.
 
 This study demonstrated the potential of high-resolution drone-based
 multispectral remote sensing to map the spatial and temporal
-distribution of the invasive red macroalga \emph{G. vermiculophylla} in
-European estuaries. By employing the DISCOV machine-learning model,
+distribution of the invasive red macroalga G. vermiculophylla in
+European estuaries. By employing the DISCOV V.2 machine-learning model,
 updated to include an extensive dataset of Rhodophyceae pixels, we
 achieved a classification accuracy of 91.1\%. Our analysis revealed a
-clear spatial relationship between \emph{G. vermiculophylla} and
-intertidal topography retrieved from LiDAR, with its cover consistently
-higher in flat, elevated mudflats compared to lower and steeper areas.
-The temporal progression, derived from a historical dataset spanning
-over seven decades, highlights the progressive establishment and
-expansion of the algae. Notably, our remote sensing analysis confirmed
-the presence of \emph{G. vermiculophylla} in the Belon Estuary
-approximately 20 years before its first scientific description,
-emphasizing the value of retrospective mapping.
-
-The historical aerial imagery analysis provided crucial insights into
-the dynamics of \emph{G. vermiculophylla}'s invasion, revealing a lag
-phase followed by rapid colonization. This expansion coincided with the
-development of Pacific oyster aquaculture, suggesting a potential with
-the proliferation of this invasive species. These findings underscore
-the crucial role of remote sensing in ecological research, particularly
-in studying invasive species (Roca et al., 2022). Integrating
-hyperspectral sensors could enhance species-level discrimination, while
-adopting low-cost RGB-based methods could extend monitoring capacities
-to a broader range of stakeholders. The larger mats could be detected at
-a coarser spatial resolution, and a perspective of this work is to use
-Sentinel 2 satellite images at a 10 m resolution (Davies et al., 2024b).
-Incorporating these advancements into environmental management
-frameworks can enable proactive monitoring, timely interventions, and
-habitat restoration efforts. These advancements will be crucial for
-informing management strategies, fostering community engagement, and
+clear spatial relationship between G. vermiculophylla and intertidal
+topography retrieved from LiDAR, with its cover consistently higher in
+flat, elevated mudflats compared to lower and steeper areas. The
+temporal progression, derived from a historical dataset spanning over
+seven decades, highlights the progressive establishment and expansion of
+the algae. Notably, our remote sensing analysis confirmed the presence
+of G. vermiculophylla in the Belon Estuary approximately 20 years before
+its first scientific description, emphasizing the value of retrospective
+mapping. The historical aerial imagery analysis provided crucial
+insights into the dynamics of G. vermiculophylla's invasion, revealing a
+lag phase followed by rapid colonization. This expansion coincided with
+the development of Pacific oyster aquaculture, suggesting a potential
+link with the proliferation of this invasive species. These findings
+underscore the crucial role of remote sensing in ecological research,
+particularly in studying invasive species (Roca et al., 2022).
+Integrating hyperspectral sensors could enhance species-level
+discrimination while adopting low-cost RGB-based methods could extend
+monitoring capacities to a broader range of stakeholders. The larger
+mats could be detected at a coarser spatial resolution, and a
+perspective of this work is to use Sentinel 2 satellite images at a 10 m
+resolution (Davies et al., 2024b). These advancements will be crucial
+for informing management strategies, fostering community engagement, and
 preserving estuarine biodiversity in the face of ongoing ecological
 changes.
 
@@ -1518,6 +1512,12 @@ Mcilwaine, B., Casado, M.R., Leinster, P., 2019. Using 1st derivative
 reflectance signatures within a remote sensing framework to identify
 macroalgae in marine environments. Remote Sensing 11.
 \url{https://doi.org/10.3390/rs11060704}
+
+\bibitem[\citeproctext]{ref-jmse11020367}
+Mendoza-Segura, C., Fernández, E., Beca-Carretero, P., 2023. Predicted
+changes in the biogeographical range of gracilaria vermiculophylla under
+present and future climate scenarios. Journal of Marine Science and
+Engineering 11. \url{https://doi.org/10.3390/jmse11020367}
 
 \bibitem[\citeproctext]{ref-Michel2021}
 Michel, G., Le Bot, S., Lesourd, S., Lafite, R., 2021.
