@@ -1,0 +1,30 @@
+ID	Group	Type	Text	Comment	xmin	xmax	ymin	ymax	alpha	color	Evaluate	Resolution	Evaluate_bigbox	shape
+5	input data 1	Arrow		2 -> 3	2	2	2	0.5	0.5	#EA6155	T	NA	F	
+5	input data 1	Arrow		1 -> 3	0.5	1.5	0	0	0.5	#EA6155	T	NA	F	
+5	input data 1	Arrow		3 -> 4	2.5	3.5	0	0	0.5	#EA6155	T	NA	F	
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+1	input data 1	Box	DISCOV V1 alaligne Training Dataset		-0.5	0.5	-0.5	0.5	0.5	#f94144	T	8 mm 	F	diamond
+2	input data 1	Box	New Training Pixels		-0.5	0.5	1.5	2.5	0.5	#f94144	T	8 mm 	F	diamond
+3	input data 1	Box	Merging		1.5	2.5	-0.5	0.5	0.5	#f9c74f	T	8 mm 	F	square
+4	input data 1	Box	DISCOV V1.1		3.5	4.5	-0.5	0.5	0.5	#f94144	T	8 mm 	F	diamond
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+5	input data 1	Segment		2 -> 3	0.5	2	2	2	0.5	#EA6155	T	NA	F	

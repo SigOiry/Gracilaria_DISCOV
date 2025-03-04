@@ -80,17 +80,15 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 % Set default figure placement to htbp
+\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -182,6 +180,9 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -203,7 +204,7 @@ Ecosystems, Biodiversity},
 vermiculophylla} at the Site of its First European Observation}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2025-01-17}
+\date{2025-02-17}
 
 \begin{document}
 \maketitle
@@ -404,7 +405,7 @@ sections (Romero et al., 2008).
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{Figures/Low_res/Figure1/Map_site.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{Figures/Low_res/Figure1/Map_site.png}
 
 }
 
@@ -423,13 +424,13 @@ pre-processing}\label{sec-DroneFlights}
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/FigurePictures_censored.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/FigurePictures_censored.png}
 
 }
 
 \caption{\label{fig-PictureFigure}\emph{Gracilaria vermiculophylla} in
 the Belon. A: Quadrat of 0.25 m² with a 100\% cover of \emph{G.
-vermiculophylla}; B: Single thallus howing cylindrical branches; C:
+vermiculophylla}; B: Single thallus showing cylindrical branches; C:
 Landscape view of mudflats covered by monospecific mats of G.
 vermiculophylla; D: Recording of the spectral signature of the algae
 using an ASD FieldSpec HandHeld 2 spectroradiometer.}
@@ -549,7 +550,7 @@ into two classes: The presence or absence of Red Algae
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Flowchart gracillaria.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Flowchart gracillaria.png}
 
 }
 
@@ -615,7 +616,7 @@ mats of \emph{G. vermiculophylla} exclusively colonised the mudflat.
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Historical_maps.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Historical_maps.png}
 
 }
 
@@ -644,17 +645,17 @@ high, indicating sustained and widespread colonization.
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Cover_Gracillaria_vs_Time.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Cover_Gracillaria_vs_Time.png}
 
 }
 
-\caption{\label{fig-HistoricalPlot}Trend of the Gracilaria
-vermiculophylla cover in the Belon Estuary (at Pont du Guilly). The red
-vertical line indicates the date of Crassostrea gigas introduction in
-South Brittany (Grizel and Heral, 1991), while the golden line
-represents the date of the first documented mention of Gracilaria
-vermiculophylla presence in Europe which was in the Belon Esturay
-(Rueness, 2005).}
+\caption{\label{fig-HistoricalPlot}Trend of the \emph{Gracilaria
+vermiculophylla} cover in the Belon Estuary (at Pont du Guilly). The red
+vertical line indicates the date of \emph{Crassostrea gigas}
+introduction in South Brittany (Grizel and Heral, 1991), while the
+golden line represents the date of the first documented mention of
+\emph{Gracilaria vermiculophylla} presence in Europe which was in the
+Belon Esturay (Rueness, 2005).}
 
 \end{figure}%
 
@@ -679,7 +680,7 @@ precise identification of the wavelength associated with these pigments
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/plot_spectral_signature.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/plot_spectral_signature.png}
 
 }
 
@@ -696,7 +697,7 @@ orange, and red, respectively.}
 
 The classification map obtained from the neural network algorithm is
 shown for the Belon estuary (Figure~\ref{fig-Belon} A). Among the main
-classes of the intertidal vegetation, the class fo Rhodophyceae (red
+classes of the intertidal vegetation, the class of Rhodophyceae (red
 macroalgae, in red) was the dominant algal cover, forming extensive,
 continous patches colonizing almost the entire mudflat. In contrast,
 Bacillariophyceae (diatoms biofilm, in orange) and Chlorophyceae (Green
@@ -725,7 +726,7 @@ almost no vegetation cover.
 
 \centering{
 
-\includegraphics[width=3.75in,height=\textheight,keepaspectratio]{./Figures/Low_res/Belon_maps.png}
+\includegraphics[width=3.75in,height=\textheight]{./Figures/Low_res/Belon_maps.png}
 
 }
 
@@ -733,7 +734,7 @@ almost no vegetation cover.
 intertidal vegetation with a neural network algorithm (A), RGB
 composition (B), Elevation (C) and mudflat topography (D) of the Belon
 estuary site in Brittany, France. The total extent of this flight was 21
-hectares with a resolution of 8 mm per pixel. Elevation corrsponds to
+hectares with a resolution of 8 mm per pixel. Elevation corresponds to
 the height above mean sea level.}
 
 \end{figure}%
@@ -760,12 +761,12 @@ supporting a greater percent cover of the algae.
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/GAM_slope_cover.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/GAM_slope_cover.png}
 
 }
 
 \caption{\label{fig-Gam_Slope}DISCOV Prediction (A), RGB composition (B)
-and Bathymetry (C) of the Bélon estuary site in Brttany, France. The
+and Bathymetry (C) of the Bélon estuary site in Brittany, France. The
 total extent of this flight was 21 hectars with a resolution of 8 mm per
 pixel. Bathymetry is represented as the height above mean sea level.}
 
@@ -786,11 +787,11 @@ of Spain, it was mixed with other intertidal vegetation. Distinguishing
 among these vegetation types was a key prerequisite for the analysis. To
 achieve this, we developed a new version of the deep learning-based
 classification model DISCOV initially developed to discriminate seagrass
-from green macrophytes (Oiry et al., 2024). DISCOV v2.0 was based on an
-improved training dataset, which included a larger number of pixels on
-red macroalgae covering approximately 26 \% of one million pixels and
-allowed the model to achieve an accuracy of 91.1 \% in predicting
-\emph{G. vermiculophylla} presence.
+from green macrophytes (DISCOV ; Oiry et al. (2024)). DISCOV v2.0 was
+based on an improved training dataset, which included a larger number of
+pixels on red macroalgae covering approximately 26 \% of one million
+pixels and allowed the model to achieve an accuracy of 91.1 \% in
+predicting \emph{G. vermiculophylla} presence.
 
 Rhodophytes possess unique phycobilin pigments, enabling their spectral
 distinction from other macroalgal groups (Douay et al., 2022; Mcilwaine
@@ -803,25 +804,20 @@ rather than at the species level. Although it is unlikely that
 Gracilaria can be precisely distinguished at the species level using
 standard multispectral, hyperspectral data may allow mapping on a finer
 taxonomic resolution (Douay et al., 2022; Olmedo-Masat et al., 2020).
-Ecological factors also aided in identifying \emph{G. vermiculophylla}.
-Unlike many other macroalgae that require hard substrates for the spores
-to settle, \emph{G. vermiculophylla} establishes itself on soft-bottom
-sediments. In fact, it is commonly found on mudflats, anchoring its
+Ecological factors also contribute to distinguishing \emph{G.
+vermiculophylla}. Macroalgae require hard substrates for the spores to
+settle, but some Gracilariales species can establish on soft-bottom
+sediments. \emph{G. vermiculophylla} is found on mudflats, anchoring its
 thalli in the top 10 cm of mud (Surget, 2017), and inhabiting the upper
-intertidal zone---an unusual trait for a Rhodophyte (Abreu et al., 2011;
-Davoult et al., 2017). By effectively detecting \emph{G.
-vermiculophylla} in these soft-substrate, upper intertidal habitats, our
-method provides a framework for identifying niche conditions that favour
-its spread. This information may provide managers with early warning
-indicators to control its expansion before it reaches nuisance levels.
-Therefore, integrating spectral data with sediment characteristics
-serves as a strong indicator of \emph{G. vermiculophylla} presence in
-European Atlantic estuaries, complementing the physical variables
-already used in species distribution modelling (Mendoza-Segura et al.,
-2023). A multispectral sensor is necessary to obtain spatially explicit
-maps when this species is mixed with other classes of intertidal
-vegetation. However, when monospecific mats are the primary vegetation
-colonising tidal flats, RGB drone imagery can be exploited.
+intertidal zone of estuaries in Western Europe---an unusual trait for a
+Rhodophyte (Abreu et al., 2011; Davoult et al., 2017). By effectively
+detecting \emph{G. vermiculophylla} in these soft-sediment environments,
+the methodology developed in this study provides a framework for mapping
+this species in coastal areas. A multispectral sensor is necessary to
+obtain spatially explicit maps when this species is mixed with other
+classes of intertidal vegetation. However, when monospecific mats are
+the primary vegetation colonising tidal flats, RGB drone imagery can be
+exploited.
 
 \subsection{\texorpdfstring{\emph{G. vermiculophylla} spatial
 distribution and mudflat
@@ -867,7 +863,7 @@ environments with low to moderate hydrodynamic conditions (Surget,
 There was a significant negative relationship between slope steepness
 and the density of \emph{G. vermiculophylla}. Besterman et al. (2021)
 showed that mudflat topography was a good predictor of \emph{G.
-vermiculophylla} abundance, while Thomsen et al. (2009) rreported a high
+vermiculophylla} abundance, while Thomsen et al. (2009) reported a high
 abundance in marshes with low slopes. Mudflat topography integrates
 several flow-related variables (Besterman et al., 2021). Steeper slopes
 are typically associated with higher current velocities during tidal
@@ -970,34 +966,34 @@ monitor invasive species and implement timely control measures.
 
 This study demonstrated the potential of high-resolution drone-based
 multispectral remote sensing to map the spatial and temporal
-distribution of the invasive red macroalga G. vermiculophylla in
-European estuaries. By employing the DISCOV V.2 machine-learning model,
+distribution of the invasive red macroalga \emph{G. vermiculophylla} in
+European estuaries. By employing the DISCOV machine-learning model,
 updated to include an extensive dataset of Rhodophyceae pixels, we
 achieved a classification accuracy of 91.1\%. Our analysis revealed a
-clear spatial relationship between G. vermiculophylla and intertidal
-topography retrieved from LiDAR, with its cover consistently higher in
-flat, elevated mudflats compared to lower and steeper areas. The
-temporal progression, derived from a historical dataset spanning over
-seven decades, highlights the progressive establishment and expansion of
-the algae. Notably, our remote sensing analysis confirmed the presence
-of G. vermiculophylla in the Belon Estuary approximately 20 years before
-its first scientific description, emphasizing the value of retrospective
-mapping. The historical aerial imagery analysis provided crucial
-insights into the dynamics of G. vermiculophylla's invasion, revealing a
-lag phase followed by rapid colonization. This expansion coincided with
-the development of Pacific oyster aquaculture, suggesting a potential
-link with the proliferation of this invasive species. These findings
-underscore the crucial role of remote sensing in ecological research,
-particularly in studying invasive species (Roca et al., 2022).
-Integrating hyperspectral sensors could enhance species-level
-discrimination while adopting low-cost RGB-based methods could extend
-monitoring capacities to a broader range of stakeholders. The larger
-mats could be detected at a coarser spatial resolution, and a
-perspective of this work is to use Sentinel 2 satellite images at a 10 m
-resolution (Davies et al., 2024b). These advancements will be crucial
-for informing management strategies, fostering community engagement, and
-preserving estuarine biodiversity in the face of ongoing ecological
-changes.
+clear spatial relationship between \emph{G. vermiculophylla} and
+intertidal topography retrieved from LiDAR, with its cover consistently
+higher in flat, elevated mudflats compared to lower and steeper areas.
+The temporal progression, derived from a historical dataset spanning
+over seven decades, highlights the progressive establishment and
+expansion of the algae. Notably, our remote sensing analysis confirmed
+the presence of \emph{G. vermiculophylla} in the Belon Estuary
+approximately 20 years before its first scientific description,
+emphasizing the value of retrospective mapping. The historical aerial
+imagery analysis provided crucial insights into the dynamics of \emph{G.
+vermiculophylla}'s invasion, revealing a lag phase followed by rapid
+colonization. This expansion coincided with the development of Pacific
+oyster aquaculture, suggesting a potential link with the proliferation
+of this invasive species. These findings underscore the crucial role of
+remote sensing in ecological research, particularly in studying invasive
+species (Roca et al., 2022). Integrating hyperspectral sensors could
+enhance species-level discrimination while adopting low-cost RGB-based
+methods could extend monitoring capacities to a broader range of
+stakeholders. The larger mats could be detected at a coarser spatial
+resolution, and a perspective of this work is to use Sentinel 2
+satellite images at a 10 m resolution (Davies et al., 2024b). These
+advancements will be crucial for informing management strategies,
+fostering community engagement, and preserving estuarine biodiversity in
+the face of ongoing ecological changes.
 
 \newpage
 
@@ -1280,7 +1276,7 @@ Spain}\label{sec-AnnexeD}
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Saja_maps.png}
+\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Saja_maps.png}
 
 }
 
@@ -1512,12 +1508,6 @@ Mcilwaine, B., Casado, M.R., Leinster, P., 2019. Using 1st derivative
 reflectance signatures within a remote sensing framework to identify
 macroalgae in marine environments. Remote Sensing 11.
 \url{https://doi.org/10.3390/rs11060704}
-
-\bibitem[\citeproctext]{ref-jmse11020367}
-Mendoza-Segura, C., Fernández, E., Beca-Carretero, P., 2023. Predicted
-changes in the biogeographical range of gracilaria vermiculophylla under
-present and future climate scenarios. Journal of Marine Science and
-Engineering 11. \url{https://doi.org/10.3390/jmse11020367}
 
 \bibitem[\citeproctext]{ref-Michel2021}
 Michel, G., Le Bot, S., Lesourd, S., Lafite, R., 2021.
