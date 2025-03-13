@@ -80,15 +80,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -180,15 +182,12 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Mapping the distribution of the alien invasive Gracilaria vermiculophylla at the Site of its First European Observation},
+  pdftitle={Mapping the distribution of the alien invasive Gracilaria vermiculophylla at the Site of its First European Introduction},
   pdfauthor={Simon Oiry¹; Bede Ffinian Rowe Davies¹; Pierre Gernez¹; Laurent Barillé¹},
   pdfkeywords={Remote Sensing, Invasive species, Coastal
 Ecosystems, Biodiversity},
@@ -201,10 +200,10 @@ Ecosystems, Biodiversity},
 
 
 \title{Mapping the distribution of the alien invasive \emph{Gracilaria
-vermiculophylla} at the Site of its First European Observation}
+vermiculophylla} at the Site of its First European Introduction}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
 Gernez¹ \and Laurent Barillé¹}
-\date{2025-02-17}
+\date{2025-03-13}
 
 \begin{document}
 \maketitle
@@ -245,15 +244,6 @@ similar invasive species.
 \footnote{Institut des Substances et Organismes de la Mer, ISOMer,
   Nantes Université, UR 2160, F-44000 Nantes, France}
 
-\section{Title proposition}\label{title-proposition}
-
-\begin{itemize}
-\tightlist
-\item
-  Monitoring the marine invasive alien species \emph{Gracilaria
-  vermiculophylla} remotely
-\end{itemize}
-
 \section{Introduction}\label{introduction}
 
 The introduction of Non-Indigenous Species (NIS) in terrestrial,
@@ -265,13 +255,16 @@ assessment and monitoring programs (Massé et al., 2023). In Europe, 874
 NIS have been introduced to the marine environment so far (i.e.~until
 2020) and it is expected that the rate of biological invasions will
 continue to increase in the coming years (Zenetos et al., 2022).
-Macroalgae represent more than 40 \% of the NIS introduced to Europe
+Macroalgae account for over 40 \% of the NIS introduced to Europe
 waters, with many species native to the Temperate Northern Pacific
-(Williams and Smith, 2007).
+(Williams and Smith, 2007). They contribute between 20 - 29\% of all
+marine NIS in the North-East Atlantic, Mediterranean Sea and
+Macaronesia, according to the study by Loos et al. (2024), who counted
+418 NIS species in this region.
 
 Amongst all invasive macroalgae, \emph{Gracilaria vermiculophylla}
 (Papenfuss, 1967) (original name \emph{Gracilariopsis vermiculophylla}
-(OHMI, 1956); also known as \emph{Agarophyton vermiculophyllum} (Gurgel
+(Ohmi, 1956); also known as \emph{Agarophyton vermiculophyllum} (Gurgel
 et al., 2018)), has spread extensively from its native distribution
 range in Japan and Korea (Terada and Yamamoto, 2002). This spread has
 occurred across temperate estuaries in North America, Europe, and other
@@ -282,48 +275,50 @@ In regions like the Baltic Sea and the eastern United States, it can
 affect native fucoid macroalgae and seagrasses negatively (Firth et al.,
 2024; Thomsen et al., 2013; Van Katwijk, 2003). It can also alter
 sediment composition (Nyberg et al., 2009), and disrupts trophic
-interactions (Ginneken et al., 2018). However \emph{G. vermiculophylla}
-create new habitats for invertebrates and juvenile fish in a soft-bottom
-environment (Davoult et al., 2017) and, more generally, can positively
-enhance ecosystem processes (Ramus et al., 2017). The negative and
-positive effects of this species (Thomsen et al., 2009), which now
-dominate some coastal ecosystems, underscore the importance of
+interactions (Ginneken et al., 2018). However \emph{Gracilaria.
+vermiculophylla} create new habitats for invertebrates and juvenile fish
+in a soft-bottom environment (Davoult et al., 2017) and, more generally,
+can positively enhance ecosystem processes (Ramus et al., 2017). The
+negative and positive effects of this species (Thomsen et al., 2009),
+which now dominate some coastal ecosystems, underscore the importance of
 monitoring and managing its population, particularly as climate change
 and anthropogenic pressures continue to facilitate biological invasions.
 \emph{G. vermiculophylla} success as an invader stems from its tolerance
 to a wide range of environmental conditions, including temperature
-(Sotka et al., 2018), nutrient variability (Abreu et al., 2011), and
-salinity (Weinberger et al., 2008). Its growth capacity at low
-salinities (Nyberg, 2007; Rueness, 2005) explains its presence in the
-brackish waters of the Baltic Sea (Weinberger et al., 2008) but also in
-the mesohaline sheltered part of estuaries of the Atlantic coast of
-Europe \textbf{(Surget et al., 2017)}. It is also present in confined
-areas of lagoons characterized by low hydrodynamism (Abreu et al., 2011;
-Sfriso et al., 2012). In Europe, it was first observed in 1996 in the
-Belon estuary (France) and later in many other estuaries on the Brittany
-coast of France (Rueness, 2005). It can be found on hard substrates such
-as invertebrate's tubes and shells providing a substratum (Thomsen et
-al., 2007) or attached to pebbles and rocks (Terada and Yamamoto, 2002)
-but the largest populations are colonizing soft-bottom sediment and
-particularly estuarine intertidal mudflats \textbf{(Surget et al.,
-2017)}. In this habitat, extensive dark red mats are observed at low
-tide, covering vast areas that have largely been unquantified in most
-studies. Therefore, \emph{G. vermiculophylla} can establish populations
-in soft-bottom sediment habitats, previously devoid of macroalgae (Ramus
-et al., 2017). These mats are usually monospecific, with the alga thalli
-partially buried in the mud (Rueness, 2005; Surget, 2017). Intertidal
-mats can, however, be temporarily overgrown by ephemeral green
-macroalgae (Weinberger et al., 2008). In the European estuaries where
-\emph{G. vermiculophylla} was first documented, large monospecific mats
-were reported to be confined to the upper intertidal zones (Rueness,
-2005); however, their spatial distribution relative to the mudflat
-topography and elevation had not been quantitatively assessed. In
-coastal lagoons of the East Atlantic coast, Besterman et al. (2021) have
-shown that the mudflat topography was a significant predictor of its
-abundance. In fact, \emph{G. vermiculophylla} has never been mapped
-using remote sensing techniques, and existing descriptions of its
-distribution lack spatially explicit mapping (Abreu et al., 2011; Sfriso
-et al., 2012; Thomsen et al., 2007; Weinberger et al., 2008).
+(Sotka et al., 2018), light (Surget et al., 2017), nutrient variability
+(Abreu et al., 2011), and salinity (Weinberger et al., 2008). Its growth
+capacity at low salinities (Nyberg, 2007; Rueness, 2005) explains its
+presence in the brackish waters of the Baltic Sea (Weinberger et al.,
+2008) but also in the mesohaline sheltered part of estuaries of the
+Atlantic coast of Europe (Surget et al., 2017). It is also present in
+confined areas of lagoons characterized by low hydrodynamism (Abreu et
+al., 2011; Sfriso et al., 2012). In Europe, it was first observed in
+1996 in the Belon estuary (France) and later in many other estuaries on
+the Brittany coast of France (Rueness, 2005). It can be found on hard
+substrates such as invertebrate's tubes and shells providing a
+substratum (Thomsen et al., 2007) or attached to pebbles and rocks
+(Terada and Yamamoto, 2002) but the largest populations are colonizing
+soft-bottom sediment and particularly estuarine intertidal mudflats
+without to be fixed on any substratum (Surget et al., 2017). In this
+habitat, extensive dark red mats are observed at low tide, covering vast
+areas that have largely been unquantified in most studies. Therefore,
+\emph{G. vermiculophylla} can establish populations in soft-bottom
+sediment habitats, previously devoid of macroalgae (Ramus et al., 2017).
+These mats are usually monospecific in Sweden and France (Rueness, 2005;
+Surget et al., 2017), with the alga thalli partially buried in the mud,
+as observed in French populations. In germany however, Intertidal mats
+can be temporarily overgrown by ephemeral green macroalgae (Weinberger
+et al., 2008). In the European estuaries where \emph{G. vermiculophylla}
+was first documented, large monospecific mats were reported to be
+confined to the upper intertidal zones (Rueness, 2005); however, their
+spatial distribution relative to the mudflat topography and elevation
+had not been quantitatively assessed. In coastal lagoons of the East
+Atlantic coast, Besterman et al. (2021) have shown that the mudflat
+topography was a significant predictor of its abundance. In fact,
+\emph{G. vermiculophylla} has never been mapped using remote sensing
+techniques, and existing descriptions of its distribution lack spatially
+explicit mapping (Abreu et al., 2011; Sfriso et al., 2012; Thomsen et
+al., 2007; Weinberger et al., 2008).
 
 Remote sensing has revolutionized our ability to monitor and manage
 coastal ecosystems, offering efficient and scalable methods for
@@ -352,7 +347,7 @@ vermiculophylla} spatial distribution at a very-high spatial resolution
 adapted a neural network classification model, Drone Intertidal
 Substrate Classification Of Vegetation (DISCOV, (Oiry et al., 2024)) by
 re-training the model with new pixels of \emph{G. vermiculophylla}. An
-\emph{in situ} data validation dataset was obtained from Franch and
+\emph{in situ} data validation dataset was obtained from French and
 Spanish sites to estimate the classification accuracy. LIDAR data were
 concurrently acquired to map the intertidal elevation accurately. A
 Generalized Linear Mixed Effect Model (GLMM) was used to examine the
@@ -361,16 +356,16 @@ metrics quantifying the mudflat topography. We expected the presence of
 \emph{G. vermiculophylla} in mudflats to be associated with a specific
 height range as well as being more closely related to flat areas of the
 intertidal zone. In the Belon estuary (South Brittany, France) where it
-was first observed in Europe, a time series, starting from 1952, of RGB
-images was analysed to describe the temporal changes of its distribution
+was first observed in Europe, a time series of RGB images starting from
+1952 was analysed to describe the temporal changes of its distribution
 over the last seventy years.
 
 \section{Materiel \& Methods}\label{materiel-methods}
 
 \subsection{Study sites}\label{study-sites}
 
-Field campaigns were conducted at three study sites across France and
-Spain. At each site, two locations were investigated
+Field campaigns were conducted at three study sites and four stations
+across France and Spain. At each site, two locations were investigated
 (Figure~\ref{fig-location_sites}). The Aven \& Belon estuaries in South
 Brittany, France (Figure~\ref{fig-location_sites} A \& C) are dynamic
 ria-type systems hosting diverse habitats, including tidal flats and
@@ -405,14 +400,14 @@ sections (Romero et al., 2008).
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{Figures/Low_res/Figure1/Map_site.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{Figures/Low_res/Figure1/Map_site.png}
 
 }
 
-\caption{\label{fig-location_sites}Location of the drone flights. A:
-Flights made in Aven Estuary, France; B: Flights made in Belon Estuary,
-France; C: Flights made in the Saja Estuariy, Spain. Golden polygons
-represent intertidal areas.}
+\caption{\label{fig-location_sites}Location of the drone flights at the
+three study sites. A: Flights made in Aven Estuary, France; B: Flights
+made in Belon Estuary, France; C: Flights made at the two stations of
+the Saja Estuary, Spain. Golden polygons represent intertidal areas.}
 
 \end{figure}%
 
@@ -424,7 +419,7 @@ pre-processing}\label{sec-DroneFlights}
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/FigurePictures_censored.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/FigurePictures_censored.png}
 
 }
 
@@ -528,9 +523,9 @@ Micasense reflectance data for mapping intertidal vegetation along the
 Portuguese and French Atlantic coasts, has been used in this study. The
 training dataset of DISCOV v1.0 was updated Figure~\ref{fig-Workflow}.
 As shown by Oiry et al. (2024) the DISCOV v1.0 model was trained using
-only 5771 Rhodophyceae pixel (3\% of the training dataset). To fill
-this, gap the original training dataset of DISCOV v1.0 was updated using
-new training pixel coming from the 5 drone flights
+only 5771 Rhodophyta pixel (3\% of the training dataset). To fill this,
+gap the original training dataset of DISCOV v1.0 was updated using new
+training pixel coming from the 5 drone flights
 (Section~\ref{sec-DroneFlights}). A total of 427000 pixels were added to
 the DISCOV training dataset from version 1 (Section~\ref{sec-AnnexeA}).
 
@@ -542,7 +537,7 @@ of vegetation they believed was present. Using this method, 3
 independent users contributed to creating a validation dataset of 6755
 pixels across 79 snapshots distributed among the four drone flights
 (Section~\ref{sec-AnnexeB}). The validation dataset was then simplified
-into two classes: The presence or absence of Red Algae
+into two classes: The presence or absence of red algae
 (Figure~\ref{fig-Workflow}).
 
 \phantomsection\label{cell-fig-Workflow}
@@ -550,7 +545,7 @@ into two classes: The presence or absence of Red Algae
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Flowchart gracillaria.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Flowchart gracillaria.png}
 
 }
 
@@ -616,13 +611,14 @@ mats of \emph{G. vermiculophylla} exclusively colonised the mudflat.
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Historical_maps.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Historical_maps.png}
 
 }
 
 \caption{\label{fig-HistoricalMap}RGB images of the Belon Estuary (Pont
 de Guilly) showing the colonization of the mudflat by Gracilaria
-vermiculophylla between 1952 and 2024.}
+vermiculophylla between 1952 and 2024. Red algae appear as dark patches
+on the mudflat.}
 
 \end{figure}%
 
@@ -645,7 +641,7 @@ high, indicating sustained and widespread colonization.
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Cover_Gracillaria_vs_Time.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Cover_Gracillaria_vs_Time.png}
 
 }
 
@@ -669,18 +665,18 @@ phycoerythrin and phycocyanin, which exhibited maximum absorption peaks
 at approximately 565 nm and 620 nm, respectively. An additional
 absorption feature around 495 nm was likely attributable to accessory
 carotenoid pigments. The most pronounced absorption peak occurred at 675
-nm, corresponding to chlorophyll-a absorption. The second derivative
-analysis clearly highlighted the inflection points corresponding to the
-main absorption peaks at 495, 565, 620, and 675 nm, allowing for more
-precise identification of the wavelength associated with these pigments
-(Figure~\ref{fig-SpecDescri} B).
+nm, corresponding to chlorophyll-\emph{a} absorption. The second
+derivative analysis clearly highlighted the inflection points
+corresponding to the main absorption peaks at 495, 565, 620, and 675 nm,
+allowing for more precise identification of the wavelength associated
+with these pigments (Figure~\ref{fig-SpecDescri} B).
 
 \phantomsection\label{cell-fig-SpecDescri}
 \begin{figure}[H]
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/plot_spectral_signature.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/plot_spectral_signature.png}
 
 }
 
@@ -697,16 +693,16 @@ orange, and red, respectively.}
 
 The classification map obtained from the neural network algorithm is
 shown for the Belon estuary (Figure~\ref{fig-Belon} A). Among the main
-classes of the intertidal vegetation, the class of Rhodophyceae (red
+classes of the intertidal vegetation, the phylum of Rhodophyta (red
 macroalgae, in red) was the dominant algal cover, forming extensive,
 continous patches colonizing almost the entire mudflat. In contrast,
-Bacillariophyceae (diatoms biofilm, in orange) and Chlorophyceae (Green
+Bacillariophyceae (diatoms biofilm, in orange) and Chlorophyta (Green
 macroalgae, in green) exhibited more localized distributions, typically
 restricted to smaller, fragmented patches. A few Phaeophyceae (brown
 macroalgae, in brown) were confined to limited patches in the upper
-intertidal attached to rocks. In the Saja esturay, Rhodophyceae cover
-was more scarsed, due to a strong Chlorophyceae presence on this site
-(Annexe D: Section~\ref{sec-AnnexeD}).
+intertidal attached to rocks. In the Saja esturay, Rhodophyta cover was
+more scarsed, due to a strong chlorophyta presence on this site (Annexe
+D: Section~\ref{sec-AnnexeD}).
 
 Across the study sites the presence/absence of \emph{G. vermiculophylla}
 was classified with a global accuracy of 91.1 \%, a sensitivity of 96.5
@@ -726,7 +722,7 @@ almost no vegetation cover.
 
 \centering{
 
-\includegraphics[width=3.75in,height=\textheight]{./Figures/Low_res/Belon_maps.png}
+\includegraphics[width=3.75in,height=\textheight,keepaspectratio]{./Figures/Low_res/Belon_maps.png}
 
 }
 
@@ -761,14 +757,16 @@ supporting a greater percent cover of the algae.
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/GAM_slope_cover.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/GAM_slope_cover.png}
 
 }
 
-\caption{\label{fig-Gam_Slope}DISCOV Prediction (A), RGB composition (B)
-and Bathymetry (C) of the Bélon estuary site in Brittany, France. The
-total extent of this flight was 21 hectars with a resolution of 8 mm per
-pixel. Bathymetry is represented as the height above mean sea level.}
+\caption{\label{fig-Gam_Slope}Relation between the elevation (in meters)
+and the percentage cover of Gracilaria vermiculophylla across three
+slope categories: Flat, Angled, and Steep. Solid lines represent fitted
+generalized linear model predictions, with dashed lines indicating 89\%
+confidence intervals. The solid black line represents the mean predicted
+coverage across all slope categories.}
 
 \end{figure}%
 
@@ -793,13 +791,13 @@ pixels on red macroalgae covering approximately 26 \% of one million
 pixels and allowed the model to achieve an accuracy of 91.1 \% in
 predicting \emph{G. vermiculophylla} presence.
 
-Rhodophytes possess unique phycobilin pigments, enabling their spectral
+Red seaweeds possess unique phycobilin pigments, enabling their spectral
 distinction from other macroalgal groups (Douay et al., 2022; Mcilwaine
 et al., 2019; Olmedo-Masat et al., 2020). Even with the ten-band
 multispectral sensor used in our study, it remained feasible to
 discriminate the major classes of intertidal macrophytes (Davies et al.,
 2023; Oiry et al., 2024; Román et al., 2021). Note that DISCOV V2.0
-identifies \emph{G. vermiculophylla} at the class level (Rhodophyceae)
+identifies \emph{G. vermiculophylla} at the phylum level (Rhodophyta)
 rather than at the species level. Although it is unlikely that
 Gracilaria can be precisely distinguished at the species level using
 standard multispectral, hyperspectral data may allow mapping on a finer
@@ -871,11 +869,11 @@ exchanges, resulting in stronger erosion and reduced sedimentation.
 Areas with steeper slopes may also limit the retention of organic matter
 and nutrients, reducing the availability of essential resources needed
 for algal growth. In contrast, flatter areas within the intertidal zone
-are more likely to accumulate fine sediments and retain water for longer
-durations during low tides, creating a more stable and nutrient-rich
-environment conducive to \emph{G. vermiculophylla} proliferation. These
-low-slope conditions may also favour dense algal mat formation, further
-stabilising the sediment and promoting growth.
+(slikke) are more likely to accumulate fine sediments and retain water
+for longer durations during low tides, creating a more stable and
+nutrient-rich environment conducive to \emph{G. vermiculophylla}
+proliferation. These low-slope conditions may also favour dense algal
+mat formation, further stabilising the sediment and promoting growth.
 
 \subsection{\texorpdfstring{Monitoring \emph{Gracilaria vermiculophylla}
 Invasion
@@ -905,10 +903,12 @@ Heral, 1991; Rueness, 2005). Aquaculture practices, such as the transfer
 of oyster spat and equipment between regions, facilitate the
 unintentional transport of invasive algal fragments. For instance,
 \emph{G. vermiculophylla} may have attached to shells or nets used in
-oyster farming, enabling its spread to new estuarine habitats. After
-initial establishment, the alga progressively occupied suitable
-habitats, consistent with theoretical invasion dynamics involving a lag
-phase followed by rapid spread (Arim et al., 2006). The establishment of
+oyster farming, enabling its spread to new estuarine habitats, and
+transfer of oysters is responsible of its appearance in the
+Mediterranean Sea in 2008 (Loos et al., 2024). After initial
+establishment, the alga progressively occupied suitable habitats,
+consistent with theoretical invasion dynamics involving a lag phase
+followed by rapid spread (Arim et al., 2006). The establishment of
 \emph{G. vermiculophylla} likely induced changes in sediment
 characteristics, trophic interactions, and habitat structure prior to
 formal recognition (BenDor and Metcalf, 2006). Such shifts are
@@ -968,7 +968,7 @@ This study demonstrated the potential of high-resolution drone-based
 multispectral remote sensing to map the spatial and temporal
 distribution of the invasive red macroalga \emph{G. vermiculophylla} in
 European estuaries. By employing the DISCOV machine-learning model,
-updated to include an extensive dataset of Rhodophyceae pixels, we
+updated to include an extensive dataset of Rhodophyta pixels, we
 achieved a classification accuracy of 91.1\%. Our analysis revealed a
 clear spatial relationship between \emph{G. vermiculophylla} and
 intertidal topography retrieved from LiDAR, with its cover consistently
@@ -981,19 +981,21 @@ approximately 20 years before its first scientific description,
 emphasizing the value of retrospective mapping. The historical aerial
 imagery analysis provided crucial insights into the dynamics of \emph{G.
 vermiculophylla}'s invasion, revealing a lag phase followed by rapid
-colonization. This expansion coincided with the development of Pacific
-oyster aquaculture, suggesting a potential link with the proliferation
-of this invasive species. These findings underscore the crucial role of
-remote sensing in ecological research, particularly in studying invasive
-species (Roca et al., 2022). Integrating hyperspectral sensors could
-enhance species-level discrimination while adopting low-cost RGB-based
-methods could extend monitoring capacities to a broader range of
-stakeholders. The larger mats could be detected at a coarser spatial
-resolution, and a perspective of this work is to use Sentinel 2
-satellite images at a 10 m resolution (Davies et al., 2024b). These
-advancements will be crucial for informing management strategies,
-fostering community engagement, and preserving estuarine biodiversity in
-the face of ongoing ecological changes.
+colonization, as it is observed in all introduced species
+(Stiger-Pouvreau and Thouzeau, 2015). This expansion coincided with the
+development of Pacific oyster aquaculture, suggesting oyster as a
+potential vector of dispersal of this invasive species. These findings
+underscore the crucial role of remote sensing in ecological research,
+particularly in studying invasive species (Roca et al., 2022).
+Integrating hyperspectral sensors could enhance species-level
+discrimination while adopting low-cost RGB-based methods could extend
+monitoring capacities to a broader range of stakeholders. The larger
+mats could be detected at a coarser spatial resolution, and a
+perspective of this work is to use Sentinel 2 satellite images at a 10 m
+resolution (Davies et al., 2024b). These advancements will be crucial
+for informing management strategies, fostering community engagement, and
+preserving estuarine biodiversity in the face of ongoing ecological
+changes.
 
 \newpage
 
@@ -1023,13 +1025,13 @@ differences with the training dataset of DISCOV v1.0}
 
 \ascline{1.5pt}{666666}{1-4}
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Name}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Taxonomic\ Class}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Training\ Pixels}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Difference\ with\ DISCOV\ v1.0}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Name}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Taxonomic\ Unit}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Training\ Pixels}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Difference\ with\ DISCOV\ v1.0}}}} \\
 
 \ascline{1.5pt}{666666}{1-4}\endfirsthead 
 
 \ascline{1.5pt}{666666}{1-4}
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Name}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Taxonomic\ Class}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Training\ Pixels}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Difference\ with\ DISCOV\ v1.0}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Name}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Taxonomic\ Unit}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Training\ Pixels}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Difference\ with\ DISCOV\ v1.0}}}} \\
 
 \ascline{1.5pt}{666666}{1-4}\endhead
 
@@ -1053,7 +1055,7 @@ differences with the training dataset of DISCOV v1.0}
 
 
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Brown\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Phaeophyta}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{169,936}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Brown\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Phaeophyceae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{169,936}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{-}}}} \\
 
 
 
@@ -1102,54 +1104,54 @@ differences with the training dataset of DISCOV v1.0}
 
 \providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
 
-\begin{longtable}[c]{cccc}
+\begin{longtable}[c]{ccccc}
 
 \caption{\label{tbl-ValidationDataset}Presence and absence of red
 macroalgae for each drone flight}
 
 \tabularnewline
 
-\ascline{1.5pt}{666666}{1-4}
+\ascline{1.5pt}{666666}{1-5}
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Site}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Absent}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Present}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{country}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Site}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Absent}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Present}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} \\
 
-\ascline{1.5pt}{666666}{1-4}\endfirsthead 
+\ascline{1.5pt}{666666}{1-5}\endfirsthead 
 
-\ascline{1.5pt}{666666}{1-4}
+\ascline{1.5pt}{666666}{1-5}
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Site}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Absent}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Present}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{country}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Site}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Absent}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Present}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} \\
 
-\ascline{1.5pt}{666666}{1-4}\endhead
-
-
-
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Marisma\ de\ Cortiguera}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,531}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{483}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2,014}}}} \\
+\ascline{1.5pt}{666666}{1-5}\endhead
 
 
 
-
-
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Marisma\ de\ Cudón}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,237}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{136}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,373}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Spain}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Marisma\ de\ Cortiguera}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,531}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{483}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{2,014}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Notre-Dame\ De\ Tremor}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,073}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{463}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,536}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Spain}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Marisma\ de\ Cudón}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,237}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{136}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,373}}}} \\
 
 
 
 
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Pont\ de\ Guilly}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,389}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{443}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,832}}}} \\
-
-\ascline{1pt}{000000}{1-4}
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{France}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Notre-Dame\ De\ Tremor}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,073}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{463}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,536}}}} \\
 
 
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{5,230}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,525}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{6,755}}}} \\
 
-\ascline{1.5pt}{666666}{1-4}
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{France}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Pont\ de\ Guilly}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,389}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{443}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,832}}}} \\
+
+\ascline{1pt}{000000}{1-5}
+
+
+
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{\ }}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Total}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{5,230}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{1,525}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{6,755}}}} \\
+
+\ascline{1.5pt}{666666}{1-5}
 
 
 \end{longtable}
@@ -1276,7 +1278,7 @@ Spain}\label{sec-AnnexeD}
 
 \centering{
 
-\includegraphics[width=0.95\textwidth,height=\textheight]{./Figures/Low_res/Saja_maps.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/Saja_maps.png}
 
 }
 
@@ -1296,7 +1298,7 @@ per pixel.}
 \begin{CSLReferences}{1}{0}
 \bibitem[\citeproctext]{ref-abreu2011nitrogen}
 Abreu, M.H., Pereira, R., Buschmann, A., Sousa-Pinto, I., Yarish, C.,
-2011. Nitrogen uptake responses of gracilaria vermiculophylla (ohmi)
+2011. Nitrogen uptake responses of {G}racilaria vermiculophylla (ohmi)
 papenfuss under combined and single addition of nitrate and ammonium.
 Journal of Experimental Marine Biology and Ecology 407, 190--199.
 
@@ -1348,9 +1350,9 @@ models using {Stan}. Journal of Statistical Software 80, 1--28.
 
 \bibitem[\citeproctext]{ref-calleja2017long}
 Calleja, F., Galván, C., Silió-Calzada, A., Juanes, J.A., Ondiviela, B.,
-2017. Long-term analysis of zostera noltei: A retrospective approach for
-understanding seagrasses' dynamics. Marine environmental research 130,
-93--105.
+2017. Long-term analysis of {Z}ostera noltei: A retrospective approach
+for understanding seagrasses' dynamics. Marine environmental research
+130, 93--105.
 
 \bibitem[\citeproctext]{ref-Castaing1995}
 Castaing, P., Guilcher, A., 1995. Morphosedimentary evolution of
@@ -1405,8 +1407,8 @@ distinct trajectories in western europe. Remote Sensing of Environment
 \bibitem[\citeproctext]{ref-davoult2017multiple}
 Davoult, D., Surget, G., Stiger-Pouvreau, V., Noisette, F., Riera, P.,
 Stagnol, D., Androuin, T., Poupart, N., 2017. Multiple effects of a
-gracilaria vermiculophylla invasion on estuarine mudflat functioning and
-diversity. Marine Environmental Research 131, 227--235.
+{G}racilaria vermiculophylla invasion on estuarine mudflat functioning
+and diversity. Marine Environmental Research 131, 227--235.
 
 \bibitem[\citeproctext]{ref-rs14133124}
 Diruit, W., Le Bris, A., Bajjouk, T., Richier, S., Helias, M., Burel,
@@ -1448,7 +1450,7 @@ change biology 22, 151--163.
 
 \bibitem[\citeproctext]{ref-van2018global}
 Ginneken, V. van, Vries, E. de, others, 2018. The global dispersal of
-the non-endemic invasive red alga gracilaria vermiculophylla in the
+the non-endemic invasive red alga {G}racilaria vermiculophylla in the
 ecosystems of the euro-asia coastal waters including the wadden sea
 unesco world heritage coastal area: Awful or awesome? Oceanography \&
 Fisheries Open Access Journal 8, 4--26.
@@ -1459,14 +1461,15 @@ for invasive species control. Frontiers in Ecology and the Environment
 19, 98--107.
 
 \bibitem[\citeproctext]{ref-grizel1991introduction}
-Grizel, H., Heral, M., 1991. Introduction into france of the japanese
-oyster (crassostrea gigas). ICES Journal of Marine Science 47, 399--403.
+Grizel, H., Heral, M., 1991. Introduction into france of the {J}apanese
+oyster ({C}rassostrea gigas). ICES Journal of Marine Science 47,
+399--403.
 
 \bibitem[\citeproctext]{ref-gurgel2018systematics}
 Gurgel, C.F.D., Norris, J.N., Schmidt, W.E., Le, H.N., Fredericq, S.,
-2018. Systematics of the gracilariales (rhodophyta) including new
-subfamilies, tribes, subgenera, and two new genera, agarophyton gen.
-Nov. And crassa gen. nov. Phytotaxa 374, 1--23.
+2018. Systematics of the {G}racilariales ({R}hodophyta) including new
+subfamilies, tribes, subgenera, and two new genera, {A}garophyton gen.
+{n}ov. {a}nd {C}rassa gen. nov. Phytotaxa 374, 1--23.
 
 \bibitem[\citeproctext]{ref-terrapck}
 Hijmans, R.J., 2024.
@@ -1490,6 +1493,14 @@ Weinberger, F., others, 2017. Genetic identification of source and
 likely vector of a widespread marine invader. Ecology and evolution 7,
 4432--4447.
 
+\bibitem[\citeproctext]{ref-van2024non}
+Loos, L.M. van der, Bafort, Q., Bosch, S., Ballesteros, E., Bárbara, I.,
+Berecibar, E., Blanfuné, A., Bogaert, K., Bouckenooghe, S.,
+Boudouresque, C.-F., others, 2024. Non-indigenous seaweeds in the
+{N}ortheast {A}tlantic {O}cean, the {M}editerranean {S}ea and
+{M}acaronesia: A critical synthesis of diversity, spatial and temporal
+patterns. European Journal of Phycology 59, 127--156.
+
 \bibitem[\citeproctext]{ref-d15020161}
 Massé, C., Viard, F., Humbert, S., Antajan, E., Auby, I., Bachelet, G.,
 Bernard, G., Bouchet, V.M.P., Burel, T., Dauvin, J.-C., Delegrange, A.,
@@ -1499,7 +1510,7 @@ Leclerc, J.-C., Le Duff, M., Le Garrec, V., Noël, P., Nowaczyk, A.,
 Pergent-Martini, C., Pezy, J.-P., Raoux, A., Raybaud, V., Ruitton, S.,
 Sauriau, P.-G., Spilmont, N., Thibault, D., Vincent, D., Curd, A., 2023.
 An overview of marine non-indigenous species found in three contrasting
-biogeographic metropolitan french regions: Insights on distribution,
+biogeographic metropolitan {F}rench regions: Insights on distribution,
 origins and pathways of introduction. Diversity 15.
 \url{https://doi.org/10.3390/d15020161}
 
@@ -1512,8 +1523,8 @@ macroalgae in marine environments. Remote Sensing 11.
 \bibitem[\citeproctext]{ref-Michel2021}
 Michel, G., Le Bot, S., Lesourd, S., Lafite, R., 2021.
 Morpho-sedimentological and dynamic patterns in a ria type estuary: The
-belon estuary (south brittany, france). Journal of Maps 17, 389--400.
-\url{https://doi.org/10.1080/17445647.2021.1925170}
+{B}elon estuary ({S}outh {B}rittany, {F}rance). Journal of Maps 17,
+389--400. \url{https://doi.org/10.1080/17445647.2021.1925170}
 
 \bibitem[\citeproctext]{ref-mudd2010does}
 Mudd, S.M., D'Alpaos, A., Morris, J.T., 2010. How does vegetation affect
@@ -1534,12 +1545,12 @@ Ecology.
 
 \bibitem[\citeproctext]{ref-nyberg2009flora}
 Nyberg, C.D., Thomsen, M.S., Wallentinus, I., 2009. Flora and fauna
-associated with the introduced red alga gracilaria vermiculophylla.
+associated with the introduced red alga {G}racilaria vermiculophylla.
 European Journal of Phycology 44, 395--403.
 
 \bibitem[\citeproctext]{ref-ohmi1956contributions}
-OHMI, H., 1956. CONTRIBUTIONS TO THE KNOWLEDGE OF GRACILARIACEAE FROM
-JAPAN: Ⅱ. On a new species of the genus gracilariopsis, with some
+Ohmi, H., 1956. Contributions to the knowledge of {G}racilariaceae from
+{J}apan: Ⅱ. On a new species of the genus {G}racilariopsis, with some
 considerations on its ecology. 北海道大學水産學部研究彙報 6, 271--279.
 
 \bibitem[\citeproctext]{ref-Simon2024ShinyApp}
@@ -1550,15 +1561,15 @@ validation dataset building}.
 \bibitem[\citeproctext]{ref-rs16234383}
 Oiry, S., Davies, B.F.R., Sousa, A.I., Rosa, P., Zoffoli, M.L., Brunier,
 G., Gernez, P., Barillé, L., 2024. Discriminating seagrasses from green
-macroalgae in european intertidal areas using high-resolution
+macroalgae in {E}uropean intertidal areas using high-resolution
 multispectral drone imagery. Remote Sensing 16.
 \url{https://doi.org/10.3390/rs16234383}
 
 \bibitem[\citeproctext]{ref-olmedo2020far}
 Olmedo-Masat, O.M., Raffo, M.P., Rodrı́guez-Pérez, D., Arijón, M.,
 Sánchez-Carnero, N., 2020. How far can we classify macroalgae remotely?
-An example using a new spectral library of species from the south west
-atlantic (argentine patagonia). Remote Sensing 12, 3870.
+An example using a new spectral library of species from the {S}outh
+{W}est {A}tlantic ({A}rgentine {P}atagonia). Remote Sensing 12, 3870.
 
 \bibitem[\citeproctext]{ref-ortega2005fluxes}
 Ortega, T., Ponce, R., Forja, J., Gómez-Parra, A., 2005. Fluxes of
@@ -1568,7 +1579,7 @@ sea (north of spain). Journal of Marine Systems 53, 125--142.
 \bibitem[\citeproctext]{ref-WoRMS303450}
 Papenfuss, G.F., 1967.
 \href{https://marinespecies.org/aphia.php?p=sourcedetails&id=303450}{Notes
-on algal nomenclature - v. Various chlorophyceae and rhodophyceae}.
+on algal nomenclature - v. Various {C}hlorophyceae and {R}hodophyceae}.
 Phykos 5, 95--105.
 
 \bibitem[\citeproctext]{ref-peidro2024quantifying}
@@ -1579,8 +1590,8 @@ multispectral imagery. Regional Studies in Marine Science 103621.
 
 \bibitem[\citeproctext]{ref-raikar2001effect}
 Raikar, S., Iima, M., Fujita, Y., 2001. Effect of temperature, salinity
-and light intensity on the growth of gracilaria spp.(gracilariales,
-rhodophyta) from japan, malaysia and india.
+and light intensity on the growth of {G}racilaria spp.({G}racilariales,
+{R}hodophyta) from {J}apan, {M}alaysia and {I}ndia.
 
 \bibitem[\citeproctext]{ref-ramus2017invasive}
 Ramus, A.P., Silliman, B.R., Thomsen, M.S., Long, Z.T., 2017. An
@@ -1591,7 +1602,7 @@ ecosystem. Proceedings of the national academy of sciences 114,
 \bibitem[\citeproctext]{ref-roca2022monitoring}
 Roca, M., Dunbar, M.B., Román, A., Caballero, I., Zoffoli, M.L., Gernez,
 P., Navarro, G., 2022. Monitoring the marine invasive alien species
-rugulopteryx okamurae using unmanned aerial vehicles and satellites.
+{R}ugulopteryx okamurae using unmanned aerial vehicles and satellites.
 Frontiers in Marine Science 9, 1004012.
 
 \bibitem[\citeproctext]{ref-roman2024mapping}
@@ -1611,9 +1622,9 @@ Sintering behaviour of ceramic bodies from contaminated marine
 sediments. Ceramics International 34, 1917--1924.
 
 \bibitem[\citeproctext]{ref-rueness2005life}
-Rueness, J., 2005. Life history and molecular sequences of gracilaria
-vermiculophylla (gracilariales, rhodophyta), a new introduction to
-european waters. Phycologia 44, 120--128.
+Rueness, J., 2005. Life history and molecular sequences of {G}racilaria
+vermiculophylla ({G}racilariales, {R}hodophyta), a new introduction to
+{E}uropean waters. Phycologia 44, 120--128.
 
 \bibitem[\citeproctext]{ref-savitzky1964smoothing}
 Savitzky, A., Golay, M.J., 1964. Smoothing and differentiation of data
@@ -1622,10 +1633,10 @@ by simplified least squares procedures. Analytical chemistry 36,
 
 \bibitem[\citeproctext]{ref-sfriso2012spreading}
 Sfriso, A., Wolf, M.A., Maistro, S., Sciuto, K., Moro, I., 2012.
-Spreading and autoecology of the invasive species gracilaria
-vermiculophylla (gracilariales, rhodophyta) in the lagoons of the
-north-western adriatic sea (mediterranean sea, italy). Estuarine,
-Coastal and Shelf Science 114, 192--198.
+Spreading and autoecology of the invasive species {G}racilaria
+vermiculophylla ({G}racilariales, {R}hodophyta) in the lagoons of the
+{N}orth-{W}estern {A}driatic {S}ea ({M}editerranean {S}ea, {I}taly).
+Estuarine, Coastal and Shelf Science 114, 192--198.
 
 \bibitem[\citeproctext]{ref-simberloff2021maintenance}
 Simberloff, D., 2021. Maintenance management and eradication of
@@ -1638,6 +1649,11 @@ others, 2018. Combining niche shift and population genetic analyses
 predicts rapid phenotypic evolution during invasion. Evolutionary
 Applications 11, 781--793.
 
+\bibitem[\citeproctext]{ref-stiger2015marine}
+Stiger-Pouvreau, V., Thouzeau, G., 2015. Marine species introduced on
+the {F}rench {C}hannel-{A}tlantic coasts: A review of main biological
+invasions and impacts. Open Journal of Ecology 5, 56784.
+
 \bibitem[\citeproctext]{ref-surget2017processus}
 Surget, G., 2017. Processus adaptatifs des v{é}g{é}taux marins face au
 changement climatique {à} diff{é}rentes {é}chelles de temps et d'espace:
@@ -1645,30 +1661,37 @@ Dynamique de populations, m{é}tabolomique, {é}cophysiologie et
 potentiels de valorisation (PhD thesis). Universit{é} de Bretagne
 occidentale-Brest.
 
+\bibitem[\citeproctext]{ref-surget2017seasonal}
+Surget, G., Le Lann, K., Delebecq, G., Kervarec, N., Donval, A.,
+Poullaouec, M.-A., Bihannic, I., Poupart, N., Stiger-Pouvreau, V., 2017.
+Seasonal phenology and metabolomics of the introduced red macroalga
+{G}racilaria vermiculophylla, monitored in the {B}ay of {B}rest
+({F}rance). Journal of Applied Phycology 29, 2651--2666.
+
 \bibitem[\citeproctext]{ref-Tankoua2011}
 Tankoua, O.F., Buffet, P.-E., Amiard, J.-C., Amiard-Triquet, C.,
 Mouneyrac, C., Berthet, B., 2011. Potential influence of confounding
 factors (size, salinity) on biomarkers in the sentinel species
-scrobicularia plana used in programmes monitoring estuarine quality.
+{S}crobicularia plana used in programmes monitoring estuarine quality.
 Environmental Science and Pollution Research 18, 1253--1263.
 \url{https://doi.org/10.1007/s11356-011-0479-3}
 
 \bibitem[\citeproctext]{ref-terada2002review}
-Terada, R., Yamamoto, H., 2002. Review of gracilaria vermiculophylla
-(ohmi) papenfuss and other species in japan and asia. Taxonomy of
+Terada, R., Yamamoto, H., 2002. Review of {G}racilaria vermiculophylla
+({O}hmi) papenfuss and other species in {J}apan and {A}sia. Taxonomy of
 economic seaweeds, with special reference to Pacific species 8,
 225--230.
 
 \bibitem[\citeproctext]{ref-thomsen2007stress}
 Thomsen, M., McGlathery, K.J., 2007. Stress tolerance of the invasive
-macroalgae codium fragile and gracilaria vermiculophylla in a
+macroalgae {C}odium fragile and {G}racilaria vermiculophylla in a
 soft-bottom turbid lagoon. Biological invasions 9, 499--513.
 
 \bibitem[\citeproctext]{ref-thomsen2009distribution}
 Thomsen, M.S., McGlathery, K., Schwarzschild, A., Silliman, B., 2009.
-Distribution and ecological role of the non-native macroalga gracilaria
-vermiculophylla in virginia salt marshes. Biological Invasions 11,
-2303--2316.
+Distribution and ecological role of the non-native macroalga
+{G}racilaria vermiculophylla in {V}irginia salt marshes. Biological
+Invasions 11, 2303--2316.
 
 \bibitem[\citeproctext]{ref-thomsen2007gracilaria}
 Thomsen, M.S., Staehr, P.A., Nyberg, C.D., Schwærter, S., Krause-Jensen,
@@ -1698,9 +1721,9 @@ Netherlands. pp. 173--195.
 
 \bibitem[\citeproctext]{ref-weinberger2008invasive}
 Weinberger, F., Buchholz, B., Karez, R., Wahl, M., 2008. The invasive
-red alga gracilaria vermiculophylla in the baltic sea: Adaptation to
-brackish water may compensate for light limitation. Aquatic Biology 3,
-251--264.
+red alga {G}racilaria vermiculophylla in the {B}altic {S}ea: Adaptation
+to brackish water may compensate for light limitation. Aquatic Biology
+3, 251--264.
 
 \bibitem[\citeproctext]{ref-williams2007global}
 Williams, S.L., Smith, J.E., 2007. A global review of the distribution,
