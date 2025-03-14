@@ -1257,7 +1257,7 @@ For each date, polygons have been drawn around *G. vermiculophylla* patches by v
 
 ## Statistical analysis 
 
-We used a Generalized Linear Mixed Model (GLMM) within a Bayesian framework using the 'brms' package in R [@brm1; @brm2; @brm3]. The response variable, the cover of *G. vermiculophylla*, was modeled using a Beta distribution as a function of bathymetry elevation and the slope of the mudflat (categorized as Flat, Angled, Steep). A random intercept for site was included to account for potential hierarchical variation among sampling sites. The Beta distribution was chosen because the response variable is continuous and constrained between 0 and 1. We visually assessed sample vs. fitted residuals and quartile–quartile (Q-Q) plots to ensure that the model assumptions, including appropriate model fit and absence of patterns in residuals, were satisfied.
+We used a Generalized Linear Mixed Model (GLMM) within a Bayesian framework using the 'brms' package in R [@brm1; @brm2; @brm3]. The response variable, the cover of *G. vermiculophylla*, was modeled using a Beta distribution as a function of bathymetry elevation and the slope of the mudflat (categorized as Flat, Angled, Steep). A random intercept for site was included to account for potential hierarchical variation among sampling sites. The Beta distribution was chosen because the response variable is continuous and constrained between 0 and 1. **The response variables were modeled assuming a Gaussian distribution, with weakly informative priors (Student-T(3,0,2.5)). Model parameters were estimated using Markov Chain Monte Carlo (MCMC) sampling, with 4 chains of 5000 iterations and a warm-up of 500.**
 
 # Results
 
