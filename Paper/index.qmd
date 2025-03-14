@@ -25,6 +25,17 @@ author:
       - Revision
     affiliations:
       - id: ISOMER
+  - name: Valérie Stiger-Pouvreau²
+    orcid: 0000-0003-3041-0468
+    corresponding: false
+    roles: 
+      - Revision
+    affiliations:
+      - id: Brest
+      - name: Univ Brest
+      - departement: Institut de Recherche pour le Développement (IRD), CNRS, Ifremer, LEMAR, IUEM, F-29280
+      - city: Plouzane
+      - country: France
   - name: Pierre Gernez¹
     orcid: 0000-0003-2055-410X
     corresponding: false
@@ -65,8 +76,10 @@ csl: RSE.csl
 
 
 [^1]
+[^2]
 
 [^1]: Institut des Substances et Organismes de la Mer, ISOMer, Nantes Université, UR 2160, F-44000 Nantes, France
+[^2]: Univ Brest, Institut de Recherche pour le Développement (IRD), CNRS, Ifremer, LEMAR, IUEM, F-29280 Plouzane, France
 
 ```{r library}
 #| cache: true
@@ -363,7 +376,7 @@ a
 
 ## Study sites
 
-Field campaigns were conducted at three study sites and four stations across France and Spain. At each site, two locations were investigated (@fig-location_sites). The Aven & Belon estuaries in South Brittany, France (@fig-location_sites A & C) are dynamic ria-type systems hosting diverse habitats, including tidal flats and subtidal zones with coarse, marine-origin sediments [@Michel2021; @Castaing1995]. These habitats support key benthic species such as *Scrobicularia plana*, *Cerastoderma edule*, and *Tellina tenuis*, which play essential roles in sediment bioturbation and nutrient cycling [@Tankoua2011; @Blanchet2014]. These estuaries serve as a nursery for juvenile fish and a feeding ground for migratory birds, with their ecological productivity driven by a mix of euryhaline and marine species adapted to salinity gradients [@Blanchet2014]. Oyster farming, particularly *Crassostrea gigas*, is a dominant activity, altering sediment dynamics and local biodiversity [@Michel2021]. Despite its ecological richness, the estuary faces pressures from nutrient loading and physical alteration [@Tankoua2011].
+Field campaigns were conducted at three study sites and four stations across France and Spain. At each site, two locations were investigated (@fig-location_sites). The Aven & Belon estuaries in South Brittany, France (@fig-location_sites A & C) are dynamic ria-type systems hosting diverse habitats, including tidal flats and subtidal zones with coarse, marine-origin sediments [@Michel2021; @Castaing1995]. These habitats support key benthic species such as *Scrobicularia plana*, *Cerastoderma edule*, and *Tellina tenuis*, which play essential roles in sediment bioturbation and nutrient cycling [@Tankoua2011; @Blanchet2014]. These estuaries serve as a nursery for juvenile fish and a feeding ground for migratory birds, with their ecological productivity driven by a mix of euryhaline and marine species adapted to salinity gradients [@Blanchet2014]. Oyster farming, particularly *Crassostrea gigas* (recent genetic studies have proposed reclassifying this species as *Magallana gigas*, but *Crassostrea gigas* remains widely used in environmental management literature), is a dominant activity, altering sediment dynamics and local biodiversity [@Michel2021]. Despite its ecological richness, the estuary faces pressures from nutrient loading and physical alteration [@Tankoua2011].
 
 ```{r text_Etel}
 #| cache: true
@@ -1190,6 +1203,8 @@ df_table <- df_training %>%
                           True_Class == "Rhodophyta" ~ "Red macroalgae",
                           T ~ True_Class),
          True_Class = case_when(True_Class == "Phaeophyta" ~ "Phaeophyceae",
+                                True_Class == "Rhodophyta" ~ "Florideophyceae",
+                                True_Class == "Chlorophyta" ~ "Chlorophyceae",
                                 True_Class == "Sediment" ~ "-",
                                 True_Class == "Water" ~ "-",
                                 T ~ True_Class),
@@ -1199,7 +1214,7 @@ df_table <- df_training %>%
 
 ```
 
-In a previous study we developed a neural network classification model (DISCOV; @rs16234383), previously applied with success to Micasense reflectance data for mapping intertidal vegetation along the Portuguese and French Atlantic coasts, has been used in this study. The training dataset of DISCOV v1.0 was updated [@fig-Workflow]. As shown by @rs16234383 the DISCOV v1.0 model was trained using only 5771 Rhodophyta pixel (3% of the training dataset). To fill this, gap the original training dataset of DISCOV v1.0 was updated using new training pixel coming from the 5 drone flights (@sec-DroneFlights). A total of `r as.integer(round(sum(df_table$n) - sum(df_table$DISCOV1_n),-3))` pixels were added to the DISCOV training dataset from version 1 (@sec-AnnexeA).
+In a previous study we developed a neural network classification model (DISCOV; @rs16234383), previously applied with success to Micasense reflectance data for mapping intertidal vegetation along the Portuguese and French Atlantic coasts, has been used in this study. The training dataset of DISCOV v1.0 was updated [@fig-Workflow]. As shown by @rs16234383 the DISCOV v1.0 model was trained using only 5771 Florideophyceae pixel (3% of the training dataset). To fill this, gap the original training dataset of DISCOV v1.0 was updated using new training pixel coming from the 5 drone flights (@sec-DroneFlights). A total of `r as.integer(round(sum(df_table$n) - sum(df_table$DISCOV1_n),-3))` pixels were added to the DISCOV training dataset from version 1 (@sec-AnnexeA).
 
 ```{r ValidationPixels}
 #| cache: false
@@ -1761,7 +1776,7 @@ plot
   
 ```
 
-The spectral signature of *G. vermiculophylla* was characterized by a reflectance pattern in the visible region of the spectrum shaped by the photosynthetic and accessory pigments common to all rhodophytes (@fig-SpecDescri A). This pattern was primarily driven by phycoerythrin and phycocyanin, which exhibited maximum absorption peaks at approximately 565 nm and 620 nm, respectively. An additional absorption feature around 495 nm was likely attributable to accessory carotenoid pigments. The most pronounced absorption peak occurred at 675 nm, corresponding to chlorophyll-*a* absorption. The second derivative analysis clearly highlighted the inflection points corresponding to the main absorption peaks at 495, 565, 620, and 675 nm, allowing for more precise identification of the wavelength associated with these pigments (@fig-SpecDescri B).
+The spectral signature of *G. vermiculophylla* was characterized by a reflectance pattern in the visible region of the spectrum shaped by the photosynthetic and accessory pigments common to all red algae (@fig-SpecDescri A). This pattern was primarily driven by phycoerythrin and phycocyanin, which exhibited maximum absorption peaks at approximately 565 nm and 620 nm, respectively. An additional absorption feature around 495 nm was likely attributable to accessory carotenoid pigments. The most pronounced absorption peak occurred at 675 nm, corresponding to chlorophyll-*a* absorption. The second derivative analysis clearly highlighted the inflection points corresponding to the main absorption peaks at 495, 565, 620, and 675 nm, allowing for more precise identification of the wavelength associated with these pigments (@fig-SpecDescri B).
 
 ```{r Figure Spectral_Description}
 #| cache: false
@@ -1811,10 +1826,10 @@ DISCOV_Belon <- ggplot()+
                     na.value = NA,
                     name = "Classes",
                     labels = c("Bacillariophyceae",
-                               "Chlorophyta",
+                               "Chlorophyceae",
                                "Magnoliopsida",
                                "Phaeophyceae",
-                               "Rhodophyta",
+                               "Florideophyceae",
                                "Sediment",
                                "Water"))+
   geom_text(aes(x =  ext(DISCOV_rast)[1]+0.04*(ext(DISCOV_rast)[2]-ext(DISCOV_rast)[1]),
@@ -2365,8 +2380,8 @@ df_validation <-
   read.csv()
 ```
 
-The classification map obtained from the neural network algorithm is shown for the Belon estuary (@fig-Belon A). Among the main classes of the intertidal vegetation, the phylum of Rhodophyta (red macroalgae, in red) was the dominant algal cover, forming extensive, continous patches colonizing almost the entire mudflat. In contrast, Bacillariophyceae (diatoms biofilm, in orange) and Chlorophyta (Green macroalgae, in green) exhibited more localized distributions, typically restricted to smaller, fragmented patches. A few Phaeophyceae (brown macroalgae, in brown) were confined to limited patches in the upper intertidal attached to rocks. 
-In the Saja esturay, Rhodophyta cover was more scarsed, due to a strong chlorophyta presence on this site (Annexe D: @sec-AnnexeD). 
+The classification map obtained from the neural network algorithm is shown for the Belon estuary (@fig-Belon A). Among the main classes of the intertidal vegetation, the class of Florideophyceae (red macroalgae, in red) was the dominant algal cover, forming extensive, continous patches colonizing almost the entire mudflat. In contrast, Bacillariophyceae (diatoms biofilm, in orange) and Chlorophyceae (Green macroalgae, in green) exhibited more localized distributions, typically restricted to smaller, fragmented patches. A few Phaeophyceae (brown macroalgae, in brown) were confined to limited patches in the upper intertidal attached to rocks. 
+In the Saja esturay, Florideophyceae cover was more scarsed, due to a strong Chlorophyceae presence on this site (Annexe D: @sec-AnnexeD). 
 
 Across the study sites the presence/absence of *G. vermiculophylla* was classified with a global accuracy of `r round(df_validation %>% dplyr::filter(metric == "Accuracy") %>% pull(),3)*100` %, a sensitivity of `r round(df_validation %>% dplyr::filter(metric == "Sensitivity") %>% pull(),3)*100` % and a specificity of `r round(df_validation %>% dplyr::filter(metric == "Specificity") %>% pull(),3)*100` %.
 
@@ -2538,7 +2553,7 @@ knitr::include_graphics("./Figures/Low_res/GAM_slope_cover.png")
 
 In this study, we produced the first spatial distribution maps of the invasive red macroalgae *Gracilaria vermiculophylla* using a multispectral drone survey conducted at low tide in Atlantic estuaries representing varied environmental conditions. The species formed monospecific mats in southern Brittany, while in the Cantabrian region of Spain, it was mixed with other intertidal vegetation. Distinguishing among these vegetation types was a key prerequisite for the analysis. To achieve this, we developed a new version of the deep learning-based classification model DISCOV initially developed to discriminate seagrass from green macrophytes (DISCOV ; @rs16234383). DISCOV v2.0 was based on an improved training dataset, which included a larger number of pixels on red macroalgae covering approximately 26 % of one million pixels and allowed the model to achieve an accuracy of 91.1 % in predicting *G. vermiculophylla* presence. 
 
-Red seaweeds possess unique phycobilin pigments, enabling their spectral distinction from other macroalgal groups [@rs14020346; @olmedo2020far; @rs11060704]. Even with the ten-band multispectral sensor used in our study, it remained feasible to discriminate the major classes of intertidal macrophytes [@roman2021using; @rs16234383; @davies2023multi]. Note that DISCOV V2.0 identifies *G. vermiculophylla* at the phylum level (Rhodophyta) rather than at the species level. Although it is unlikely that Gracilaria can be precisely distinguished at the species level using standard multispectral, hyperspectral data may allow mapping on a finer taxonomic resolution  [@rs14020346; @olmedo2020far]. Ecological factors also contribute to distinguishing *G. vermiculophylla*. Macroalgae require hard substrates for the spores to settle, but some Gracilariales species can establish on soft-bottom sediments. *G. vermiculophylla* is found on mudflats, anchoring its thalli in the top 10 cm of mud [@surget2017processus], and inhabiting the upper intertidal zone of estuaries in Western Europe—an unusual trait for a Rhodophyte [@abreu2011nitrogen; @davoult2017multiple]. By effectively detecting *G. vermiculophylla* in these soft-sediment environments, the methodology developed in this study provides a framework for mapping this species in coastal areas. A multispectral sensor is necessary to obtain spatially explicit maps when this species is mixed with other classes of intertidal vegetation. However, when monospecific mats are the primary vegetation colonising tidal flats, RGB drone imagery can be exploited. 
+Red seaweeds possess unique phycobilin pigments, enabling their spectral distinction from other macroalgal groups [@rs14020346; @olmedo2020far; @rs11060704]. Even with the ten-band multispectral sensor used in our study, it remained feasible to discriminate the major classes of intertidal macrophytes [@roman2021using; @rs16234383; @davies2023multi]. Note that DISCOV V2.0 identifies *G. vermiculophylla* at the class level (Florideophyceae) rather than at the species level. Although it is unlikely that Gracilaria can be precisely distinguished at the species level using standard multispectral, hyperspectral data may allow mapping on a finer taxonomic resolution  [@rs14020346; @olmedo2020far]. Ecological factors also contribute to distinguishing *G. vermiculophylla*. Macroalgae require hard substrates for the spores to settle, but some Gracilariales species can establish on soft-bottom sediments. *G. vermiculophylla* is found on mudflats, anchoring its thalli in the top 10 cm of mud [@surget2017processus], and inhabiting the upper intertidal zone of estuaries in Western Europe—an unusual trait for a red seaweed [@abreu2011nitrogen; @davoult2017multiple]. By effectively detecting *G. vermiculophylla* in these soft-sediment environments, the methodology developed in this study provides a framework for mapping this species in coastal areas. A multispectral sensor is necessary to obtain spatially explicit maps when this species is mixed with other classes of intertidal vegetation. However, when monospecific mats are the primary vegetation colonising tidal flats, RGB drone imagery can be exploited. 
 
 ## *G. vermiculophylla* spatial distribution and mudflat topography
 
@@ -2556,7 +2571,7 @@ The temporal gap between the first presence and documentation reflects limitatio
 
 # Conclusion
 
-This study demonstrated the potential of high-resolution drone-based multispectral remote sensing to map the spatial and temporal distribution of the invasive red macroalga *G. vermiculophylla* in European estuaries. By employing the DISCOV machine-learning model, updated to include an extensive dataset of Rhodophyta pixels, we achieved a classification accuracy of 91.1%. Our analysis revealed a clear spatial relationship between *G. vermiculophylla* and intertidal topography retrieved from LiDAR, with its cover consistently higher in flat, elevated mudflats compared to lower and steeper areas. The temporal progression, derived from a historical dataset spanning over seven decades, highlights the progressive establishment and expansion of the algae. Notably, our remote sensing analysis confirmed the presence of *G. vermiculophylla* in the Belon Estuary approximately 20 years before its first scientific description, emphasizing the value of retrospective mapping. The historical aerial imagery analysis provided crucial insights into the dynamics of *G. vermiculophylla*’s invasion, revealing a lag phase followed by rapid colonization, as it is observed in all introduced species [@stiger2015marine]. This expansion coincided with the development of Pacific oyster aquaculture, suggesting oyster as a potential vector of dispersal of this invasive species. These findings underscore the crucial role of remote sensing in ecological research, particularly in studying invasive species [@roca2022monitoring].  Integrating hyperspectral sensors could enhance species-level discrimination while adopting low-cost RGB-based methods could extend monitoring capacities to a broader range of stakeholders. The larger mats could be detected at a coarser spatial resolution, and a perspective of this work is to use Sentinel 2 satellite images at a 10 m resolution [@davies2024sentinel]. These advancements will be crucial for informing management strategies, fostering community engagement, and preserving estuarine biodiversity in the face of ongoing ecological changes.
+This study demonstrated the potential of high-resolution drone-based multispectral remote sensing to map the spatial and temporal distribution of the invasive red macroalga *G. vermiculophylla* in European estuaries. By employing the DISCOV machine-learning model, updated to include an extensive dataset of Florideophyceae pixels, we achieved a classification accuracy of 91.1%. Our analysis revealed a clear spatial relationship between *G. vermiculophylla* and intertidal topography retrieved from LiDAR, with its cover consistently higher in flat, elevated mudflats compared to lower and steeper areas. The temporal progression, derived from a historical dataset spanning over seven decades, highlights the progressive establishment and expansion of the algae. Notably, our remote sensing analysis confirmed the presence of *G. vermiculophylla* in the Belon Estuary approximately 20 years before its first scientific description, emphasizing the value of retrospective mapping. The historical aerial imagery analysis provided crucial insights into the dynamics of *G. vermiculophylla*’s invasion, revealing a lag phase followed by rapid colonization, as it is observed in all introduced species [@stiger2015marine]. This expansion coincided with the development of Pacific oyster aquaculture, suggesting oyster as a potential vector of dispersal of this invasive species. These findings underscore the crucial role of remote sensing in ecological research, particularly in studying invasive species [@roca2022monitoring].  Integrating hyperspectral sensors could enhance species-level discrimination while adopting low-cost RGB-based methods could extend monitoring capacities to a broader range of stakeholders. The larger mats could be detected at a coarser spatial resolution, and a perspective of this work is to use Sentinel 2 satellite images at a 10 m resolution [@davies2024sentinel]. These advancements will be crucial for informing management strategies, fostering community engagement, and preserving estuarine biodiversity in the face of ongoing ecological changes.
 
 ::: {.page-break}
 \newpage
@@ -2605,6 +2620,7 @@ df_table %>%
 
 library(tidyverse)
 library(flextable)
+library(sf)
 
 
 df_flx_valid <- "../Data/Shiny_Validation/shp_all_validation.shp" %>%
@@ -2757,10 +2773,10 @@ DISCOV_Saja <- ggplot()+
                     na.value = NA,
                     name = "DISCOV v2",
                     labels = c("Bacillariophyceae",
-                               "Chlorophyta",
+                               "Chlorophyceae",
                                "Magnoliopsida",
                                "Phaeophyceae",
-                               "Rhodophyta",
+                               "Florideophyceae",
                                "Sediment",
                                "Water"))+
   geom_text(aes(x =  ext(DISCOV_rast)[1]+0.04*(ext(DISCOV_rast)[2]-ext(DISCOV_rast)[1]),

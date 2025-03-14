@@ -188,7 +188,7 @@
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
   pdftitle={Mapping the distribution of the alien invasive Gracilaria vermiculophylla at the Site of its First European Introduction},
-  pdfauthor={Simon Oiry¹; Bede Ffinian Rowe Davies¹; Pierre Gernez¹; Laurent Barillé¹},
+  pdfauthor={Simon Oiry¹; Bede Ffinian Rowe Davies¹; Valérie Stiger-Pouvreau²; Pierre Gernez¹; Laurent Barillé¹},
   pdfkeywords={Remote Sensing, Invasive species, Coastal
 Ecosystems, Biodiversity},
   colorlinks=true,
@@ -201,9 +201,9 @@ Ecosystems, Biodiversity},
 
 \title{Mapping the distribution of the alien invasive \emph{Gracilaria
 vermiculophylla} at the Site of its First European Introduction}
-\author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Pierre
-Gernez¹ \and Laurent Barillé¹}
-\date{2025-03-13}
+\author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Valérie
+Stiger-Pouvreau² \and Pierre Gernez¹ \and Laurent Barillé¹}
+\date{2025-03-14}
 
 \begin{document}
 \maketitle
@@ -242,7 +242,9 @@ similar invasive species.
 
 
 \footnote{Institut des Substances et Organismes de la Mer, ISOMer,
-  Nantes Université, UR 2160, F-44000 Nantes, France}
+  Nantes Université, UR 2160, F-44000 Nantes, France} \footnote{Univ
+  Brest, Institut de Recherche pour le Développement (IRD), CNRS,
+  Ifremer, LEMAR, IUEM, F-29280 Plouzane, France}
 
 \section{Introduction}\label{introduction}
 
@@ -378,10 +380,13 @@ al., 2011). These estuaries serve as a nursery for juvenile fish and a
 feeding ground for migratory birds, with their ecological productivity
 driven by a mix of euryhaline and marine species adapted to salinity
 gradients (Blanchet et al., 2014). Oyster farming, particularly
-\emph{Crassostrea gigas}, is a dominant activity, altering sediment
-dynamics and local biodiversity (Michel et al., 2021). Despite its
-ecological richness, the estuary faces pressures from nutrient loading
-and physical alteration (Tankoua et al., 2011).
+\emph{Crassostrea gigas} (recent genetic studies have proposed
+reclassifying this species as \emph{Magallana gigas}, but
+\emph{Crassostrea gigas} remains widely used in environmental management
+literature), is a dominant activity, altering sediment dynamics and
+local biodiversity (Michel et al., 2021). Despite its ecological
+richness, the estuary faces pressures from nutrient loading and physical
+alteration (Tankoua et al., 2011).
 
 The Saja-Besaya Estuary, situated along the Cantabrian Coast in northern
 Spain, is characterized by the confluence of the Saja and Besaya rivers
@@ -523,9 +528,9 @@ Micasense reflectance data for mapping intertidal vegetation along the
 Portuguese and French Atlantic coasts, has been used in this study. The
 training dataset of DISCOV v1.0 was updated Figure~\ref{fig-Workflow}.
 As shown by Oiry et al. (2024) the DISCOV v1.0 model was trained using
-only 5771 Rhodophyta pixel (3\% of the training dataset). To fill this,
-gap the original training dataset of DISCOV v1.0 was updated using new
-training pixel coming from the 5 drone flights
+only 5771 Florideophyceae pixel (3\% of the training dataset). To fill
+this, gap the original training dataset of DISCOV v1.0 was updated using
+new training pixel coming from the 5 drone flights
 (Section~\ref{sec-DroneFlights}). A total of 427000 pixels were added to
 the DISCOV training dataset from version 1 (Section~\ref{sec-AnnexeA}).
 
@@ -659,7 +664,7 @@ Belon Esturay (Rueness, 2005).}
 
 The spectral signature of \emph{G. vermiculophylla} was characterized by
 a reflectance pattern in the visible region of the spectrum shaped by
-the photosynthetic and accessory pigments common to all rhodophytes
+the photosynthetic and accessory pigments common to all red algae
 (Figure~\ref{fig-SpecDescri} A). This pattern was primarily driven by
 phycoerythrin and phycocyanin, which exhibited maximum absorption peaks
 at approximately 565 nm and 620 nm, respectively. An additional
@@ -693,16 +698,16 @@ orange, and red, respectively.}
 
 The classification map obtained from the neural network algorithm is
 shown for the Belon estuary (Figure~\ref{fig-Belon} A). Among the main
-classes of the intertidal vegetation, the phylum of Rhodophyta (red
+classes of the intertidal vegetation, the class of Florideophyceae (red
 macroalgae, in red) was the dominant algal cover, forming extensive,
 continous patches colonizing almost the entire mudflat. In contrast,
-Bacillariophyceae (diatoms biofilm, in orange) and Chlorophyta (Green
+Bacillariophyceae (diatoms biofilm, in orange) and Chlorophyceae (Green
 macroalgae, in green) exhibited more localized distributions, typically
 restricted to smaller, fragmented patches. A few Phaeophyceae (brown
 macroalgae, in brown) were confined to limited patches in the upper
-intertidal attached to rocks. In the Saja esturay, Rhodophyta cover was
-more scarsed, due to a strong chlorophyta presence on this site (Annexe
-D: Section~\ref{sec-AnnexeD}).
+intertidal attached to rocks. In the Saja esturay, Florideophyceae cover
+was more scarsed, due to a strong Chlorophyceae presence on this site
+(Annexe D: Section~\ref{sec-AnnexeD}).
 
 Across the study sites the presence/absence of \emph{G. vermiculophylla}
 was classified with a global accuracy of 91.1 \%, a sensitivity of 96.5
@@ -797,25 +802,25 @@ et al., 2019; Olmedo-Masat et al., 2020). Even with the ten-band
 multispectral sensor used in our study, it remained feasible to
 discriminate the major classes of intertidal macrophytes (Davies et al.,
 2023; Oiry et al., 2024; Román et al., 2021). Note that DISCOV V2.0
-identifies \emph{G. vermiculophylla} at the phylum level (Rhodophyta)
-rather than at the species level. Although it is unlikely that
-Gracilaria can be precisely distinguished at the species level using
-standard multispectral, hyperspectral data may allow mapping on a finer
-taxonomic resolution (Douay et al., 2022; Olmedo-Masat et al., 2020).
-Ecological factors also contribute to distinguishing \emph{G.
-vermiculophylla}. Macroalgae require hard substrates for the spores to
-settle, but some Gracilariales species can establish on soft-bottom
-sediments. \emph{G. vermiculophylla} is found on mudflats, anchoring its
-thalli in the top 10 cm of mud (Surget, 2017), and inhabiting the upper
-intertidal zone of estuaries in Western Europe---an unusual trait for a
-Rhodophyte (Abreu et al., 2011; Davoult et al., 2017). By effectively
-detecting \emph{G. vermiculophylla} in these soft-sediment environments,
-the methodology developed in this study provides a framework for mapping
-this species in coastal areas. A multispectral sensor is necessary to
-obtain spatially explicit maps when this species is mixed with other
-classes of intertidal vegetation. However, when monospecific mats are
-the primary vegetation colonising tidal flats, RGB drone imagery can be
-exploited.
+identifies \emph{G. vermiculophylla} at the class level
+(Florideophyceae) rather than at the species level. Although it is
+unlikely that Gracilaria can be precisely distinguished at the species
+level using standard multispectral, hyperspectral data may allow mapping
+on a finer taxonomic resolution (Douay et al., 2022; Olmedo-Masat et
+al., 2020). Ecological factors also contribute to distinguishing
+\emph{G. vermiculophylla}. Macroalgae require hard substrates for the
+spores to settle, but some Gracilariales species can establish on
+soft-bottom sediments. \emph{G. vermiculophylla} is found on mudflats,
+anchoring its thalli in the top 10 cm of mud (Surget, 2017), and
+inhabiting the upper intertidal zone of estuaries in Western Europe---an
+unusual trait for a red seaweed (Abreu et al., 2011; Davoult et al.,
+2017). By effectively detecting \emph{G. vermiculophylla} in these
+soft-sediment environments, the methodology developed in this study
+provides a framework for mapping this species in coastal areas. A
+multispectral sensor is necessary to obtain spatially explicit maps when
+this species is mixed with other classes of intertidal vegetation.
+However, when monospecific mats are the primary vegetation colonising
+tidal flats, RGB drone imagery can be exploited.
 
 \subsection{\texorpdfstring{\emph{G. vermiculophylla} spatial
 distribution and mudflat
@@ -968,7 +973,7 @@ This study demonstrated the potential of high-resolution drone-based
 multispectral remote sensing to map the spatial and temporal
 distribution of the invasive red macroalga \emph{G. vermiculophylla} in
 European estuaries. By employing the DISCOV machine-learning model,
-updated to include an extensive dataset of Rhodophyta pixels, we
+updated to include an extensive dataset of Florideophyceae pixels, we
 achieved a classification accuracy of 91.1\%. Our analysis revealed a
 clear spatial relationship between \emph{G. vermiculophylla} and
 intertidal topography retrieved from LiDAR, with its cover consistently
@@ -1043,7 +1048,7 @@ differences with the training dataset of DISCOV v1.0}
 
 
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Green\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Chlorophyta}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{92,585}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x5.4}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Green\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Chlorophyceae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{92,585}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x5.4}}}} \\
 
 
 
@@ -1061,7 +1066,7 @@ differences with the training dataset of DISCOV v1.0}
 
 
 
-\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Red\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Rhodophyta}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{268,637}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x46.55}}}} \\
+\multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Red\ macroalgae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{Florideophyceae}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{268,637}}}} & \multicolumn{1}{>{}c}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\global\setmainfont{Arial}{x46.55}}}} \\
 
 
 
