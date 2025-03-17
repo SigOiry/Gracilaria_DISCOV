@@ -203,7 +203,7 @@ Ecosystems, Biodiversity},
 vermiculophylla} at the Site of its First European Introduction}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Valérie
 Stiger-Pouvreau² \and Pierre Gernez¹ \and Laurent Barillé¹}
-\date{2025-03-14}
+\date{2025-03-17}
 
 \begin{document}
 \maketitle
@@ -277,12 +277,12 @@ In regions like the Baltic Sea and the eastern United States, it can
 affect native fucoid macroalgae and seagrasses negatively (Firth et al.,
 2024; Thomsen et al., 2013; Van Katwijk, 2003). It can also alter
 sediment composition (Nyberg et al., 2009), and disrupts trophic
-interactions (Ginneken et al., 2018). However \emph{Gracilaria.
-vermiculophylla} create new habitats for invertebrates and juvenile fish
-in a soft-bottom environment (Davoult et al., 2017) and, more generally,
-can positively enhance ecosystem processes (Ramus et al., 2017). The
-negative and positive effects of this species (Thomsen et al., 2009),
-which now dominate some coastal ecosystems, underscore the importance of
+interactions (Ginneken et al., 2018). However \emph{G. vermiculophylla}
+create new habitats for invertebrates and juvenile fish in a soft-bottom
+environment (Davoult et al., 2017) and, more generally, can positively
+enhance ecosystem processes (Ramus et al., 2017). The negative and
+positive effects of this species (Thomsen et al., 2009), which now
+dominate some coastal ecosystems, underscore the importance of
 monitoring and managing its population, particularly as climate change
 and anthropogenic pressures continue to facilitate biological invasions.
 \emph{G. vermiculophylla} success as an invader stems from its tolerance
@@ -424,7 +424,7 @@ pre-processing}\label{sec-DroneFlights}
 
 \centering{
 
-\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/FigurePictures_censored.png}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{./Figures/Low_res/FigurePictures.png}
 
 }
 
@@ -591,10 +591,10 @@ using a Beta distribution as a function of bathymetry elevation and the
 slope of the mudflat (categorized as Flat, Angled, Steep). A random
 intercept for site was included to account for potential hierarchical
 variation among sampling sites. The Beta distribution was chosen because
-the response variable is continuous and constrained between 0 and 1. We
-visually assessed sample vs.~fitted residuals and quartile--quartile
-(Q-Q) plots to ensure that the model assumptions, including appropriate
-model fit and absence of patterns in residuals, were satisfied.
+the response variable is continuous and constrained between 0 and 1. The
+response variables were modeled assuming a beta distribution, with flat
+priors. Model parameters were estimated using Markov Chain Monte Carlo
+(MCMC) sampling, with 4 chains of 5000 iterations and a warm-up of 500.
 
 \section{Results}\label{results}
 
@@ -734,9 +734,9 @@ almost no vegetation cover.
 \caption{\label{fig-Belon}Classification of the main classes of
 intertidal vegetation with a neural network algorithm (A), RGB
 composition (B), Elevation (C) and mudflat topography (D) of the Belon
-estuary site in Brittany, France. The total extent of this flight was 21
-hectares with a resolution of 8 mm per pixel. Elevation corresponds to
-the height above mean sea level.}
+estuary site in Brittany, France. This flight was done on April 2024 and
+covers 21 hectares with a resolution of 80 mm per pixel. Elevation
+corresponds to the height above mean sea level.}
 
 \end{figure}%
 
