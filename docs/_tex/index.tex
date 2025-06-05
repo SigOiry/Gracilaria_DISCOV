@@ -1,4 +1,5 @@
 % Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
@@ -7,21 +8,22 @@
   letterpaper,
   DIV=11,
   numbers=noendperiod]{scrartcl}
-
+\usepackage{xcolor}
 \usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
 \usepackage{lmodern}
-\ifPDFTeX\else  
-    % xetex/luatex font selection
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -39,9 +41,6 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
 \makeatletter
 \ifx\paragraph\undefined\else
@@ -67,8 +66,7 @@
 \makeatother
 
 
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -93,6 +91,8 @@
 % Set default figure placement to htbp
 \def\fps@figure{htbp}
 \makeatother
+
+
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -126,6 +126,18 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
 
 \usepackage{fontspec}
 \usepackage{multirow}
@@ -181,11 +193,9 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-
 \usepackage{bookmark}
-
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Mapping the distribution of the alien invasive Gracilaria vermiculophylla at the Site of its First European Introduction},
   pdfauthor={Simon Oiry¹; Bede Ffinian Rowe Davies¹; Valérie Stiger-Pouvreau²; Pierre Gernez¹; Laurent Barillé¹},
@@ -203,8 +213,7 @@ Ecosystems, Biodiversity},
 vermiculophylla} at the Site of its First European Introduction}
 \author{Simon Oiry¹ \and Bede Ffinian Rowe Davies¹ \and Valérie
 Stiger-Pouvreau² \and Pierre Gernez¹ \and Laurent Barillé¹}
-\date{2025-03-17}
-
+\date{2025-06-05}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -224,20 +233,21 @@ Concurrent LiDAR data enabled precise characterization of intertidal
 topography, demonstrating a strong association between algal cover,
 elevation, and slope. Dense mats were consistently observed in flat,
 elevated mudflat areas, with reduced presence in steeper or lower zones.
-These patterns highlight the species' preference for stable sedimentary
-environments with reduced hydrodynamic forces. Temporal analyses also
-linked its spread to anthropogenic activities, notably aquaculture. Our
-findings emphasize the utility of high-resolution drone imaging for
-invasive species monitoring and habitat mapping, offering critical
-insights into the ecological dynamics of \emph{G. vermiculophylla} and
-its drivers. This scalable method facilitates proactive management
-strategies by enabling early detection and detailed assessment of
-invasion patterns. The integration of remote sensing and in situ
-validation establishes a robust framework for ecological monitoring,
-contributing to the understanding of biological invasions and their
-environmental consequences. This approach can inform management
-interventions to mitigate the impacts of \emph{G. vermiculophylla} and
-similar invasive species.
+These patterns indicate that \emph{G. vermiculophylla} is able to
+persist in stable, fine-sediment environments where hydrodynamic forces
+are relatively low. Temporal analyses also linked its spread to
+anthropogenic activities, notably aquaculture. Our findings emphasize
+the utility of high-resolution drone imaging for invasive species
+monitoring and habitat mapping, offering critical insights into the
+ecological dynamics of \emph{G. vermiculophylla} and its drivers. This
+scalable method facilitates proactive management strategies by enabling
+early detection and detailed assessment of invasion patterns. The
+integration of remote sensing and in situ validation establishes a
+robust framework for ecological monitoring, contributing to the
+understanding of biological invasions and their environmental
+consequences. This approach can inform management interventions to
+mitigate the impacts of \emph{G. vermiculophylla} and similar invasive
+species.
 \end{abstract}
 
 
@@ -251,75 +261,85 @@ similar invasive species.
 The introduction of Non-Indigenous Species (NIS) in terrestrial,
 freshwater, and marine ecosystems is one of the major threats to
 biodiversity worldwide. In particular, the proliferation and rapid
-spread of Invasive Alien Species (IAS) can radically change the
-structure and functioning of marine ecosystems, requiring effective
-assessment and monitoring programs (Massé et al., 2023). In Europe, 874
-NIS have been introduced to the marine environment so far (i.e.~until
-2020) and it is expected that the rate of biological invasions will
-continue to increase in the coming years (Zenetos et al., 2022).
-Macroalgae account for over 40 \% of the NIS introduced to Europe
-waters, with many species native to the Temperate Northern Pacific
-(Williams and Smith, 2007). They contribute between 20 - 29\% of all
-marine NIS in the North-East Atlantic, Mediterranean Sea and
-Macaronesia, according to the study by Loos et al. (2024), who counted
-418 NIS species in this region.
+spread of Invasive Alien Species can radically change the structure and
+functioning of marine ecosystems, requiring effective assessment and
+monitoring programs (Massé et al., 2023). In Europe, 874 NIS have been
+introduced to the marine environment so far (i.e.~until 2020) and it is
+expected that the rate of biological invasions will continue to increase
+in the coming years (Zenetos et al., 2022). Macroalgae account for over
+40 \% of the NIS introduced to Europe waters, with many species native
+to the Temperate Northern Pacific (Williams and Smith, 2007). They
+contribute between 20 - 29\% of all marine NIS in the North-East
+Atlantic, Mediterranean Sea and Macaronesia, according to the study by
+Loos et al. (2024), who counted 418 NIS species in this region.
 
 Amongst all invasive macroalgae, \emph{Gracilaria vermiculophylla}
 (Papenfuss, 1967) (original name \emph{Gracilariopsis vermiculophylla}
 (Ohmi, 1956); also known as \emph{Agarophyton vermiculophyllum} (Gurgel
 et al., 2018)), has spread extensively from its native distribution
-range in Japan and Korea (Terada and Yamamoto, 2002). This spread has
-occurred across temperate estuaries in North America, Europe, and other
-regions, facilitated by aquaculture and maritime activities
-(Krueger-Hadfield et al., 2017; Rueness, 2005; Weinberger et al., 2008).
+range in Japan and Korea (Terada and Yamamoto, 2002). The rapid
+west-European expansion of \emph{G. vermiculophylla} has been closely
+associated with movements of Pacific oyster (C\emph{rassostrea gigas})
+stock, a pathway identified by population-genetic and
+historical-shipment evidence (Krueger-Hadfield et al., 2017; Loos et
+al., 2024; Rueness, 2005; Weinberger et al., 2008).
 
 In regions like the Baltic Sea and the eastern United States, it can
 affect native fucoid macroalgae and seagrasses negatively (Firth et al.,
 2024; Thomsen et al., 2013; Van Katwijk, 2003). It can also alter
 sediment composition (Nyberg et al., 2009), and disrupts trophic
-interactions (Ginneken et al., 2018). However \emph{G. vermiculophylla}
-create new habitats for invertebrates and juvenile fish in a soft-bottom
-environment (Davoult et al., 2017) and, more generally, can positively
-enhance ecosystem processes (Ramus et al., 2017). The negative and
-positive effects of this species (Thomsen et al., 2009), which now
-dominate some coastal ecosystems, underscore the importance of
-monitoring and managing its population, particularly as climate change
-and anthropogenic pressures continue to facilitate biological invasions.
-\emph{G. vermiculophylla} success as an invader stems from its tolerance
-to a wide range of environmental conditions, including temperature
-(Sotka et al., 2018), light (Surget et al., 2017), nutrient variability
-(Abreu et al., 2011), and salinity (Weinberger et al., 2008). Its growth
-capacity at low salinities (Nyberg, 2007; Rueness, 2005) explains its
-presence in the brackish waters of the Baltic Sea (Weinberger et al.,
-2008) but also in the mesohaline sheltered part of estuaries of the
-Atlantic coast of Europe (Surget et al., 2017). It is also present in
-confined areas of lagoons characterized by low hydrodynamism (Abreu et
-al., 2011; Sfriso et al., 2012). In Europe, it was first observed in
-1996 in the Belon estuary (France) and later in many other estuaries on
-the Brittany coast of France (Rueness, 2005). It can be found on hard
-substrates such as invertebrate's tubes and shells providing a
-substratum (Thomsen et al., 2007) or attached to pebbles and rocks
-(Terada and Yamamoto, 2002) but the largest populations are colonizing
-soft-bottom sediment and particularly estuarine intertidal mudflats
-without to be fixed on any substratum (Surget et al., 2017). In this
-habitat, extensive dark red mats are observed at low tide, covering vast
-areas that have largely been unquantified in most studies. Therefore,
-\emph{G. vermiculophylla} can establish populations in soft-bottom
-sediment habitats, previously devoid of macroalgae (Ramus et al., 2017).
-These mats are usually monospecific in Sweden and France (Rueness, 2005;
-Surget et al., 2017), with the alga thalli partially buried in the mud,
-as observed in French populations. In germany however, Intertidal mats
-can be temporarily overgrown by ephemeral green macroalgae (Weinberger
-et al., 2008). In the European estuaries where \emph{G. vermiculophylla}
-was first documented, large monospecific mats were reported to be
-confined to the upper intertidal zones (Rueness, 2005); however, their
-spatial distribution relative to the mudflat topography and elevation
-had not been quantitatively assessed. In coastal lagoons of the East
-Atlantic coast, Besterman et al. (2021) have shown that the mudflat
-topography was a significant predictor of its abundance. In fact,
-\emph{G. vermiculophylla} has never been mapped using remote sensing
-techniques, and existing descriptions of its distribution lack spatially
-explicit mapping (Abreu et al., 2011; Sfriso et al., 2012; Thomsen et
+interactions (Ginneken et al., 2018).However, in soft-bottom areas where
+native habitat formers are lacking, dense mats of G. vermiculophylla can
+partially offset the loss of ecosystem functions---for example by
+creating refuge for invertebrates and juvenile fishes and by attenuating
+near-bed flow---although they do not provide the rhizome-mediated
+sediment stabilisation or long-term carbon storage typical of seagrass
+beds (Ramus et al., 2017; Thomsen, 2010). The negative and positive
+effects of this species (Thomsen et al., 2009), which now dominate some
+coastal ecosystems, underscore the importance of monitoring and managing
+its population, particularly as climate change and anthropogenic
+pressures continue to facilitate biological invasions. \emph{G.
+vermiculophylla} success as an invader stems from its tolerance to a
+wide range of environmental conditions, including temperature (Sotka et
+al., 2018), light (Surget et al., 2017), nutrient variability (Abreu et
+al., 2011), and salinity (Sotka et al., 2018; Weinberger et al., 2008).
+Its growth capacity at low salinities (Nyberg, 2007; Rueness, 2005)
+explains its presence in the brackish waters of the Baltic Sea
+(Weinberger et al., 2008) but also in the mesohaline sheltered part of
+estuaries of the Atlantic coast of Europe (Surget et al., 2017). It is
+also present in confined areas of lagoons characterized by low
+hydrodynamism (Abreu et al., 2011; Sfriso et al., 2012). In Europe, it
+was first observed in 1996 in the Belon estuary (France) and later in
+many other estuaries on the Brittany coast of France (Rueness, 2005).
+\emph{G. vermiculophylla} can attach to biogenic structures that offer
+firm surfaces, such as polychaete reefs or mollusc shells (Kollars et
+al., 2016; Krueger-Hadfield et al., 2023; Thomsen et al., 2007), or to
+lithic substrates such as pebbles and rocks (Krueger-Hadfield, 2018;
+Nyberg et al., 2009; Terada and Yamamoto, 2002). However, its largest
+populations colonise estuarine intertidal mudflats as loose-lying mats
+on soft sediment (Surget et al., 2017). In this habitat, extensive dark
+red mats are observed at low tide. Therefore, \emph{G. vermiculophylla}
+can establish persistent populations in soft-sediment habitats where
+perennial macroalgal canopies are naturally sparse or seasonally absent
+(Ramus et al., 2017). These mats are usually monospecific in Sweden and
+France (Rueness, 2005; Surget et al., 2017), with the alga thalli
+partially buried in the mud, as observed in French populations. In
+germany however, Intertidal mats can be temporarily overgrown by
+ephemeral green macroalgae (Weinberger et al., 2008). In the European
+estuaries where \emph{G. vermiculophylla} was first documented, large
+monospecific mats were reported to be confined to the upper intertidal
+zones (Rueness, 2005); however, their spatial distribution relative to
+the mudflat topography and elevation had not been quantitatively
+assessed. In coastal lagoons of the East Atlantic coast, Besterman et
+al. (2021) have shown that the mudflat topography was a significant
+predictor of its abundance. Recent drone surveys have delineated
+\emph{G. vermiculophylla} mats using either (i) manual
+photointerpretation of orthomosaics or (ii) site-specific NDVI
+thresholds (Ross and Snyder, 2022). While informative, these techniques
+are difficult to transfer to new estuaries because both visual
+classification and NDVI break-points must be re-calibrated for local
+light, tide, and co-occurring algae. Thus basin-wide, standardised maps
+are still lacking (Abreu et al., 2011; Sfriso et al., 2012; Thomsen et
 al., 2007; Weinberger et al., 2008).
 
 Remote sensing has revolutionized our ability to monitor and manage
@@ -337,30 +357,30 @@ missions, drone remote sensing makes it possible to acquire at extremely
 high spatial resolution (i.e.~cm-scale), rapidly target specific areas
 of interest, and provide observations in overcast conditions. In
 particular, the potential of drone remote sensing for monitoring the
-surface area occupied by IAS has been demonstrated (Roca et al., 2022).
-Drone-based photogrammetry also makes it possible to characterize the
-distribution of intertidal vegetation together with mudflat
-geomorphology, thus improving our understanding of primary producers
-patterning (Brunier et al., 2022; Douglas et al., 2024).
+surface area occupied by Invasive Alien Species has been demonstrated
+(Roca et al., 2022). Drone-based photogrammetry also makes it possible
+to characterize the distribution of intertidal vegetation together with
+mudflat geomorphology, thus improving our understanding of primary
+producers patterning (Brunier et al., 2022; Douglas et al., 2024).
 
-This study applied a drone-based remote sensing approach to map \emph{G.
-vermiculophylla} spatial distribution at a very-high spatial resolution
-(centimeter) in intertidal estuaries of European Atlantic coast. We
-adapted a neural network classification model, Drone Intertidal
-Substrate Classification Of Vegetation (DISCOV, (Oiry et al., 2024)) by
-re-training the model with new pixels of \emph{G. vermiculophylla}. An
-\emph{in situ} data validation dataset was obtained from French and
-Spanish sites to estimate the classification accuracy. LIDAR data were
-concurrently acquired to map the intertidal elevation accurately. A
-Generalized Linear Mixed Effect Model (GLMM) was used to examine the
-relationship between the seaweed spatial distribution and spatial
-metrics quantifying the mudflat topography. We expected the presence of
-\emph{G. vermiculophylla} in mudflats to be associated with a specific
-height range as well as being more closely related to flat areas of the
-intertidal zone. In the Belon estuary (South Brittany, France) where it
-was first observed in Europe, a time series of RGB images starting from
-1952 was analysed to describe the temporal changes of its distribution
-over the last seventy years.
+This study we couple centimetre-resolution drone imagery with
+complementary spatial data to resolve three outstanding questions about
+the European invasion of \emph{Gracilaria vermiculophylla}. First, an
+adapted version of the DISCOV convolutional network classifier (Oiry et
+al., 2024) is applied to drone mosaics from estuaries in France and
+Spain, providing the first transferable, high-accuracy maps of the
+alga's distribution along the Atlantic coast. Second, LiDAR-derived
+micro-topography is used to test whether those occurrences occupy a
+consistent ``topographic window'' of tidal elevation and surface
+flatness, thereby identifying the physical conditions that most favour
+establishment. Third, a time-series of aerial photographs dating back to
+the early 1950s is analysed to reconstruct the long-term expansion of
+\emph{G. vermiculophylla} in its European bridgehead, the Bélon estuary,
+and to quantify changes in areal cover over seven decades. Together,
+these steps link centimetre-scale mapping to ecological mechanism and
+invasion trajectory, advancing both drone-based remote sensing and our
+understanding of soft-sediment invasions by \emph{G. vermiculophylla},
+while also providing actionable information for management and policy.
 
 \section{Materiel \& Methods}\label{materiel-methods}
 
@@ -373,14 +393,17 @@ Brittany, France (Figure~\ref{fig-location_sites} A \& C) are dynamic
 ria-type systems hosting diverse habitats, including tidal flats and
 subtidal zones with coarse, marine-origin sediments (Castaing and
 Guilcher, 1995; Michel et al., 2021). These habitats support key benthic
-species such as \emph{Scrobicularia plana}, \emph{Cerastoderma edule},
-and \emph{Tellina tenuis}, which play essential roles in sediment
-bioturbation and nutrient cycling (Blanchet et al., 2014; Tankoua et
-al., 2011). These estuaries serve as a nursery for juvenile fish and a
-feeding ground for migratory birds, with their ecological productivity
-driven by a mix of euryhaline and marine species adapted to salinity
-gradients (Blanchet et al., 2014). Oyster farming, particularly
-\emph{Crassostrea gigas} (recent genetic studies have proposed
+species such as \emph{Scrobicularia plana} -- the peppery furrow shell,
+an infaunal bivalve deposit-feeder; \emph{Cerastoderma edule} -- the
+common cockle, a suspension-feeding bivalve; and \emph{Tellina tenuis}
+-- the thin tellin, a small burrowing bivalve, all of which play
+essential roles in sediment bioturbation and nutrient cycling (Blanchet
+et al., 2014; Tankoua et al., 2011). These estuaries serve as a nursery
+for juvenile fish and a feeding ground for migratory birds, with their
+ecological productivity driven by a mix of euryhaline and marine species
+adapted to salinity gradients (Blanchet et al., 2014). Oyster farming,
+particularly \emph{Crassostrea gigas} -- the Pacific oyster, a large
+reef-building filter feeder (recent genetic studies have proposed
 reclassifying this species as \emph{Magallana gigas}, but
 \emph{Crassostrea gigas} remains widely used in environmental management
 literature), is a dominant activity, altering sediment dynamics and
@@ -471,32 +494,39 @@ hectares and 26.7 hectares, respectively.
 
 \paragraph{Multispectral data}\label{sec-photo}
 
-At each location, reflectance images with of 1.2 million pixels were
-captured using a DJI Matrice 300 quadcopter drone equipped with a
-Micasense RedEdge Dual MX multispectral camera. The camera recorded data
-across ten spectral bands, spanning from blue to near-infrared (NIR)
-wavelengths (444, 475, 531, 560, 650, 668, 705, 717, 740, and 840 nm).
-To ensure consistent lighting conditions, the drone's flight trajectory
-was aligned to maintain a solar azimuth angle of 90 degrees. Image
-acquisition was carried out with an overlap of 70\% between side-by-side
-images and 80\% between successive images along the flight path. A
-downwelling light sensor (DLS2) was used to measure real-time
-irradiance, enabling the correction of reflectance values for variations
-in light intensity caused by changing cloud cover during the flight. The
-raw image data were subsequently calibrated to reflectance using a
-calibration panel with \textasciitilde50\% reflectivity, provided by the
-camera's manufacturer. Images were processed using structure-from-motion
-photogrammetry software (Agisoft, 2019) to generate multispectral
-ortho-mosaics for each flight. The ortho-mosaicking workflow was
-consistent across all flights. Initially, key tie points were identified
-within each image and across overlapping images to create a sparse point
-cloud. This point cloud was refined by removing noisy points using a
-reprojection accuracy metric. Subsequently, a dense point cloud was
-generated using a structure-from-motion algorithm. A digital surface
-model (DSM) was then created through surface interpolation of the dense
-point cloud, which served as the basis for reconstructing the
-multispectral ortho-image (Nebel et al., 2020). The resolution of the
-multispectral ortho-mosaic obtained was 8 cm per pixel.
+At each study site we flew a DJI Matrice 300 RTK fitted with a MicaSense
+RedEdge-MX Dual to capture 1.2-Mpx frames in ten spectral bands spanning
+the visible to NIR range (444, 475, 531, 560, 650, 668, 705, 717, 740,
+840 nm). Flights followed a lawn-mower pattern whose tracks were
+oriented 90° to the solar azimuth, minimising glinting effects, and
+maintained 80 \% forward and 70 \% side overlap at 120 m of flight
+height, giving an 8 cm ground-sampling distance to the final
+orthomosaic. Before take-off and after landing a 50 \% Spectralon® panel
+was photographed; together with a 2.5 Hz down-welling irradiance from
+the on-board DLS2 these images were used for an empirical-line
+calibration. Raw digital numbers were first corrected for dark current,
+row noise and vignette (manufacturer coefficients), converted to
+at-sensor radiance, and finally to surface reflectance by linear fitting
+to the panel reflectance for each band while compensating frame-to-frame
+irradiance fluctuations recorded by the DLS2. Images were processed in
+Agisoft Metashape v 2.0.3 (Agisoft, 2019) using a uniform template:
+sparse matching (40 000 key points · image⁻¹), tie-point filtering at a
+1-pixel reprojection-error threshold, and bundle adjustment constrained
+solely by the real-time kinematic (RTK) positions embedded in each
+camera exposure (±1.6 cm XY, ±2.5 cm Z as specified by DJI). No
+ground-control points were collected. Dense-cloud generation (high
+quality), mild depth filtering and DSM-based true-orthorectification
+completed the workflow. Ortho-mosaics were exported in WGS 84 / UTM zone
+30 N. Post-processing statistics indicate a mean reprojection error of
+0.46 px (≈ 3.7 cm) and strip-alignment residuals \textless{} 2 cm,
+confirming sub-pixel planimetric accuracy across the mosaics despite the
+absence of ground control.
+
+This identical radiometric and geometric pipeline was applied to every
+flight, ensuring that all 8 cm multispectral ortho-mosaics are
+radiometrically comparable and co-register to within one pixel,
+providing a consistent input for subsequent classification and
+ecological analysis.
 
 \paragraph{LiDAR data}\label{lidar-data}
 
@@ -522,17 +552,21 @@ categorized into three classes: Flat (angle \textless{} 10°), Angled
 
 \subsection{Scene classification}\label{scene-classification}
 
-In a previous study we developed a neural network classification model
-(DISCOV; Oiry et al. (2024)), previously applied with success to
-Micasense reflectance data for mapping intertidal vegetation along the
-Portuguese and French Atlantic coasts, has been used in this study. The
-training dataset of DISCOV v1.0 was updated Figure~\ref{fig-Workflow}.
-As shown by Oiry et al. (2024) the DISCOV v1.0 model was trained using
-only 5771 Florideophyceae pixel (3\% of the training dataset). To fill
-this, gap the original training dataset of DISCOV v1.0 was updated using
-new training pixel coming from the 5 drone flights
-(Section~\ref{sec-DroneFlights}). A total of 427000 pixels were added to
-the DISCOV training dataset from version 1 (Section~\ref{sec-AnnexeA}).
+In a previous study we developed a neural-network classification model
+(DISCOV; Oiry et al. (2024)) --- a feed-forward fastai network with two
+hidden layers, 26 054 trainable parameters, and 21 spectral predictors
+(10 raw MicaSense bands, their min-max-scaled counterparts, and NDVI)
+that was trained for 12 epochs to classify 5 classes of intertidal
+vegetation. The same model, already shown to map intertidal vegetation
+along the Portuguese and French Atlantic coasts with \textgreater94 \%
+overall accuracy and κ = 0.92 on an independent set of ≈536 000 pixels,
+is used here. The training dataset of DISCOV v1.0 (418 164
+photo-interpreted pixels at 8 mm resolution across seven habitat
+classes) contained only 5 771 Florideophyceae pixels (3 \%). To fill
+this gap, we updated the dataset with new training pixels from the five
+additional drone flights (Section~\ref{sec-DroneFlights}), adding 427000
+pixels (Section~\ref{sec-AnnexeA}), following the methodology presented
+by Oiry et al. (2024).
 
 To validate the DISCOV model, a user-friendly Shiny app was developed.
 This app enabled independent users to photo-interpret snapshots of the
@@ -590,11 +624,16 @@ response variable, the cover of \emph{G. vermiculophylla}, was modeled
 using a Beta distribution as a function of bathymetry elevation and the
 slope of the mudflat (categorized as Flat, Angled, Steep). A random
 intercept for site was included to account for potential hierarchical
-variation among sampling sites. The Beta distribution was chosen because
-the response variable is continuous and constrained between 0 and 1. The
-response variables were modeled assuming a beta distribution, with flat
-priors. Model parameters were estimated using Markov Chain Monte Carlo
-(MCMC) sampling, with 4 chains of 5000 iterations and a warm-up of 500.
+variation among sampling sites (\textbf{?@eq-model}). The Beta
+distribution was chosen because the response variable is continuous and
+constrained between 0 and 1. The response variables were modeled
+assuming a beta distribution, with flat priors. Model parameters were
+estimated using Markov Chain Monte Carlo (MCMC) sampling, with 4 chains
+of 5000 iterations and a warm-up (i.e.~burn-in) of 500. Convergence and
+sampling quality were verified by inspecting the Gelman--Rubin statistic
+(Rhat ≤ 1.01 for every parameter) together with bulk and tail effective
+sample sizes (all \textgreater{} 1 000), confirming that the posterior
+was thoroughly explored and free of divergent transitions.
 
 \section{Results}\label{results}
 
@@ -604,12 +643,13 @@ estuary}\label{historical-records-in-the-belon-estuary}
 A clear shift from bare sediment to vegetated mudflats has been observed
 over the past 70 years, corresponding to the colonization of the Belon
 Estuary by \emph{G. vermiculophylla} (Figure~\ref{fig-HistoricalMap}).
-In the 50s, the tidal flats showed no detectable presence of vegetation.
-In the 70s some darkening of the sediment became discerbible, but the
-first unambiguous presence of \emph{G. vermiculophylla} was 1982. During
-the subsequent decades, the cover of algae increased and in 2024, the
-high-resolution mapping done with the drone showed that monospecific
-mats of \emph{G. vermiculophylla} exclusively colonised the mudflat.
+In the 1950s, the tidal flats showed no detectable presence of
+vegetation. In the 1970s some darkening of the sediment became
+discerbible, but the first unambiguous presence of \emph{G.
+vermiculophylla} was 1982. During the subsequent decades, the cover of
+algae increased and in 2024, the high-resolution mapping done with the
+drone showed that monospecific mats of \emph{G. vermiculophylla}
+exclusively colonised the mudflat.
 
 \phantomsection\label{cell-fig-HistoricalMap}
 \begin{figure}[H]
@@ -711,7 +751,7 @@ was more scarsed, due to a strong Chlorophyceae presence on this site
 
 Across the study sites the presence/absence of \emph{G. vermiculophylla}
 was classified with a global accuracy of 91.1 \%, a sensitivity of 96.5
-\% and a specificity of 71.5 \%.
+\%, a specificity of 71.5 \%, an F1 score of 94.4
 
 The elevation map showed that the main mats of G. vermiculophylla were
 between 1 and 2 m above mean sea level (Figure~\ref{fig-Belon} C). Algal
@@ -833,35 +873,46 @@ showed that higher elevations within the intertidal zone supported a
 greater abundance of \emph{G. vermiculophylla}. Thomsen et al. (2009)
 observed this species inhabiting areas as elevated as the mudflat-marsh
 border. This capacity to colonise the upper intertidal is related to its
-physiological plasticity and high-stress resistance (Thomsen et al.,
-2007). Its capacity for sustained growth under desiccation, light and
-salinity extremes (Nyberg, 2007; Raikar et al., 2001; Rueness, 2005)
-explains its successful establishment at high elevations in mesohaline
-estuarine environments (Weinberger et al., 2008). In the Belon estuary,
-most of \emph{G. vermiculophylla} was found between 1 and 2 m above MSL,
-which are high elevations for which rapid desiccation of this macroalgae
-was described by Thomsen and McGlathery (2007) in shallow lagoons of the
-Eastern Atlantic coast. The thick mat structure observed in Western
-Europe may explain this discrepancy by retaining more water. A lower
-hydrodynamism also characterizes these areas. Unlike seagrasses, another
-type of marine plant that can colonize soft sediment, but possesses
-rhizomes that provide robust anchorage, \emph{G. vermiculophylla} lacks
-such specialized structures. Consequently, it is more vulnerable to
-disturbance and displacement by waves and tidal currents than seagrass.
-In the estuaries of South Brittany, this species can bury part of its
-thalli into the upper layers of soft sediment (Surget, 2017). This mode
-of anchorage likely helps \emph{G. vermiculophylla} withstand strong
-currents or wave action and contributes to forming these thick mats. The
-creation of such mats probably also requires areas with high
-sedimentation rates, typically found in the upper intertidal or the
-vicinity of marshes, promoting sediment deposition (Mudd et al., 2010).
-This observation aligns with the findings illustrated in
-Figure~\ref{fig-HistoricalMap}, which show that one of the first areas
-colonized by \emph{G. vermiculophylla} in the Belon estuary was located
-near a salt marsh patch. These dense mats enhance its stability and
-facilitate its persistence and proliferation in intertidal and estuarine
-environments with low to moderate hydrodynamic conditions (Surget,
-2017).
+broad stress tolerance under variable light, salinity, and grazing
+conditions (Thomsen et al., 2007). Its capacity for sustained growth
+under desiccation, light and salinity extremes (Nyberg, 2007; Raikar et
+al., 2001; Rueness, 2005) explains its successful establishment at high
+elevations in mesohaline estuarine environments (Weinberger et al.,
+2008). Longer aerial exposure at these elevations is partly offset by
+the species' exceptional tolerance of dehydration (survival
+after\textgreater5 months dark storage at 8 °C) and its ability to
+re-hydrate rapidly once inundated, so that net photosynthesis remains
+positive during most tidal cycles (Hu and Juan, 2014). In the Belon
+estuary, most of \emph{G. vermiculophylla} was found between 1 and 2 m
+above MSL, which are high elevations for which rapid desiccation of this
+macroalgae was described by Thomsen and McGlathery (2007) in shallow
+lagoons of the Eastern Atlantic coast. The thick mat structure observed
+in Western Europe may explain this discrepancy by retaining more water.
+These mats also trap suspended sediments and organic detritus,
+progressively raising the bed and creating the soft, nutrient-rich
+substratum on which new thalli can attach---an example of positive niche
+construction (Byers et al., 2012). A lower hydrodynamism also
+characterizes these areas. Unlike seagrasses---marine angiosperms that
+colonize soft sediments using rhizomes for robust anchorage---\emph{G.
+vermiculophylla}, lacks such specialised structures. Consequently, it is
+more vulnerable to disturbance and displacement by waves and tidal
+currents than seagrass. Micro-topographic depressions formed by low
+slopes (\textless{} 1.5°) reduce drag forces during ebb--flow reversals
+and act as ``fragment traps'', favouring the retention of drifting
+thalli that seed new patches (Byers et al., 2012). In the estuaries of
+South Brittany, this species can bury part of its thalli into the upper
+layers of soft sediment (Surget, 2017). This mode of anchorage likely
+helps \emph{G. vermiculophylla} withstand strong currents or wave action
+and contributes to forming these thick mats. The creation of such mats
+probably also requires areas with high sedimentation rates, typically
+found in the upper intertidal or the vicinity of marshes, promoting
+sediment deposition (Mudd et al., 2010). This observation aligns with
+the findings illustrated in Figure~\ref{fig-HistoricalMap}, which show
+that one of the first areas colonized by \emph{G. vermiculophylla} in
+the Belon estuary was located near a salt marsh patch. These dense mats
+enhance its stability and facilitate its persistence and proliferation
+in intertidal and estuarine environments with low to moderate
+hydrodynamic conditions (Surget, 2017).
 
 There was a significant negative relationship between slope steepness
 and the density of \emph{G. vermiculophylla}. Besterman et al. (2021)
@@ -871,9 +922,11 @@ abundance in marshes with low slopes. Mudflat topography integrates
 several flow-related variables (Besterman et al., 2021). Steeper slopes
 are typically associated with higher current velocities during tidal
 exchanges, resulting in stronger erosion and reduced sedimentation.
-Areas with steeper slopes may also limit the retention of organic matter
-and nutrients, reducing the availability of essential resources needed
-for algal growth. In contrast, flatter areas within the intertidal zone
+Under such conditions unattached thalli are more readily exported and
+the probability of successful re-attachment drops sharply. Areas with
+steeper slopes may also limit the retention of organic matter and
+nutrients, reducing the availability of essential resources needed for
+algal growth. In contrast, flatter areas within the intertidal zone
 (slikke) are more likely to accumulate fine sediments and retain water
 for longer durations during low tides, creating a more stable and
 nutrient-rich environment conducive to \emph{G. vermiculophylla}
@@ -904,32 +957,34 @@ The appearance of \emph{G. vermiculophylla} corresponds with the
 introduction of the Pacific oyster (\emph{Crassostrea gigas}) into the
 estuary a few years before, between 1971 and 1975, and a potential
 vector for algal dispersal through aquaculture activities (Grizel and
-Heral, 1991; Rueness, 2005). Aquaculture practices, such as the transfer
-of oyster spat and equipment between regions, facilitate the
-unintentional transport of invasive algal fragments. For instance,
-\emph{G. vermiculophylla} may have attached to shells or nets used in
-oyster farming, enabling its spread to new estuarine habitats, and
-transfer of oysters is responsible of its appearance in the
-Mediterranean Sea in 2008 (Loos et al., 2024). After initial
-establishment, the alga progressively occupied suitable habitats,
-consistent with theoretical invasion dynamics involving a lag phase
-followed by rapid spread (Arim et al., 2006). The establishment of
-\emph{G. vermiculophylla} likely induced changes in sediment
-characteristics, trophic interactions, and habitat structure prior to
-formal recognition (BenDor and Metcalf, 2006). Such shifts are
-comparable to documented impacts in similar systems (Crowl et al., 2008;
-Gallardo et al., 2016), yet remain difficult to quantify without early
-monitoring data. Remote sensing using multispectral drone mapping can
-provide high-resolution, spatially explicit data, but it must be
-combined with repeated, \emph{in situ} field measurements to maximize
-its potential (Chadwick et al., 2020; Zoffoli et al., 2023). Temporal
-repetition makes it possible to assess dynamic processes, and
-integrating these mapping approaches with \emph{in situ} analyses of
-local infauna, carbon cycling, riverine inputs, and sedimentology yields
-valuable data for local managers. Such an integrated approach can
-determine how the invasive algae affects the local ecosystem and, more
-broadly, forecast its potential impact on other estuarine environments
-facing similar invasion events.
+Heral, 1991; Rueness, 2005). Aquaculture operations such as the movement
+of spat bags, grow-out nets, and shell‐hash clutch, can unintentionally
+transfer fragments of \emph{G. vermiculophylla}. Such fouled materials,
+rather than live oyster shells per se, are considered the main vector
+that introduced the alga to several European lagoons, including its
+first Mediterranean record in 2008 (Loos et al., 2024). In Brittany the
+first aerial detection of the alga in 1976 occurred four years after
+large-scale oyster transfers began in the Bélon and Aven estuaries
+(Grizel and Heral, 1991), suggesting oyster culture as a
+probable---though not exclusive---vector. After initial establishment,
+the alga progressively occupied suitable habitats, consistent with
+theoretical invasion dynamics involving a lag phase followed by rapid
+spread (Arim et al., 2006). The establishment of \emph{G.
+vermiculophylla} likely induced changes in sediment characteristics,
+trophic interactions, and habitat structure prior to formal recognition
+(BenDor and Metcalf, 2006). Such shifts are comparable to documented
+impacts in similar systems (Crowl et al., 2008; Gallardo et al., 2016),
+yet remain difficult to quantify without early monitoring data. Remote
+sensing using multispectral drone mapping can provide high-resolution,
+spatially explicit data, but it must be combined with repeated, \emph{in
+situ} field measurements to maximize its potential (Chadwick et al.,
+2020; Zoffoli et al., 2023). Temporal repetition makes it possible to
+assess dynamic processes, and integrating these mapping approaches with
+\emph{in situ} analyses of local infauna, carbon cycling, riverine
+inputs, and sedimentology yields valuable data for local managers. Such
+an integrated approach can determine how the invasive algae affects the
+local ecosystem and, more broadly, forecast its potential impact on
+other estuarine environments facing similar invasion events.
 
 The temporal gap between the first presence and documentation reflects
 limitations in early surveillance, potentially underestimating
@@ -1112,7 +1167,7 @@ differences with the training dataset of DISCOV v1.0}
 \begin{longtable}[c]{ccccc}
 
 \caption{\label{tbl-ValidationDataset}Presence and absence of red
-macroalgae for each drone flight}
+macroalgae for each drone flight. Values indicate the number of pixels.}
 
 \tabularnewline
 
@@ -1353,6 +1408,11 @@ Bürkner, P.-C., 2017. {brms}: An {R} package for {Bayesian} multilevel
 models using {Stan}. Journal of Statistical Software 80, 1--28.
 \url{https://doi.org/10.18637/jss.v080.i01}
 
+\bibitem[\citeproctext]{ref-byers2012impacts}
+Byers, J.E., Gribben, P.E., Yeager, C., Sotka, E.E., 2012. Impacts of an
+abundant introduced ecosystem engineer within mudflats of the
+southeastern US coast. Biological invasions 14, 2587--2600.
+
 \bibitem[\citeproctext]{ref-calleja2017long}
 Calleja, F., Galván, C., Silió-Calzada, A., Juanes, J.A., Ondiviela, B.,
 2017. Long-term analysis of {Z}ostera noltei: A retrospective approach
@@ -1481,6 +1541,11 @@ Hijmans, R.J., 2024.
 \href{https://CRAN.R-project.org/package=terra}{Terra: Spatial data
 analysis}.
 
+\bibitem[\citeproctext]{ref-hu2014adaptation}
+Hu, Z.-M., Juan, L.-B., 2014. Adaptation mechanisms and ecological
+consequences of seaweed invasions: A review case of agarophyte
+gracilaria vermiculophylla. Biological invasions 16, 967--976.
+
 \bibitem[\citeproctext]{ref-RemonterLeTempsIGN}
 IGN, 2024. Remonter le temps.
 
@@ -1491,12 +1556,28 @@ J.E., others, 2021. The use of barriers to limit the spread of aquatic
 invasive animal species: A global review. Frontiers in Ecology and
 Evolution 9, 611631.
 
+\bibitem[\citeproctext]{ref-kollars2016invasive}
+Kollars, N.M., Byers, J.E., Sotka, E.E., 2016. Invasive d{é}cor: An
+association between a native decorator worm and a non-native seaweed can
+be mutualistic. Marine ecology progress series 545, 135--145.
+
+\bibitem[\citeproctext]{ref-krueger2018everywhere}
+Krueger-Hadfield, S., 2018. Everywhere you look, everywhere you go,
+there's an estuary invaded by the red seaweed gracilaria vermiculophylla
+(ohmi) papenfuss, 1967. BioInvasions Records 7.
+
 \bibitem[\citeproctext]{ref-krueger2017genetic}
 Krueger-Hadfield, S.A., Kollars, N.M., Strand, A.E., Byers, J.E.,
 Shainker, S.J., Terada, R., Greig, T.W., Hammann, M., Murray, D.C.,
 Weinberger, F., others, 2017. Genetic identification of source and
 likely vector of a widespread marine invader. Ecology and evolution 7,
 4432--4447.
+
+\bibitem[\citeproctext]{ref-krueger2023phenology}
+Krueger-Hadfield, S.A., Oetterer, A.P., Lees, L.E., Hoffman, J.M.,
+Sotka, E.E., Murren, C.J., 2023. Phenology and thallus size in a
+non-native population of gracilaria vermiculophylla. Journal of
+Phycology 59, 926--938.
 
 \bibitem[\citeproctext]{ref-van2024non}
 Loos, L.M. van der, Bafort, Q., Bosch, S., Ballesteros, E., Bárbara, I.,
@@ -1536,12 +1617,6 @@ Mudd, S.M., D'Alpaos, A., Morris, J.T., 2010. How does vegetation affect
 sedimentation on tidal marshes? Investigating particle capture and
 hydrodynamic controls on biologically mediated sedimentation. Journal of
 Geophysical Research: Earth Surface 115.
-
-\bibitem[\citeproctext]{ref-nebel2020review}
-Nebel, S., Beege, M., Schneider, S., Rey, G.D., 2020. A review of
-photogrammetry and photorealistic 3D models in education from a
-psychological perspective, in: Frontiers in Education. Frontiers Media
-SA, p. 144.
 
 \bibitem[\citeproctext]{ref-nyberg2007introduced}
 Nyberg, C.D., 2007. Introduced marine macroalgae and habitat modifiers:
@@ -1626,6 +1701,10 @@ Romero, M., Andrés, A., Alonso, R., Viguri, J., Rincón, J.M., 2008.
 Sintering behaviour of ceramic bodies from contaminated marine
 sediments. Ceramics International 34, 1917--1924.
 
+\bibitem[\citeproctext]{ref-ross2022ecological}
+Ross, P.G., Snyder, R.A., 2022. Ecological monitoring program at VIMS
+ESL: Annual report 2021.
+
 \bibitem[\citeproctext]{ref-rueness2005life}
 Rueness, J., 2005. Life history and molecular sequences of {G}racilaria
 vermiculophylla ({G}racilariales, {R}hodophyta), a new introduction to
@@ -1691,6 +1770,11 @@ economic seaweeds, with special reference to Pacific species 8,
 Thomsen, M., McGlathery, K.J., 2007. Stress tolerance of the invasive
 macroalgae {C}odium fragile and {G}racilaria vermiculophylla in a
 soft-bottom turbid lagoon. Biological invasions 9, 499--513.
+
+\bibitem[\citeproctext]{ref-thomsen2010experimental}
+Thomsen, M.S., 2010. Experimental evidence for positive effects of
+invasive seaweed on native invertebrates via habitat-formation in a
+seagrass bed. Aquatic Invasions 5, 341--346.
 
 \bibitem[\citeproctext]{ref-thomsen2009distribution}
 Thomsen, M.S., McGlathery, K., Schwarzschild, A., Silliman, B., 2009.
